@@ -57,7 +57,9 @@
     <Compile Include="Cropwindow.Handle\HorizontalHandleHelper.cs" />
     <Compile Include="Cropwindow.Handle\VerticalHandleHelper.cs" />
     <Compile Include="Cropwindow.Pair\Edge.cs" />
+    <Compile Include="Cropwindow.Pair\EdgeAux.cs" />
     <Compile Include="Cropwindow.Pair\EdgePair.cs" />
+    <Compile Include="Cropwindow.Pair\EdgeType.cs" />
     <Compile Include="CropWindow\CropOverlayView.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

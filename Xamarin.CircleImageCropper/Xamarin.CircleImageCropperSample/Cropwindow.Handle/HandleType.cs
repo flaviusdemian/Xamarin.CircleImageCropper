@@ -13,16 +13,16 @@ using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
 
 namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 {
-    public enum HandleType
+    public class HandleType
     {
-        TOP_LEFT = new CornerHandleHelper(EdgeType.TOP, EdgeType.LEFT),
-        TOP_RIGHT = new CornerHandleHelper(EdgeType.TOP, EdgeType.RIGHT),
-        BOTTOM_LEFT = new CornerHandleHelper(EdgeType.BOTTOM, EdgeType.LEFT),
-        BOTTOM_RIGHT = new CornerHandleHelper(EdgeType.BOTTOM, EdgeType.RIGHT),
-        LEFT = new VerticalHandleHelper(EdgeType.LEFT),
-        TOP = new HorizontalHandleHelper(EdgeType.TOP),
-        RIGHT = new VerticalHandleHelper(EdgeType.RIGHT),
-        BOTTOM = new HorizontalHandleHelper(EdgeType.BOTTOM),
-        CENTER = new CenterHandleHelper()
+        public static HandleHelper TOP_LEFT = new CornerHandleHelper(EdgeType.TOP, EdgeType.LEFT);
+        public static HandleHelper TOP_RIGHT = new CornerHandleHelper(EdgeType.TOP, EdgeType.RIGHT);
+        public static HandleHelper BOTTOM_LEFT = new CornerHandleHelper(EdgeType.BOTTOM, EdgeType.LEFT);
+        public static HandleHelper BOTTOM_RIGHT = new CornerHandleHelper(EdgeType.BOTTOM, EdgeType.RIGHT);
+        public static HandleHelper LEFT = new VerticalHandleHelper(EdgeType.LEFT);
+        public static HandleHelper TOP = new HorizontalHandleHelper(EdgeType.TOP);
+        public static HandleHelper RIGHT = new VerticalHandleHelper(EdgeType.RIGHT);
+        public static HandleHelper BOTTOM = new HorizontalHandleHelper(EdgeType.BOTTOM);
+        public static HandleHelper CENTER = new CenterHandleHelper();
     }
 }

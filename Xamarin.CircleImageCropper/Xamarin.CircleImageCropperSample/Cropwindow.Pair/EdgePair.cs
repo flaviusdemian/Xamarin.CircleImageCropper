@@ -16,12 +16,12 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
     {
         // Member Variables ////////////////////////////////////////////////////////
 
-        public EdgeType primary;
-        public EdgeType secondary;
+        public EdgeAux primary;
+        public EdgeAux secondary;
 
         // Constructor /////////////////////////////////////////////////////////////
 
-        public EdgePair(EdgeType edge1, EdgeType edge2)
+        public EdgePair(EdgeAux edge1, EdgeAux edge2)
         {
             primary = edge1;
             secondary = edge2;

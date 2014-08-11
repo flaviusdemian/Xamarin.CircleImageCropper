@@ -11,7 +11,6 @@ using Android.Runtime;
 using Android.Widget;
 using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
 using Xamarin.CircleImageCropperSample.Util;
-using Edge = Android.Views.Edge;
 
 namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 {
@@ -19,13 +18,12 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
     {
           // Member Variables ////////////////////////////////////////////////////////
 
-    private EdgeType mEdge;
+    private Edge mEdge;
 
     // Constructor /////////////////////////////////////////////////////////////
 
-    HorizontalHandleHelper(EdgeType edge) :  base(edge, null)
+    public HorizontalHandleHelper(Edge edge) :  base(edge, null)
     {
-       
         mEdge = edge;
     }
 

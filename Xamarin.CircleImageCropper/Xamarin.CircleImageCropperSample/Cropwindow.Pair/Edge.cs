@@ -22,19 +22,12 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
         // Minimum distance in pixels that one edge can get to its opposing edge.
         // This is an arbitrary value that simply prevents the crop window from
         // becoming too small.
-        public static int MIN_CROP_LENGTH_PX = 40;
 
         // Member Variables ////////////////////////////////////////////////////////
         //private Edge edgeType;
         private float mCoordinate;
         // Public Methods //////////////////////////////////////////////////////////
-
-
-        public Edge LEFT;
-        public Edge TOP;
-        public Edge RIGHT;
-        public Edge BOTTOM;
-
+        private EdgeAux edgeAux;
         /**
          * Sets the Edge to the given x-y coordinate but also adjusting for snapping
          * to the image bounds and parent view border constraints.
@@ -47,22 +40,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          */
         public void adjustCoordinate(float x, float y, Rect imageRect, float imageSnapRadius, float aspectRatio)
         {
-
-            switch (this)
-            {
-                case LEFT:
-                    mCoordinate = adjustLeft(x, imageRect, imageSnapRadius, aspectRatio);
-                    break;
-                case TOP:
-                    mCoordinate = adjustTop(y, imageRect, imageSnapRadius, aspectRatio);
-                    break;
-                case RIGHT:
-                    mCoordinate = adjustRight(x, imageRect, imageSnapRadius, aspectRatio);
-                    break;
-                case BOTTOM:
-                    mCoordinate = adjustBottom(y, imageRect, imageSnapRadius, aspectRatio);
-                    break;
-            }
+            edgeAux.adjustCoordinate(x, y, imageRect, imageSnapRadius, aspectRatio);
         }
 
         /**
@@ -73,7 +51,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
       */
         public float getCoordinate()
         {
-            return mCoordinate;
+            return edgeAux.getCoordinate();
         }
 
         /**
@@ -107,27 +85,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          */
         public void adjustCoordinate(float aspectRatio)
         {
-
-            float left = LEFT.getCoordinate();
-            float top = TOP.getCoordinate();
-            float right = RIGHT.getCoordinate();
-            float bottom = BOTTOM.getCoordinate();
-
-            switch (this)
-            {
-                case EdgeType.LEFT:
-                    mCoordinate = AspectRatioUtil.calculateLeft(top, right, bottom, aspectRatio);
-                    break;
-                case EdgeType.TOP:
-                    mCoordinate = AspectRatioUtil.calculateTop(left, right, bottom, aspectRatio);
-                    break;
-                case EdgeType.RIGHT:
-                    mCoordinate = AspectRatioUtil.calculateRight(left, top, bottom, aspectRatio);
-                    break;
-                case EdgeType.BOTTOM:
-                    mCoordinate = AspectRatioUtil.calculateBottom(left, top, right, aspectRatio);
-                    break;
-            }
+            edgeAux.adjustCoordinate(aspectRatio);
         }
 
         /**
@@ -430,32 +388,32 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          * @param imageSnapRadius the snap distance to the image edge (in pixels)
          * @return the actual x-position of the left edge
          */
-        private static float adjustLeft(float x, Rect imageRect, float imageSnapRadius, float aspectRatio)
-        {
+        //private static float adjustLeft(float x, Rect imageRect, float imageSnapRadius, float aspectRatio)
+        //{
 
-            float resultX = x;
+        //    float resultX = x;
 
-            if (x - imageRect.Left < imageSnapRadius)
-                resultX = imageRect.Left;
+        //    if (x - imageRect.Left < imageSnapRadius)
+        //        resultX = imageRect.Left;
 
-            else
-            {
-                // Select the minimum of the three possible values to use
-                float resultXHoriz = float.PositiveInfinity;
-                float resultXVert = float.PositiveInfinity;
+        //    else
+        //    {
+        //        // Select the minimum of the three possible values to use
+        //        float resultXHoriz = float.PositiveInfinity;
+        //        float resultXVert = float.PositiveInfinity;
 
-                // Checks if the window is too small horizontally
-                if (x >= EdgeType.RIGHT.getCoordinate() - MIN_CROP_LENGTH_PX)
-                    resultXHoriz = EdgeType.RIGHT.getCoordinate() - MIN_CROP_LENGTH_PX;
+        //        // Checks if the window is too small horizontally
+        //        if (x >= EdgeType.RIGHT.getCoordinate() - EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultXHoriz = EdgeType.RIGHT.getCoordinate() - EdgeAux.MIN_CROP_LENGTH_PX;
 
-                // Checks if the window is too small vertically
-                if (((EdgeType.RIGHT.getCoordinate() - x) / aspectRatio) <= MIN_CROP_LENGTH_PX)
-                    resultXVert = EdgeType.RIGHT.getCoordinate() - (MIN_CROP_LENGTH_PX * aspectRatio);
+        //        // Checks if the window is too small vertically
+        //        if (((EdgeType.RIGHT.getCoordinate() - x) / aspectRatio) <= EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultXVert = EdgeType.RIGHT.getCoordinate() - (EdgeAux.MIN_CROP_LENGTH_PX * aspectRatio);
 
-                resultX = Math.Min(resultX, Math.Min(resultXHoriz, resultXVert));
-            }
-            return resultX;
-        }
+        //        resultX = Math.Min(resultX, Math.Min(resultXHoriz, resultXVert));
+        //    }
+        //    return resultX;
+        //}
 
         /**
          * Get the resulting x-position of the right edge of the crop window given
@@ -466,37 +424,37 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          * @param imageSnapRadius the snap distance to the image edge (in pixels)
          * @return the actual x-position of the right edge
          */
-        private static float adjustRight(float x, Rect imageRect, float imageSnapRadius, float aspectRatio)
-        {
+        //private static float adjustRight(float x, Rect imageRect, float imageSnapRadius, float aspectRatio)
+        //{
 
-            float resultX = x;
+        //    float resultX = x;
 
-            // If close to the edge
-            if (imageRect.Right - x < imageSnapRadius)
-                resultX = imageRect.Right;
+        //    // If close to the edge
+        //    if (imageRect.Right - x < imageSnapRadius)
+        //        resultX = imageRect.Right;
 
-            else
-            {
-                // Select the maximum of the three possible values to use
-                float resultXHoriz = float.NegativeInfinity;
-                float resultXVert = float.NegativeInfinity;
+        //    else
+        //    {
+        //        // Select the maximum of the three possible values to use
+        //        float resultXHoriz = float.NegativeInfinity;
+        //        float resultXVert = float.NegativeInfinity;
 
-                // Checks if the window is too small horizontally
-                if (x <= EdgeType.LEFT.getCoordinate() + MIN_CROP_LENGTH_PX)
-                    resultXHoriz = EdgeType.LEFT.getCoordinate() + MIN_CROP_LENGTH_PX;
+        //        // Checks if the window is too small horizontally
+        //        if (x <= EdgeType.LEFT.getCoordinate() + EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultXHoriz = EdgeType.LEFT.getCoordinate() + EdgeAux.MIN_CROP_LENGTH_PX;
 
-                // Checks if the window is too small vertically
-                if (((x - EdgeType.LEFT.getCoordinate()) / aspectRatio) <= MIN_CROP_LENGTH_PX)
-                {
-                    resultXVert = EdgeType.LEFT.getCoordinate() + (MIN_CROP_LENGTH_PX * aspectRatio);
-                }
+        //        // Checks if the window is too small vertically
+        //        if (((x - EdgeType.LEFT.getCoordinate()) / aspectRatio) <= EdgeAux.MIN_CROP_LENGTH_PX)
+        //        {
+        //            resultXVert = EdgeType.LEFT.getCoordinate() + (EdgeAux.MIN_CROP_LENGTH_PX * aspectRatio);
+        //        }
 
-                resultX = Math.Max(resultX, Math.Max(resultXHoriz, resultXVert));
+        //        resultX = Math.Max(resultX, Math.Max(resultXHoriz, resultXVert));
 
-            }
+        //    }
 
-            return resultX;
-        }
+        //    return resultX;
+        //}
 
         /**
          * Get the resulting y-position of the top edge of the crop window given the
@@ -507,34 +465,34 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          * @param imageSnapRadius the snap distance to the image edge (in pixels)
          * @return the actual y-position of the top edge
          */
-        private static float adjustTop(float y, Rect imageRect, float imageSnapRadius, float aspectRatio)
-        {
+        //private static float adjustTop(float y, Rect imageRect, float imageSnapRadius, float aspectRatio)
+        //{
 
-            float resultY = y;
+        //    float resultY = y;
 
-            if (y - imageRect.Top < imageSnapRadius)
-                resultY = imageRect.Top;
+        //    if (y - imageRect.Top < imageSnapRadius)
+        //        resultY = imageRect.Top;
 
-            else
-            {
-                // Select the minimum of the three possible values to use
-                float resultYVert = float.PositiveInfinity;
-                float resultYHoriz = float.PositiveInfinity;
+        //    else
+        //    {
+        //        // Select the minimum of the three possible values to use
+        //        float resultYVert = float.PositiveInfinity;
+        //        float resultYHoriz = float.PositiveInfinity;
 
-                // Checks if the window is too small vertically
-                if (y >= EdgeType.BOTTOM.getCoordinate() - MIN_CROP_LENGTH_PX)
-                    resultYHoriz = EdgeType.BOTTOM.getCoordinate() - MIN_CROP_LENGTH_PX;
+        //        // Checks if the window is too small vertically
+        //        if (y >= EdgeType.BOTTOM.getCoordinate() - EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultYHoriz = EdgeType.BOTTOM.getCoordinate() - EdgeAux.MIN_CROP_LENGTH_PX;
 
-                // Checks if the window is too small horizontally
-                if (((EdgeType.BOTTOM.getCoordinate() - y) * aspectRatio) <= MIN_CROP_LENGTH_PX)
-                    resultYVert = EdgeType.BOTTOM.getCoordinate() - (MIN_CROP_LENGTH_PX / aspectRatio);
+        //        // Checks if the window is too small horizontally
+        //        if (((EdgeType.BOTTOM.getCoordinate() - y) * aspectRatio) <= EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultYVert = EdgeType.BOTTOM.getCoordinate() - (EdgeAux.MIN_CROP_LENGTH_PX / aspectRatio);
 
-                resultY = Math.Min(resultY, Math.Min(resultYHoriz, resultYVert));
+        //        resultY = Math.Min(resultY, Math.Min(resultYHoriz, resultYVert));
 
-            }
+        //    }
 
-            return resultY;
-        }
+        //    return resultY;
+        //}
 
         /**
          * Get the resulting y-position of the bottom edge of the crop window given
@@ -545,31 +503,31 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
          * @param imageSnapRadius the snap distance to the image edge (in pixels)
          * @return the actual y-position of the bottom edge
          */
-        private static float adjustBottom(float y, Rect imageRect, float imageSnapRadius, float aspectRatio)
-        {
+        //private static float adjustBottom(float y, Rect imageRect, float imageSnapRadius, float aspectRatio)
+        //{
 
-            float resultY = y;
+        //    float resultY = y;
 
-            if (imageRect.Bottom - y < imageSnapRadius)
-                resultY = imageRect.Bottom;
-            else
-            {
-                // Select the maximum of the three possible values to use
-                float resultYVert = float.NegativeInfinity;
-                float resultYHoriz = float.NegativeInfinity;
+        //    if (imageRect.Bottom - y < imageSnapRadius)
+        //        resultY = imageRect.Bottom;
+        //    else
+        //    {
+        //        // Select the maximum of the three possible values to use
+        //        float resultYVert = float.NegativeInfinity;
+        //        float resultYHoriz = float.NegativeInfinity;
 
-                // Checks if the window is too small vertically
-                if (y <= EdgeType.TOP.getCoordinate() + MIN_CROP_LENGTH_PX)
-                    resultYVert = EdgeType.TOP.getCoordinate() + MIN_CROP_LENGTH_PX;
+        //        // Checks if the window is too small vertically
+        //        if (y <= EdgeType.TOP.getCoordinate() + EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultYVert = EdgeType.TOP.getCoordinate() + EdgeAux.MIN_CROP_LENGTH_PX;
 
-                // Checks if the window is too small horizontally
-                if (((y - EdgeType.TOP.getCoordinate()) * aspectRatio) <= MIN_CROP_LENGTH_PX)
-                    resultYHoriz = EdgeType.TOP.getCoordinate() + (MIN_CROP_LENGTH_PX / aspectRatio);
+        //        // Checks if the window is too small horizontally
+        //        if (((y - EdgeType.TOP.getCoordinate()) * aspectRatio) <= EdgeAux.MIN_CROP_LENGTH_PX)
+        //            resultYHoriz = EdgeType.TOP.getCoordinate() + (EdgeAux.MIN_CROP_LENGTH_PX / aspectRatio);
 
-                resultY = Math.Max(resultY, Math.Max(resultYHoriz, resultYVert));
-            }
+        //        resultY = Math.Max(resultY, Math.Max(resultYHoriz, resultYVert));
+        //    }
 
-            return resultY;
-        }
+        //    return resultY;
+        //}
     }
 }

@@ -11,7 +11,6 @@ using Android.Runtime;
 using Android.Widget;
 using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
 using Xamarin.CircleImageCropperSample.Util;
-using Edge = Android.Views.Edge;
 
 namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 {
@@ -20,8 +19,8 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         // Member Variables ////////////////////////////////////////////////////////
 
         private static float UNFIXED_ASPECT_RATIO_CONSTANT = 1;
-        private EdgeType mHorizontalEdge;
-        private EdgeType mVerticalEdge;
+        private EdgeAux mHorizontalEdge;
+        private EdgeAux mVerticalEdge;
 
         // Save the Pair object as a member variable to avoid having to instantiate
         // a new Object every time getActiveEdges() is called.
@@ -37,7 +36,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param verticalEdge the vertical edge associated with this handle; may be
          *            null
          */
-        public HandleHelper(EdgeType horizontalEdge, EdgeType verticalEdge)
+        public HandleHelper(EdgeAux horizontalEdge, EdgeAux verticalEdge)
         {
             mHorizontalEdge = horizontalEdge;
             mVerticalEdge = verticalEdge;
@@ -63,8 +62,8 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         {
 
             EdgePair activeEdges = getActiveEdges();
-            EdgeType primaryEdge = activeEdges.primary;
-            EdgeType secondaryEdge = activeEdges.secondary;
+            EdgeAux primaryEdge = activeEdges.primary;
+            EdgeAux secondaryEdge = activeEdges.secondary;
 
             if (primaryEdge != null)
                 primaryEdge.adjustCoordinate(x, y, imageRect, snapRadius, UNFIXED_ASPECT_RATIO_CONSTANT);

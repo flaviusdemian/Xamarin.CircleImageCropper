@@ -411,15 +411,15 @@ namespace Xamarin.CircleImageCropperSample.CropWindow
                     float centerX = Width / 2f;
 
                     // Limits the aspect ratio to no less than 40 wide or 40 tall
-                    float cropWidth = Math.Max(Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX,
+                    float cropWidth = Math.Max(EdgeAux.MIN_CROP_LENGTH_PX,
                                                     AspectRatioUtil.calculateWidth(EdgeType.TOP.getCoordinate(),
                                                                                    EdgeType.BOTTOM.getCoordinate(),
                                                                                    mTargetAspectRatio));
 
                     // Create new TargetAspectRatio if the original one does not fit
                     // the screen
-                    if (cropWidth == Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX)
-                        mTargetAspectRatio = (Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX) / (EdgeType.BOTTOM.getCoordinate() - EdgeType.TOP.getCoordinate());
+                    if (cropWidth == EdgeAux.MIN_CROP_LENGTH_PX)
+                        mTargetAspectRatio = (EdgeAux.MIN_CROP_LENGTH_PX) / (EdgeType.BOTTOM.getCoordinate() - EdgeType.TOP.getCoordinate());
 
                     float halfCropWidth = cropWidth / 2f;
                     EdgeType.LEFT.setCoordinate(centerX - halfCropWidth);
