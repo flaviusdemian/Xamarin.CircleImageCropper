@@ -29,7 +29,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 
     // HandleHelper Methods ////////////////////////////////////////////////////
 
-    public override void updateCropWindow(float x,
+    public override void UpdateCropWindow(float x,
                           float y,
                           float targetAspectRatio,
                           Rect imageRect,
@@ -38,10 +38,10 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         // Adjust this Edge accordingly.
         mEdge.adjustCoordinate(x, y, imageRect, snapRadius, targetAspectRatio);
 
-        float left = EdgeType.LEFT.getCoordinate();
-        float top = EdgeType.TOP.getCoordinate();
-        float right = EdgeType.RIGHT.getCoordinate();
-        float bottom = EdgeType.BOTTOM.getCoordinate();
+        float left = EdgeManager.LEFT.coordinate;
+        float top = EdgeManager.TOP.coordinate;
+        float right = EdgeManager.RIGHT.coordinate;
+        float bottom = EdgeManager.BOTTOM.coordinate;
 
         // After this Edge is moved, our crop window is now out of proportion.
          float targetWidth = AspectRatioUtil.calculateWidth(top, bottom, targetAspectRatio);
@@ -54,23 +54,23 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         left -= halfDifference;
         right += halfDifference;
 
-        EdgeType.LEFT.setCoordinate(left);
-        EdgeType.RIGHT.setCoordinate(right);
+        EdgeManager.LEFT.coordinate = left;
+        EdgeManager.RIGHT.coordinate = right;
 
         // Check if we have gone out of bounds on the sides, and fix.
-        if (EdgeType.LEFT.isOutsideMargin(imageRect, snapRadius) && !mEdge.isNewRectangleOutOfBounds(EdgeType.LEFT,
+        if (EdgeManager.LEFT.isOutsideMargin(imageRect, snapRadius) && !mEdge.isNewRectangleOutOfBounds(EdgeManager.LEFT,
                                                                                                  imageRect,
                                                                                                  targetAspectRatio)) {
-             float offset = EdgeType.LEFT.snapToRect(imageRect);
-            EdgeType.RIGHT.offset(-offset);
+             float offset = EdgeManager.LEFT.snapToRect(imageRect);
+             EdgeManager.RIGHT.offset(-offset);
             mEdge.adjustCoordinate(targetAspectRatio);
 
         }
-        if (EdgeType.RIGHT.isOutsideMargin(imageRect, snapRadius) && !mEdge.isNewRectangleOutOfBounds(EdgeType.RIGHT,
+        if (EdgeManager.RIGHT.isOutsideMargin(imageRect, snapRadius) && !mEdge.isNewRectangleOutOfBounds(EdgeManager.RIGHT,
                                                                                                   imageRect,
                                                                                                   targetAspectRatio)) {
-             float offset = EdgeType.RIGHT.snapToRect(imageRect);
-            EdgeType.LEFT.offset(-offset);
+                                                                                                      float offset = EdgeManager.RIGHT.snapToRect(imageRect);
+             EdgeManager.LEFT.offset(-offset);
             mEdge.adjustCoordinate(targetAspectRatio);
         }
     }

@@ -20,12 +20,13 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         // Member Variables ////////////////////////////////////////////////////////
 
         private HandleHelper mHelper;
-
+        public int handleType;
         // Constructors ////////////////////////////////////////////////////////////
 
-        Handle(HandleHelper helper)
+        public Handle(HandleHelper helper, int handleType)
         {
             mHelper = helper;
+            this.handleType = handleType;
         }
 
         // Public Methods //////////////////////////////////////////////////////////
@@ -36,7 +37,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
                                      float snapRadius)
         {
 
-            mHelper.updateCropWindow(x, y, imageRect, snapRadius);
+            mHelper.UpdateCropWindow(x, y, imageRect, snapRadius);
         }
 
         public void updateCropWindow(float x,
@@ -46,7 +47,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
                                      float snapRadius)
         {
 
-            mHelper.updateCropWindow(x, y, targetAspectRatio, imageRect, snapRadius);
+            mHelper.UpdateCropWindow(x, y, targetAspectRatio, imageRect, snapRadius);
         }
     }
 }

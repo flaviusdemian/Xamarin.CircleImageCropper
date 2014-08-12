@@ -15,8 +15,10 @@
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <AndroidUseLatestPlatformSdk>True</AndroidUseLatestPlatformSdk>
+    <AndroidUseLatestPlatformSdk>
+    </AndroidUseLatestPlatformSdk>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
+    <TargetFrameworkVersion>v4.4</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -48,19 +50,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cropper\CropImageView.cs" />
+    <Compile Include="cropper\cropImageView.cs" />
     <Compile Include="Cropwindow.Handle\CenterHandleHelper.cs" />
-    <Compile Include="Cropwindow.Handle\HandleType.cs" />
+    <Compile Include="Cropwindow.Handle\HandleManager.cs" />
     <Compile Include="Cropwindow.Handle\CornerHandleHelper.cs" />
     <Compile Include="Cropwindow.Handle\Handle.cs" />
     <Compile Include="Cropwindow.Handle\HandleHelper.cs" />
+    <Compile Include="Cropwindow.Handle\HandleType.cs" />
     <Compile Include="Cropwindow.Handle\HorizontalHandleHelper.cs" />
     <Compile Include="Cropwindow.Handle\VerticalHandleHelper.cs" />
     <Compile Include="Cropwindow.Pair\Edge.cs" />
-    <Compile Include="Cropwindow.Pair\EdgeAux.cs" />
+    <Compile Include="Cropwindow.Pair\EdgeManager.cs" />
     <Compile Include="Cropwindow.Pair\EdgePair.cs" />
     <Compile Include="Cropwindow.Pair\EdgeType.cs" />
-    <Compile Include="CropWindow\CropOverlayView.cs" />
+    <Compile Include="cropWindow\cropOverlayView.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util\AspectRatioUtil.cs" />
@@ -71,6 +74,7 @@
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\layout\crop_image_view.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />
@@ -80,7 +84,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\AndroidManifest.xml" />
-    <AndroidResource Include="Resources\layout\crop_image_view.xml" />
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\styles.xml" />
     <AndroidResource Include="Resources\values\attrs.xml" />

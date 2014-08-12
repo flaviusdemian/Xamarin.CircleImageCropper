@@ -1,6 +1,6 @@
 <resources>
 
-    <declare-styleable name="CropImageView">
+    <declare-styleable name="cropImageView">
         <attr name="guidelines">
             <enum name="on" value="2"/>
             <enum name="onTouch" value="1"/>

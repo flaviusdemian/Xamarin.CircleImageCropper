@@ -6,12 +6,9 @@ using System.Text;
 using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
 using Xamarin.CircleImageCropperSample.Util;
+using Xamarin.CircleImageCropperSample.Cropwindow;
 
 namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 {
@@ -19,19 +16,19 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
     {
         // Member Variables ////////////////////////////////////////////////////////
 
-        private EdgeType mEdgeType;
+        private Edge mEdgeType;
 
         // Constructor /////////////////////////////////////////////////////////////
 
-        VerticalHandleHelper(EdgeType EdgeType)
-            : base(null, EdgeType)
+        public VerticalHandleHelper(Edge edge)
+            : base(null, edge)
         {
-            mEdgeType = EdgeType;
+            mEdgeType = edge;
         }
 
         // HandleHelper Methods ////////////////////////////////////////////////////
 
-        public override void updateCropWindow(float x,
+        public override void UpdateCropWindow(float x,
                               float y,
                               float targetAspectRatio,
                               Rect imageRect,
@@ -41,10 +38,10 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
             // Adjust this EdgeType accordingly.
             mEdgeType.adjustCoordinate(x, y, imageRect, snapRadius, targetAspectRatio);
 
-            float left = EdgeType.LEFT.getCoordinate();
-            float top = EdgeType.TOP.getCoordinate();
-            float right = EdgeType.RIGHT.getCoordinate();
-            float bottom = EdgeType.BOTTOM.getCoordinate();
+            float left = EdgeManager.LEFT.coordinate;
+            float top = EdgeManager.TOP.coordinate;
+            float right = EdgeManager.RIGHT.coordinate;
+            float bottom = EdgeManager.BOTTOM.coordinate;
 
             // After this EdgeType is moved, our crop window is now out of proportion.
             float targetHeight = AspectRatioUtil.calculateHeight(left, right, targetAspectRatio);
@@ -57,24 +54,24 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
             top -= halfDifference;
             bottom += halfDifference;
 
-            EdgeType.TOP.setCoordinate(top);
-            EdgeType.BOTTOM.setCoordinate(bottom);
+            EdgeManager.TOP.coordinate = top;
+            EdgeManager.BOTTOM.coordinate = bottom;
 
             // Check if we have gone out of bounds on the top or bottom, and fix.
-            if (EdgeType.TOP.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeType.TOP,
+            if (EdgeManager.TOP.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.TOP,
                                                                                                     imageRect,
                                                                                                     targetAspectRatio))
             {
-                float offset = EdgeType.TOP.snapToRect(imageRect);
-                EdgeType.BOTTOM.offset(-offset);
+                float offset = EdgeManager.TOP.snapToRect(imageRect);
+                EdgeManager.BOTTOM.offset(-offset);
                 mEdgeType.adjustCoordinate(targetAspectRatio);
             }
-            if (EdgeType.BOTTOM.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeType.BOTTOM,
+            if (EdgeManager.BOTTOM.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.BOTTOM,
                                                                                                        imageRect,
                                                                                                        targetAspectRatio))
             {
-                float offset = EdgeType.BOTTOM.snapToRect(imageRect);
-                EdgeType.TOP.offset(-offset);
+                float offset = EdgeManager.BOTTOM.snapToRect(imageRect);
+                EdgeManager.TOP.offset(-offset);
                 mEdgeType.adjustCoordinate(targetAspectRatio);
             }
         }

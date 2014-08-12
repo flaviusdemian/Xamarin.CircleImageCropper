@@ -10,7 +10,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using Java.Lang;
-using Xamarin.CircleImageCropperSample.CropWindow;
+using xamarin.circleImageCropperSample.cropWindow;
 using Xamarin.CircleImageCropperSample.Cropwindow.Handle;
 using Math = System.Math;
 
@@ -37,7 +37,7 @@ namespace Xamarin.CircleImageCropperSample.Util
         public static float getTargetRadius(Context context)
         {
 
-            float targetRadius = TypedValue.ApplyDimension(TypedValue.COMPLEX_UNIT_DIP, TARGET_RADIUS_DP, context.Resources.DisplayMetrics);
+            float targetRadius = TypedValue.ApplyDimension(ComplexUnitType.Dip, TARGET_RADIUS_DP, context.Resources.DisplayMetrics);
             return targetRadius;
         }
 
@@ -63,49 +63,49 @@ namespace Xamarin.CircleImageCropperSample.Util
                                               float targetRadius)
         {
 
-            HandleType pressedHandle = null;
+            Handle pressedHandle = null;
 
             // Note: corner-handles take precedence, then side-handles, then center.
 
             if (HandleUtil.isInCornerTargetZone(x, y, left, top, targetRadius))
             {
-                pressedHandle = HandleType.TOP_LEFT;
+                pressedHandle = HandleManager.TOP_LEFT;
             }
             else if (HandleUtil.isInCornerTargetZone(x, y, right, top, targetRadius))
             {
-                pressedHandle = HandleType.TOP_RIGHT;
+                pressedHandle = HandleManager.TOP_RIGHT;
             }
             else if (HandleUtil.isInCornerTargetZone(x, y, left, bottom, targetRadius))
             {
-                pressedHandle = HandleType.BOTTOM_LEFT;
+                pressedHandle = HandleManager.BOTTOM_LEFT;
             }
             else if (HandleUtil.isInCornerTargetZone(x, y, right, bottom, targetRadius))
             {
-                pressedHandle = HandleType.BOTTOM_RIGHT;
+                pressedHandle = HandleManager.BOTTOM_RIGHT;
             }
             else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && focusCenter())
             {
-                pressedHandle = HandleType.CENTER;
+                pressedHandle = HandleManager.CENTER;
             }
             else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, top, targetRadius))
             {
-                pressedHandle = HandleType.TOP;
+                pressedHandle = HandleManager.TOP;
             }
             else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, bottom, targetRadius))
             {
-                pressedHandle = HandleType.BOTTOM;
+                pressedHandle = HandleManager.BOTTOM;
             }
             else if (HandleUtil.isInVerticalTargetZone(x, y, left, top, bottom, targetRadius))
             {
-                pressedHandle = HandleType.LEFT;
+                pressedHandle = HandleManager.LEFT;
             }
             else if (HandleUtil.isInVerticalTargetZone(x, y, right, top, bottom, targetRadius))
             {
-                pressedHandle = HandleType.RIGHT;
+                pressedHandle = HandleManager.RIGHT;
             }
             else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && !focusCenter())
             {
-                pressedHandle = HandleType.CENTER;
+                pressedHandle = HandleManager.CENTER;
 
             }
 
@@ -119,7 +119,7 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return the offset as a Pair where the x-offset is the first value and
          *         the y-offset is the second value; null if the handle is null
          */
-        public static Pair getOffset(HandleType handle,
+        public static Pair getOffset(Handle handle,
                                                    float x,
                                                    float y,
                                                    float left,
@@ -137,7 +137,7 @@ namespace Xamarin.CircleImageCropperSample.Util
             float touchOffsetY = 0;
 
             // Calculate the offset from the appropriate handle.
-            switch (handle)
+            switch (handle.handleType)
             {
 
                 case HandleType.TOP_LEFT:
@@ -308,7 +308,7 @@ namespace Xamarin.CircleImageCropperSample.Util
          */
         private static bool focusCenter()
         {
-            return (!CropOverlayView.showGuidelines());
+            return (!cropOverlayView.showGuidelines());
         }
     }
 }

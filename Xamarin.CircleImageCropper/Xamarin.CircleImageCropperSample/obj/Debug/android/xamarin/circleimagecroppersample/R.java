@@ -100,31 +100,31 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int Mono_Android_Theme_Splash=0x7f070002;
     }
     public static final class styleable {
-        /** Attributes that can be used with a CropImageView.
+        /** Attributes that can be used with a cropImageView.
            <p>Includes the following attributes:</p>
            <table>
            <colgroup align="left" />
            <colgroup align="left" />
            <tr><th>Attribute</th><th>Description</th></tr>
-           <tr><td><code>{@link #CropImageView_aspectRatioX Xamarin.CircleImageCropperSample:aspectRatioX}</code></td><td></td></tr>
-           <tr><td><code>{@link #CropImageView_aspectRatioY Xamarin.CircleImageCropperSample:aspectRatioY}</code></td><td></td></tr>
-           <tr><td><code>{@link #CropImageView_fixAspectRatio Xamarin.CircleImageCropperSample:fixAspectRatio}</code></td><td></td></tr>
-           <tr><td><code>{@link #CropImageView_guidelines Xamarin.CircleImageCropperSample:guidelines}</code></td><td></td></tr>
-           <tr><td><code>{@link #CropImageView_imageResource Xamarin.CircleImageCropperSample:imageResource}</code></td><td></td></tr>
+           <tr><td><code>{@link #cropImageView_aspectRatioX Xamarin.CircleImageCropperSample:aspectRatioX}</code></td><td></td></tr>
+           <tr><td><code>{@link #cropImageView_aspectRatioY Xamarin.CircleImageCropperSample:aspectRatioY}</code></td><td></td></tr>
+           <tr><td><code>{@link #cropImageView_fixAspectRatio Xamarin.CircleImageCropperSample:fixAspectRatio}</code></td><td></td></tr>
+           <tr><td><code>{@link #cropImageView_guidelines Xamarin.CircleImageCropperSample:guidelines}</code></td><td></td></tr>
+           <tr><td><code>{@link #cropImageView_imageResource Xamarin.CircleImageCropperSample:imageResource}</code></td><td></td></tr>
            </table>
-           @see #CropImageView_aspectRatioX
-           @see #CropImageView_aspectRatioY
-           @see #CropImageView_fixAspectRatio
-           @see #CropImageView_guidelines
-           @see #CropImageView_imageResource
+           @see #cropImageView_aspectRatioX
+           @see #cropImageView_aspectRatioY
+           @see #cropImageView_fixAspectRatio
+           @see #cropImageView_guidelines
+           @see #cropImageView_imageResource
          */
-        public static final int[] CropImageView = {
+        public static final int[] cropImageView = {
             0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003,
             0x7f010004
         };
         /**
           <p>This symbol is the offset where the {@link Xamarin.CircleImageCropperSample.R.attr#aspectRatioX}
-          attribute's value can be found in the {@link #CropImageView} array.
+          attribute's value can be found in the {@link #cropImageView} array.
 
 
           <p>Must be an integer value, such as "<code>100</code>".
@@ -135,10 +135,10 @@ theme attribute (in the form
 containing a value of this type.
           @attr name Xamarin.CircleImageCropperSample:aspectRatioX
         */
-        public static final int CropImageView_aspectRatioX = 2;
+        public static final int cropImageView_aspectRatioX = 2;
         /**
           <p>This symbol is the offset where the {@link Xamarin.CircleImageCropperSample.R.attr#aspectRatioY}
-          attribute's value can be found in the {@link #CropImageView} array.
+          attribute's value can be found in the {@link #cropImageView} array.
 
 
           <p>Must be an integer value, such as "<code>100</code>".
@@ -149,10 +149,10 @@ theme attribute (in the form
 containing a value of this type.
           @attr name Xamarin.CircleImageCropperSample:aspectRatioY
         */
-        public static final int CropImageView_aspectRatioY = 3;
+        public static final int cropImageView_aspectRatioY = 3;
         /**
           <p>This symbol is the offset where the {@link Xamarin.CircleImageCropperSample.R.attr#fixAspectRatio}
-          attribute's value can be found in the {@link #CropImageView} array.
+          attribute's value can be found in the {@link #cropImageView} array.
 
 
           <p>Must be a boolean value, either "<code>true</code>" or "<code>false</code>".
@@ -163,10 +163,10 @@ theme attribute (in the form
 containing a value of this type.
           @attr name Xamarin.CircleImageCropperSample:fixAspectRatio
         */
-        public static final int CropImageView_fixAspectRatio = 1;
+        public static final int cropImageView_fixAspectRatio = 1;
         /**
           <p>This symbol is the offset where the {@link Xamarin.CircleImageCropperSample.R.attr#guidelines}
-          attribute's value can be found in the {@link #CropImageView} array.
+          attribute's value can be found in the {@link #cropImageView} array.
 
 
           <p>Must be one of the following constant values.</p>
@@ -181,16 +181,16 @@ containing a value of this type.
 </table>
           @attr name Xamarin.CircleImageCropperSample:guidelines
         */
-        public static final int CropImageView_guidelines = 0;
+        public static final int cropImageView_guidelines = 0;
         /**
           <p>This symbol is the offset where the {@link Xamarin.CircleImageCropperSample.R.attr#imageResource}
-          attribute's value can be found in the {@link #CropImageView} array.
+          attribute's value can be found in the {@link #cropImageView} array.
 
 
           <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
           @attr name Xamarin.CircleImageCropperSample:imageResource
         */
-        public static final int CropImageView_imageResource = 4;
+        public static final int cropImageView_imageResource = 4;
     };
 }

@@ -19,11 +19,11 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         // Member Variables ////////////////////////////////////////////////////////
 
         private static float UNFIXED_ASPECT_RATIO_CONSTANT = 1;
-        private EdgeAux mHorizontalEdge;
-        private EdgeAux mVerticalEdge;
+        private Edge mHorizontalEdge;
+        private Edge mVerticalEdge;
 
         // Save the Pair object as a member variable to avoid having to instantiate
-        // a new Object every time getActiveEdges() is called.
+        // a new Object every time GetActiveEdges() is called.
         private EdgePair mActiveEdges;
 
         // Constructor /////////////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param verticalEdge the vertical edge associated with this handle; may be
          *            null
          */
-        public HandleHelper(EdgeAux horizontalEdge, EdgeAux verticalEdge)
+        public HandleHelper(Edge horizontalEdge, Edge verticalEdge)
         {
             mHorizontalEdge = horizontalEdge;
             mVerticalEdge = verticalEdge;
@@ -55,15 +55,15 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param snapRadius the maximum distance (in pixels) at which the crop
          *            window should snap to the image
          */
-        public void updateCropWindow(float x,
+        public virtual void UpdateCropWindow(float x,
                               float y,
                               Rect imageRect,
                               float snapRadius)
         {
 
-            EdgePair activeEdges = getActiveEdges();
-            EdgeAux primaryEdge = activeEdges.primary;
-            EdgeAux secondaryEdge = activeEdges.secondary;
+            EdgePair activeEdges = GetActiveEdges();
+            Edge primaryEdge = activeEdges.primary;
+            Edge secondaryEdge = activeEdges.secondary;
 
             if (primaryEdge != null)
                 primaryEdge.adjustCoordinate(x, y, imageRect, snapRadius, UNFIXED_ASPECT_RATIO_CONSTANT);
@@ -84,7 +84,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param snapRadius the maximum distance (in pixels) at which the crop
          *            window should snap to the image
          */
-        public abstract void updateCropWindow(float x,
+        public abstract void UpdateCropWindow(float x,
                                        float y,
                                        float targetAspectRatio,
                                        Rect imageRect,
@@ -98,7 +98,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @return the active edge as a pair (the pair may contain null values for
          *         the <code>primary</code>, <code>secondary</code> or both fields)
          */
-        public EdgePair getActiveEdges()
+        public EdgePair GetActiveEdges()
         {
             return mActiveEdges;
         }
@@ -113,12 +113,12 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param targetAspectRatio the aspect ratio that we are maintaining
          * @return the active edges as an ordered pair
          */
-        public EdgePair getActiveEdges(float x, float y, float targetAspectRatio)
+        public EdgePair GetActiveEdges(float x, float y, float targetAspectRatio)
         {
 
             // Calculate the aspect ratio if this handle were dragged to the given
             // x-y coordinate.
-            float potentialAspectRatio = getAspectRatio(x, y);
+            float potentialAspectRatio = GetAspectRatio(x, y);
 
             // If the touched point is wider than the aspect ratio, then x
             // is the determining side. Else, y is the determining side.
@@ -145,14 +145,14 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
          * @param y the y-coordinate
          * @return the aspect ratio
          */
-        private float getAspectRatio(float x, float y)
+        private float GetAspectRatio(float x, float y)
         {
 
             // Replace the active edge coordinate with the given touch coordinate.
-            float left = (mVerticalEdge == EdgeType.LEFT) ? x : EdgeType.LEFT.getCoordinate();
-            float top = (mHorizontalEdge == EdgeType.TOP) ? y : EdgeType.TOP.getCoordinate();
-            float right = (mVerticalEdge == EdgeType.RIGHT) ? x : EdgeType.RIGHT.getCoordinate();
-            float bottom = (mHorizontalEdge == EdgeType.BOTTOM) ? y : EdgeType.BOTTOM.getCoordinate();
+            float left = (mVerticalEdge == EdgeManager.LEFT) ? x : EdgeManager.LEFT.coordinate;
+            float top = (mHorizontalEdge == EdgeManager.TOP) ? y : EdgeManager.TOP.coordinate;
+            float right = (mVerticalEdge == EdgeManager.RIGHT) ? x : EdgeManager.RIGHT.coordinate;
+            float bottom = (mHorizontalEdge == EdgeManager.BOTTOM) ? y : EdgeManager.BOTTOM.coordinate;
 
             float aspectRatio = AspectRatioUtil.calculateAspectRatio(left, top, right, bottom);
 

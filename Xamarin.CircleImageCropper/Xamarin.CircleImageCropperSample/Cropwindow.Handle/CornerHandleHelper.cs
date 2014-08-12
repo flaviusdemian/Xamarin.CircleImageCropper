@@ -16,7 +16,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
     public class CornerHandleHelper : HandleHelper
     {
 
-        public CornerHandleHelper(EdgeType horizontalEdge, EdgeType verticalEdge)
+        public CornerHandleHelper(Edge horizontalEdge, Edge verticalEdge)
             : base(horizontalEdge, verticalEdge)
         {
 
@@ -24,16 +24,16 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
 
         // HandleHelper Methods ////////////////////////////////////////////////////
 
-        public override void updateCropWindow(float x,
+        public override void UpdateCropWindow(float x,
                               float y,
                               float targetAspectRatio,
                               Rect imageRect,
                               float snapRadius)
         {
 
-            EdgePair activeEdges = getActiveEdges(x, y, targetAspectRatio);
-            EdgeType primaryEdge = activeEdges.primary;
-            EdgeType secondaryEdge = activeEdges.secondary;
+            EdgePair activeEdges = GetActiveEdges(x, y, targetAspectRatio);
+            Edge primaryEdge = activeEdges.primary;
+            Edge secondaryEdge = activeEdges.secondary;
 
             primaryEdge.adjustCoordinate(x, y, imageRect, snapRadius, targetAspectRatio);
             secondaryEdge.adjustCoordinate(targetAspectRatio);

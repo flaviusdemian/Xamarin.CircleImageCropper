@@ -15,9 +15,9 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
 {
     public class EdgeType
     {
-        public static int LEFT;
-        public static int TOP;
-        public static int RIGHT;
-        public static int BOTTOM;
+        public const int LEFT = 0;
+        public const int TOP = 1;
+        public const int RIGHT = 2;
+        public const int BOTTOM = 3;
     }
 }

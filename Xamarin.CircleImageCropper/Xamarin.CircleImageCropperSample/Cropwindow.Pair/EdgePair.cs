@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,12 +17,12 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Pair
     {
         // Member Variables ////////////////////////////////////////////////////////
 
-        public EdgeAux primary;
-        public EdgeAux secondary;
+        public Edge primary;
+        public Edge secondary;
 
         // Constructor /////////////////////////////////////////////////////////////
 
-        public EdgePair(EdgeAux edge1, EdgeAux edge2)
+        public EdgePair(Edge edge1, Edge edge2)
         {
             primary = edge1;
             secondary = edge2;
