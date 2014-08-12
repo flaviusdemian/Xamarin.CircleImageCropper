@@ -1,12 +1,14 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.5.+'
-    }
-}
+apply plugin: 'android-library'
 
-task wrapper(type: Wrapper) {
-    gradleVersion = '1.7'
+android {
+  compileSdkVersion 17
+  buildToolsVersion = 17
+
+  sourceSets {
+    main {
+      manifest.srcFile 'AndroidManifest.xml'
+      java.srcDirs = ['src']
+      res.srcDirs = ['res']
+    }
+  }
 }
