@@ -19,6 +19,8 @@ import android.util.TypedValue;
 
 import com.edmodo.cropper.cropwindow.CropOverlayView;
 import com.edmodo.cropper.cropwindow.handle.Handle;
+import com.edmodo.cropper.cropwindow.handle.HandleManager;
+import com.edmodo.cropper.cropwindow.handle.HandleType;
 
 /**
  * Utility class to perform basic operations with Handles.
@@ -75,25 +77,25 @@ public class HandleUtil {
         // Note: corner-handles take precedence, then side-handles, then center.
 
         if (HandleUtil.isInCornerTargetZone(x, y, left, top, targetRadius)) {
-            pressedHandle = Handle.TOP_LEFT;
+            pressedHandle = HandleManager.TOP_LEFT;
         } else if (HandleUtil.isInCornerTargetZone(x, y, right, top, targetRadius)) {
-            pressedHandle = Handle.TOP_RIGHT;
+            pressedHandle = HandleManager.TOP_RIGHT;
         } else if (HandleUtil.isInCornerTargetZone(x, y, left, bottom, targetRadius)) {
-            pressedHandle = Handle.BOTTOM_LEFT;
+            pressedHandle = HandleManager.BOTTOM_LEFT;
         } else if (HandleUtil.isInCornerTargetZone(x, y, right, bottom, targetRadius)) {
-            pressedHandle = Handle.BOTTOM_RIGHT;
+            pressedHandle = HandleManager.BOTTOM_RIGHT;
         } else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && focusCenter()) {
-            pressedHandle = Handle.CENTER;
+            pressedHandle = HandleManager.CENTER;
         } else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, top, targetRadius)) {
-            pressedHandle = Handle.TOP;
+            pressedHandle = HandleManager.TOP;
         } else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, bottom, targetRadius)) {
-            pressedHandle = Handle.BOTTOM;
+            pressedHandle = HandleManager.BOTTOM;
         } else if (HandleUtil.isInVerticalTargetZone(x, y, left, top, bottom, targetRadius)) {
-            pressedHandle = Handle.LEFT;
+            pressedHandle = HandleManager.LEFT;
         } else if (HandleUtil.isInVerticalTargetZone(x, y, right, top, bottom, targetRadius)) {
-            pressedHandle = Handle.RIGHT;
+            pressedHandle = HandleManager.RIGHT;
         } else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && !focusCenter()) {
-            pressedHandle = Handle.CENTER;
+            pressedHandle = HandleManager.CENTER;
 
         }
 
@@ -123,41 +125,41 @@ public class HandleUtil {
         float touchOffsetY = 0;
 
         // Calculate the offset from the appropriate handle.
-        switch (handle) {
+        switch (handle.handleType) {
 
-            case TOP_LEFT:
+            case HandleType.TOP_LEFT:
                 touchOffsetX = left - x;
                 touchOffsetY = top - y;
                 break;
-            case TOP_RIGHT:
+            case HandleType.TOP_RIGHT:
                 touchOffsetX = right - x;
                 touchOffsetY = top - y;
                 break;
-            case BOTTOM_LEFT:
+            case HandleType.BOTTOM_LEFT:
                 touchOffsetX = left - x;
                 touchOffsetY = bottom - y;
                 break;
-            case BOTTOM_RIGHT:
+            case HandleType.BOTTOM_RIGHT:
                 touchOffsetX = right - x;
                 touchOffsetY = bottom - y;
                 break;
-            case LEFT:
+            case HandleType.LEFT:
                 touchOffsetX = left - x;
                 touchOffsetY = 0;
                 break;
-            case TOP:
+            case HandleType.TOP:
                 touchOffsetX = 0;
                 touchOffsetY = top - y;
                 break;
-            case RIGHT:
+            case HandleType.RIGHT:
                 touchOffsetX = right - x;
                 touchOffsetY = 0;
                 break;
-            case BOTTOM:
+            case HandleType.BOTTOM:
                 touchOffsetX = 0;
                 touchOffsetY = bottom - y;
                 break;
-            case CENTER:
+            case HandleType.CENTER:
                 final float centerX = (right + left) / 2;
                 final float centerY = (top + bottom) / 2;
                 touchOffsetX = centerX - x;

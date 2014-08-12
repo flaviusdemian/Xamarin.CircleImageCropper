@@ -15,8 +15,7 @@ package com.edmodo.cropper.cropwindow.handle;
 
 import android.graphics.Rect;
 
-import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
+import com.edmodo.cropper.cropwindow.edge.EdgeManager;
 
 /**
  * HandleHelper class to handle the center handle.
@@ -39,10 +38,10 @@ class CenterHandleHelper extends HandleHelper
                           float snapRadius) 
     {
 
-        float left = EdgeHelper.LEFT.coordinate;
-        float top = EdgeHelper.TOP.coordinate;
-        float right = EdgeHelper.RIGHT.coordinate;
-        float bottom = EdgeHelper.BOTTOM.coordinate;
+        float left = EdgeManager.LEFT.coordinate;
+        float top = EdgeManager.TOP.coordinate;
+        float right = EdgeManager.RIGHT.coordinate;
+        float bottom = EdgeManager.BOTTOM.coordinate;
 
         final float currentCenterX = (left + right) / 2;
         final float currentCenterY = (top + bottom) / 2;
@@ -51,35 +50,35 @@ class CenterHandleHelper extends HandleHelper
         final float offsetY = y - currentCenterY;
 
         // Adjust the crop window.
-        EdgeHelper.LEFT.offset(offsetX);
-        EdgeHelper.TOP.offset(offsetY);
-        EdgeHelper.RIGHT.offset(offsetX);
-        EdgeHelper.BOTTOM.offset(offsetY);
+        EdgeManager.LEFT.offset(offsetX);
+        EdgeManager.TOP.offset(offsetY);
+        EdgeManager.RIGHT.offset(offsetX);
+        EdgeManager.BOTTOM.offset(offsetY);
 
         // Check if we have gone out of bounds on the sides, and fix.
-        if (EdgeHelper.LEFT.isOutsideMargin(imageRect, snapRadius)) 
+        if (EdgeManager.LEFT.isOutsideMargin(imageRect, snapRadius)) 
         {
-            final float offset = EdgeHelper.LEFT.snapToRect(imageRect);
-            EdgeHelper.RIGHT.offset(offset);
+            final float offset = EdgeManager.LEFT.snapToRect(imageRect);
+            EdgeManager.RIGHT.offset(offset);
         }
         else 
-    	if (EdgeHelper.RIGHT.isOutsideMargin(imageRect, snapRadius)) 
+    	if (EdgeManager.RIGHT.isOutsideMargin(imageRect, snapRadius)) 
     	{
-            final float offset = EdgeHelper.RIGHT.snapToRect(imageRect);
-            EdgeHelper.LEFT.offset(offset);
+            final float offset = EdgeManager.RIGHT.snapToRect(imageRect);
+            EdgeManager.LEFT.offset(offset);
         }
 
         // Check if we have gone out of bounds on the top or bottom, and fix.
-        if (EdgeHelper.TOP.isOutsideMargin(imageRect, snapRadius)) 
+        if (EdgeManager.TOP.isOutsideMargin(imageRect, snapRadius)) 
         {
-            final float offset = EdgeHelper.TOP.snapToRect(imageRect);
-            EdgeHelper.BOTTOM.offset(offset);
+            final float offset = EdgeManager.TOP.snapToRect(imageRect);
+            EdgeManager.BOTTOM.offset(offset);
         } 
         else 
-    	if (EdgeHelper.BOTTOM.isOutsideMargin(imageRect, snapRadius)) 
+    	if (EdgeManager.BOTTOM.isOutsideMargin(imageRect, snapRadius)) 
     	{
-            final float offset = EdgeHelper.BOTTOM.snapToRect(imageRect);
-            EdgeHelper.TOP.offset(offset);
+            final float offset = EdgeManager.BOTTOM.snapToRect(imageRect);
+            EdgeManager.TOP.offset(offset);
         }
     }
 

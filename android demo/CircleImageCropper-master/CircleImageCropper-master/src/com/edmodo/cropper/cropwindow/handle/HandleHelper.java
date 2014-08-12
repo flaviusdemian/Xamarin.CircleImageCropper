@@ -16,7 +16,7 @@ package com.edmodo.cropper.cropwindow.handle;
 import android.graphics.Rect;
 
 import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
+import com.edmodo.cropper.cropwindow.edge.EdgeManager;
 import com.edmodo.cropper.cropwindow.edge.EdgePair;
 import com.edmodo.cropper.util.AspectRatioUtil;
 
@@ -34,7 +34,6 @@ abstract class HandleHelper {
     // Save the Pair object as a member variable to avoid having to instantiate
     // a new Object every time getActiveEdges() is called.
     private EdgePair mActiveEdges;
-
     // Constructor /////////////////////////////////////////////////////////////
 
     /**
@@ -154,10 +153,10 @@ abstract class HandleHelper {
     private float getAspectRatio(float x, float y) 
     {
         // Replace the active edge coordinate with the given touch coordinate.
-        final float left = (mVerticalEdge == EdgeHelper.LEFT) ? x : EdgeHelper.LEFT.coordinate;
-        final float top = (mHorizontalEdge == EdgeHelper.TOP) ? y : EdgeHelper.TOP.coordinate;
-        final float right = (mVerticalEdge == EdgeHelper.RIGHT) ? x : EdgeHelper.RIGHT.coordinate;
-        final float bottom = (mHorizontalEdge == EdgeHelper.BOTTOM) ? y : EdgeHelper.BOTTOM.coordinate;
+        final float left = (mVerticalEdge == EdgeManager.LEFT) ? x : EdgeManager.LEFT.coordinate;
+        final float top = (mHorizontalEdge == EdgeManager.TOP) ? y : EdgeManager.TOP.coordinate;
+        final float right = (mVerticalEdge == EdgeManager.RIGHT) ? x : EdgeManager.RIGHT.coordinate;
+        final float bottom = (mHorizontalEdge == EdgeManager.BOTTOM) ? y : EdgeManager.BOTTOM.coordinate;
         final float aspectRatio = AspectRatioUtil.calculateAspectRatio(left, top, right, bottom);
         return aspectRatio;
     }

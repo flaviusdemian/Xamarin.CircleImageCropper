@@ -16,7 +16,7 @@ package com.edmodo.cropper.cropwindow.handle;
 import android.graphics.Rect;
 
 import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
+import com.edmodo.cropper.cropwindow.edge.EdgeManager;
 import com.edmodo.cropper.util.AspectRatioUtil;
 
 /**
@@ -47,10 +47,10 @@ class VerticalHandleHelper extends HandleHelper {
         // Adjust this Edge accordingly.
         mEdge.adjustCoordinate(x, y, imageRect, snapRadius, targetAspectRatio);
 
-        float left = EdgeHelper.LEFT.coordinate;
-        float top = EdgeHelper.TOP.coordinate;
-        float right = EdgeHelper.RIGHT.coordinate;
-        float bottom = EdgeHelper.BOTTOM.coordinate;
+        float left = EdgeManager.LEFT.coordinate;
+        float top = EdgeManager.TOP.coordinate;
+        float right = EdgeManager.RIGHT.coordinate;
+        float bottom = EdgeManager.BOTTOM.coordinate;
 
         // After this Edge is moved, our crop window is now out of proportion.
         final float targetHeight = AspectRatioUtil.calculateHeight(left, right, targetAspectRatio);
@@ -63,22 +63,22 @@ class VerticalHandleHelper extends HandleHelper {
         top -= halfDifference;
         bottom += halfDifference;
 
-        EdgeHelper.TOP.coordinate = top;
-        EdgeHelper.BOTTOM.coordinate = bottom;
+        EdgeManager.TOP.coordinate = top;
+        EdgeManager.BOTTOM.coordinate = bottom;
 
         // Check if we have gone out of bounds on the top or bottom, and fix.
-        if (EdgeHelper.TOP.isOutsideMargin(imageRect, snapRadius) && 
-        		!mEdge.isNewRectangleOutOfBounds(EdgeHelper.TOP, imageRect, targetAspectRatio)) 
+        if (EdgeManager.TOP.isOutsideMargin(imageRect, snapRadius) && 
+        		!mEdge.isNewRectangleOutOfBounds(EdgeManager.TOP, imageRect, targetAspectRatio)) 
         {
-            final float offset = EdgeHelper.TOP.snapToRect(imageRect);
-            EdgeHelper.BOTTOM.offset(-offset);
+            final float offset = EdgeManager.TOP.snapToRect(imageRect);
+            EdgeManager.BOTTOM.offset(-offset);
             mEdge.adjustCoordinate(targetAspectRatio);
         }
-        if (EdgeHelper.BOTTOM.isOutsideMargin(imageRect, snapRadius) && 
-        		!mEdge.isNewRectangleOutOfBounds(EdgeHelper.BOTTOM, imageRect,targetAspectRatio)) 
+        if (EdgeManager.BOTTOM.isOutsideMargin(imageRect, snapRadius) && 
+        		!mEdge.isNewRectangleOutOfBounds(EdgeManager.BOTTOM, imageRect,targetAspectRatio)) 
         {
-            final float offset = EdgeHelper.BOTTOM.snapToRect(imageRect);
-            EdgeHelper.TOP.offset(-offset);
+            final float offset = EdgeManager.BOTTOM.snapToRect(imageRect);
+            EdgeManager.TOP.offset(-offset);
             mEdge.adjustCoordinate(targetAspectRatio);
         }
     }

@@ -28,7 +28,7 @@ import android.view.View;
 
 import com.edmodo.cropper.CropImageView;
 import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
+import com.edmodo.cropper.cropwindow.edge.EdgeManager;
 import com.edmodo.cropper.cropwindow.handle.Handle;
 import com.edmodo.cropper.util.AspectRatioUtil;
 import com.edmodo.cropper.util.HandleUtil;
@@ -162,9 +162,9 @@ public class CropOverlayView extends View
 
 
         // Draw the circular border
-        float cx = (EdgeHelper.LEFT.coordinate + EdgeHelper.RIGHT.coordinate)/2; 
-        float cy = (EdgeHelper.TOP.coordinate + EdgeHelper.BOTTOM.coordinate)/2;
-        float radius = (EdgeHelper.RIGHT.coordinate - EdgeHelper.LEFT.coordinate)/2;
+        float cx = (EdgeManager.LEFT.coordinate + EdgeManager.RIGHT.coordinate)/2; 
+        float cy = (EdgeManager.TOP.coordinate + EdgeManager.BOTTOM.coordinate)/2;
+        float radius = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate)/2;
         
         canvas.drawCircle(cx, cy, radius, mBorderPaint);
     }
@@ -397,47 +397,47 @@ public class CropOverlayView extends View
             // vice-versa.
             if (AspectRatioUtil.calculateAspectRatio(bitmapRect) > mTargetAspectRatio) 
             {
-                EdgeHelper.TOP.coordinate = bitmapRect.top;
-                EdgeHelper.BOTTOM.coordinate = bitmapRect.bottom;
+                EdgeManager.TOP.coordinate = bitmapRect.top;
+                EdgeManager.BOTTOM.coordinate = bitmapRect.bottom;
 
                 final float centerX = getWidth() / 2f;
 
                 // Limits the aspect ratio to no less than 40 wide or 40 tall
                 final float cropWidth = Math.max(Edge.MIN_CROP_LENGTH_PX,
-                                                 AspectRatioUtil.calculateWidth(EdgeHelper.TOP.coordinate,
-                                                		 EdgeHelper.BOTTOM.coordinate,
+                                                 AspectRatioUtil.calculateWidth(EdgeManager.TOP.coordinate,
+                                                		 EdgeManager.BOTTOM.coordinate,
                                                                                 mTargetAspectRatio));
 
                 // Create new TargetAspectRatio if the original one does not fit
                 // the screen
                 if (cropWidth == Edge.MIN_CROP_LENGTH_PX)
-                    mTargetAspectRatio = (Edge.MIN_CROP_LENGTH_PX) / (EdgeHelper.BOTTOM.coordinate - EdgeHelper.TOP.coordinate);
+                    mTargetAspectRatio = (Edge.MIN_CROP_LENGTH_PX) / (EdgeManager.BOTTOM.coordinate - EdgeManager.TOP.coordinate);
 
                 final float halfCropWidth = cropWidth / 2f;
-                EdgeHelper.LEFT.coordinate = (centerX - halfCropWidth);
-                EdgeHelper.RIGHT.coordinate = (centerX + halfCropWidth);
+                EdgeManager.LEFT.coordinate = (centerX - halfCropWidth);
+                EdgeManager.RIGHT.coordinate = (centerX + halfCropWidth);
 
             } else {
 
-            	EdgeHelper.LEFT.coordinate = bitmapRect.left;
-            	EdgeHelper.RIGHT.coordinate = bitmapRect.right;
+            	EdgeManager.LEFT.coordinate = bitmapRect.left;
+            	EdgeManager.RIGHT.coordinate = bitmapRect.right;
 
                 final float centerY = getHeight() / 2f;
 
                 // Limits the aspect ratio to no less than 40 wide or 40 tall
                 final float cropHeight = Math.max(Edge.MIN_CROP_LENGTH_PX,
-                                                  AspectRatioUtil.calculateHeight(EdgeHelper.LEFT.coordinate,
-                                                		  EdgeHelper.RIGHT.coordinate,
+                                                  AspectRatioUtil.calculateHeight(EdgeManager.LEFT.coordinate,
+                                                		  EdgeManager.RIGHT.coordinate,
                                                                                   mTargetAspectRatio));
 
                 // Create new TargetAspectRatio if the original one does not fit
                 // the screen
                 if (cropHeight == Edge.MIN_CROP_LENGTH_PX)
-                    mTargetAspectRatio = (EdgeHelper.RIGHT.coordinate - EdgeHelper.LEFT.coordinate) / Edge.MIN_CROP_LENGTH_PX;
+                    mTargetAspectRatio = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate) / Edge.MIN_CROP_LENGTH_PX;
 
                 final float halfCropHeight = cropHeight / 2f;
-                EdgeHelper.TOP.coordinate = (centerY - halfCropHeight);
-                EdgeHelper.BOTTOM.coordinate =(centerY + halfCropHeight);
+                EdgeManager.TOP.coordinate = (centerY - halfCropHeight);
+                EdgeManager.BOTTOM.coordinate =(centerY + halfCropHeight);
             }
 
         } else { // ... do not fix aspect ratio...
@@ -446,10 +446,10 @@ public class CropOverlayView extends View
             final float horizontalPadding = 0.1f * bitmapRect.width();
             final float verticalPadding = 0.1f * bitmapRect.height();
 
-            EdgeHelper.LEFT.coordinate = (bitmapRect.left + horizontalPadding);
-            EdgeHelper.TOP.coordinate = (bitmapRect.top + verticalPadding);
-            EdgeHelper.RIGHT.coordinate = (bitmapRect.right - horizontalPadding);
-            EdgeHelper.BOTTOM.coordinate = (bitmapRect.bottom - verticalPadding);
+            EdgeManager.LEFT.coordinate = (bitmapRect.left + horizontalPadding);
+            EdgeManager.TOP.coordinate = (bitmapRect.top + verticalPadding);
+            EdgeManager.RIGHT.coordinate = (bitmapRect.right - horizontalPadding);
+            EdgeManager.BOTTOM.coordinate = (bitmapRect.bottom - verticalPadding);
         }
     }
 
@@ -461,8 +461,8 @@ public class CropOverlayView extends View
      * @return boolean Whether the guidelines should be shown or not
      */
     public static boolean showGuidelines() {
-        if ((Math.abs(EdgeHelper.LEFT.coordinate - EdgeHelper.RIGHT.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT)
-            || (Math.abs(EdgeHelper.TOP.coordinate - EdgeHelper.BOTTOM.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT))
+        if ((Math.abs(EdgeManager.LEFT.coordinate - EdgeManager.RIGHT.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT)
+            || (Math.abs(EdgeManager.TOP.coordinate - EdgeManager.BOTTOM.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT))
             return false;
         else
             return true;
@@ -471,10 +471,10 @@ public class CropOverlayView extends View
     private void drawRuleOfThirdsGuidelines(Canvas canvas) {
     	
     	
-        final float left = EdgeHelper.LEFT.coordinate;
-        final float top = EdgeHelper.TOP.coordinate;
-        final float right = EdgeHelper.RIGHT.coordinate;
-        final float bottom = EdgeHelper.BOTTOM.coordinate;
+        final float left = EdgeManager.LEFT.coordinate;
+        final float top = EdgeManager.TOP.coordinate;
+        final float right = EdgeManager.RIGHT.coordinate;
+        final float bottom = EdgeManager.BOTTOM.coordinate;
 
         
         float cx = (left + right)/2; 
@@ -505,10 +505,10 @@ public class CropOverlayView extends View
 
     private void drawBackground(Canvas canvas, Rect bitmapRect) {
 
-        final float left = EdgeHelper.LEFT.coordinate;
-        final float top = EdgeHelper.TOP.coordinate;
-        final float right = EdgeHelper.RIGHT.coordinate;
-        final float bottom = EdgeHelper.BOTTOM.coordinate;
+        final float left = EdgeManager.LEFT.coordinate;
+        final float top = EdgeManager.TOP.coordinate;
+        final float right = EdgeManager.RIGHT.coordinate;
+        final float bottom = EdgeManager.BOTTOM.coordinate;
 
         float cx = (left + right)/2; 
         float cy = (top + bottom)/2;
@@ -531,10 +531,10 @@ public class CropOverlayView extends View
 
     private void drawCorners(Canvas canvas) {
 
-        final float left = EdgeHelper.LEFT.coordinate;
-        final float top = EdgeHelper.TOP.coordinate;
-        final float right = EdgeHelper.RIGHT.coordinate;
-        final float bottom = EdgeHelper.BOTTOM.coordinate;
+        final float left = EdgeManager.LEFT.coordinate;
+        final float top = EdgeManager.TOP.coordinate;
+        final float right = EdgeManager.RIGHT.coordinate;
+        final float bottom = EdgeManager.BOTTOM.coordinate;
 
         // Draws the corner lines
 
@@ -588,10 +588,10 @@ public class CropOverlayView extends View
      */
     private void onActionDown(float x, float y) {
 
-        final float left = EdgeHelper.LEFT.coordinate;
-        final float top = EdgeHelper.TOP.coordinate;
-        final float right = EdgeHelper.RIGHT.coordinate;
-        final float bottom = EdgeHelper.BOTTOM.coordinate;
+        final float left = EdgeManager.LEFT.coordinate;
+        final float top = EdgeManager.TOP.coordinate;
+        final float right = EdgeManager.RIGHT.coordinate;
+        final float bottom = EdgeManager.BOTTOM.coordinate;
 
         mPressedHandle = HandleUtil.getPressedHandle(x, y, left, top, right, bottom, mHandleRadius);
 

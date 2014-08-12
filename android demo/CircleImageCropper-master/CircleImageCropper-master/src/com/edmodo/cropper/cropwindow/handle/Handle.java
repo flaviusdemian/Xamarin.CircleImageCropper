@@ -15,32 +15,22 @@ package com.edmodo.cropper.cropwindow.handle;
 
 import android.graphics.Rect;
 
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
-
 /**
  * Enum representing a pressable, draggable Handle on the crop window.
  */
-public enum Handle {
+public class Handle {
 
-    TOP_LEFT(new CornerHandleHelper(EdgeHelper.TOP, EdgeHelper.LEFT)),
-    TOP_RIGHT(new CornerHandleHelper(EdgeHelper.TOP, EdgeHelper.RIGHT)),
-    BOTTOM_LEFT(new CornerHandleHelper(EdgeHelper.BOTTOM, EdgeHelper.LEFT)),
-    BOTTOM_RIGHT(new CornerHandleHelper(EdgeHelper.BOTTOM, EdgeHelper.RIGHT)),
-    LEFT(new VerticalHandleHelper(EdgeHelper.LEFT)),
-    TOP(new HorizontalHandleHelper(EdgeHelper.TOP)),
-    RIGHT(new VerticalHandleHelper(EdgeHelper.RIGHT)),
-    BOTTOM(new HorizontalHandleHelper(EdgeHelper.BOTTOM)),
-    CENTER(new CenterHandleHelper());
-
+ 
     // Member Variables ////////////////////////////////////////////////////////
 
     private HandleHelper mHelper;
-
+    public int handleType;
     // Constructors ////////////////////////////////////////////////////////////
 
-    Handle(HandleHelper helper) 
+    public Handle(HandleHelper helper, int handleType) 
     {
         mHelper = helper;
+        this.handleType = handleType; 
     }
 
     // Public Methods //////////////////////////////////////////////////////////

@@ -90,10 +90,10 @@ public class Edge
      */
     public void adjustCoordinate(float aspectRatio) 
     {
-        final float left = EdgeHelper.LEFT.coordinate;
-        final float top = EdgeHelper.TOP.coordinate;
-        final float right = EdgeHelper.RIGHT.coordinate;
-        final float bottom = EdgeHelper.BOTTOM.coordinate;
+        final float left = EdgeManager.LEFT.coordinate;
+        final float top = EdgeManager.TOP.coordinate;
+        final float right = EdgeManager.RIGHT.coordinate;
+        final float bottom = EdgeManager.BOTTOM.coordinate;
 
         switch (edgeType) {
             case EdgeType.LEFT:
@@ -127,19 +127,19 @@ public class Edge
         
         switch (edgeType) {
             case EdgeType.LEFT:
-                if (edge.equals(EdgeHelper.TOP)) {
+                if (edge.equals(EdgeManager.TOP)) {
                     float top = imageRect.top;
-                    float bottom = EdgeHelper.BOTTOM.coordinate - offset;
-                    float right = EdgeHelper.RIGHT.coordinate;
+                    float bottom = EdgeManager.BOTTOM.coordinate - offset;
+                    float right = EdgeManager.RIGHT.coordinate;
                     float left = AspectRatioUtil.calculateLeft(top, right, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
                     
                 }
-                else if (edge.equals(EdgeHelper.BOTTOM)) {
+                else if (edge.equals(EdgeManager.BOTTOM)) {
                     float bottom = imageRect.bottom;
-                    float top = EdgeHelper.TOP.coordinate - offset;
-                    float right = EdgeHelper.RIGHT.coordinate;
+                    float top = EdgeManager.TOP.coordinate - offset;
+                    float right = EdgeManager.RIGHT.coordinate;
                     float left = AspectRatioUtil.calculateLeft(top, right, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
@@ -147,19 +147,19 @@ public class Edge
                 break;
                 
             case EdgeType.TOP:
-                if (edge.equals(EdgeHelper.LEFT)) {
+                if (edge.equals(EdgeManager.LEFT)) {
                     float left = imageRect.left;
-                    float right = EdgeHelper.RIGHT.coordinate - offset;
-                    float bottom = EdgeHelper.BOTTOM.coordinate;
+                    float right = EdgeManager.RIGHT.coordinate - offset;
+                    float bottom = EdgeManager.BOTTOM.coordinate;
                     float top = AspectRatioUtil.calculateTop(left, right, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
                     
                 }
-                else if (edge.equals(EdgeHelper.RIGHT)) {
+                else if (edge.equals(EdgeManager.RIGHT)) {
                     float right = imageRect.right;
-                    float left = EdgeHelper.LEFT.coordinate - offset;
-                    float bottom = EdgeHelper.BOTTOM.coordinate;
+                    float left = EdgeManager.LEFT.coordinate - offset;
+                    float bottom = EdgeManager.BOTTOM.coordinate;
                     float top = AspectRatioUtil.calculateTop(left, right, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
@@ -167,19 +167,19 @@ public class Edge
                 break; 
                 
             case EdgeType.RIGHT:
-                if (edge.equals(EdgeHelper.TOP)) {
+                if (edge.equals(EdgeManager.TOP)) {
                     float top = imageRect.top;
-                    float bottom = EdgeHelper.BOTTOM.coordinate - offset;
-                    float left = EdgeHelper.LEFT.coordinate;
+                    float bottom = EdgeManager.BOTTOM.coordinate - offset;
+                    float left = EdgeManager.LEFT.coordinate;
                     float right = AspectRatioUtil.calculateRight(left, top, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
                     
                 }
-                else if (edge.equals(EdgeHelper.BOTTOM)) {
+                else if (edge.equals(EdgeManager.BOTTOM)) {
                     float bottom = imageRect.bottom;
-                    float top = EdgeHelper.TOP.coordinate - offset;
-                    float left = EdgeHelper.LEFT.coordinate;
+                    float top = EdgeManager.TOP.coordinate - offset;
+                    float left = EdgeManager.LEFT.coordinate;
                     float right = AspectRatioUtil.calculateRight(left, top, bottom, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
@@ -188,19 +188,19 @@ public class Edge
                 
                 
             case EdgeType.BOTTOM:
-                if (edge.equals(EdgeHelper.LEFT)) {
+                if (edge.equals(EdgeManager.LEFT)) {
                     float left = imageRect.left;
-                    float right = EdgeHelper.RIGHT.coordinate - offset;
-                    float top = EdgeHelper.TOP.coordinate;
+                    float right = EdgeManager.RIGHT.coordinate - offset;
+                    float top = EdgeManager.TOP.coordinate;
                     float bottom = AspectRatioUtil.calculateBottom(left, top, right, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
                     
                 }
-                else if (edge.equals(EdgeHelper.RIGHT)) {
+                else if (edge.equals(EdgeManager.RIGHT)) {
                     float right = imageRect.right;
-                    float left = EdgeHelper.LEFT.coordinate - offset;
-                    float top = EdgeHelper.TOP.coordinate;
+                    float left = EdgeManager.LEFT.coordinate - offset;
+                    float top = EdgeManager.TOP.coordinate;
                     float bottom = AspectRatioUtil.calculateBottom(left, top, right, aspectRatio);
                     
                     return isOutOfBounds(top, left, bottom, right, imageRect);
@@ -313,14 +313,14 @@ public class Edge
      * Gets the current width of the crop window.
      */
     public static float getWidth() {
-        return EdgeHelper.RIGHT.coordinate - EdgeHelper.LEFT.coordinate;
+        return EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate;
     }
 
     /**
      * Gets the current height of the crop window.
      */
     public static float getHeight() {
-        return EdgeHelper.BOTTOM.coordinate - EdgeHelper.TOP.coordinate;
+        return EdgeManager.BOTTOM.coordinate - EdgeManager.TOP.coordinate;
     }
 
     /**
@@ -402,12 +402,12 @@ public class Edge
             float resultXVert = Float.POSITIVE_INFINITY;
 
             // Checks if the window is too small horizontally
-            if (x >= EdgeHelper.RIGHT.coordinate - MIN_CROP_LENGTH_PX)
-                resultXHoriz = EdgeHelper.RIGHT.coordinate - MIN_CROP_LENGTH_PX;
+            if (x >= EdgeManager.RIGHT.coordinate - MIN_CROP_LENGTH_PX)
+                resultXHoriz = EdgeManager.RIGHT.coordinate - MIN_CROP_LENGTH_PX;
 
             // Checks if the window is too small vertically
-            if (((EdgeHelper.RIGHT.coordinate - x) / aspectRatio) <= MIN_CROP_LENGTH_PX)
-                resultXVert = EdgeHelper.RIGHT.coordinate - (MIN_CROP_LENGTH_PX * aspectRatio);
+            if (((EdgeManager.RIGHT.coordinate - x) / aspectRatio) <= MIN_CROP_LENGTH_PX)
+                resultXVert = EdgeManager.RIGHT.coordinate - (MIN_CROP_LENGTH_PX * aspectRatio);
 
             resultX = Math.min(resultX, Math.min(resultXHoriz, resultXVert));
         }
@@ -438,12 +438,12 @@ public class Edge
             float resultXVert = Float.NEGATIVE_INFINITY;
 
             // Checks if the window is too small horizontally
-            if (x <= EdgeHelper.LEFT.coordinate + MIN_CROP_LENGTH_PX)
-                resultXHoriz = EdgeHelper.LEFT.coordinate + MIN_CROP_LENGTH_PX;
+            if (x <= EdgeManager.LEFT.coordinate + MIN_CROP_LENGTH_PX)
+                resultXHoriz = EdgeManager.LEFT.coordinate + MIN_CROP_LENGTH_PX;
 
             // Checks if the window is too small vertically
-            if (((x - EdgeHelper.LEFT.coordinate) / aspectRatio) <= MIN_CROP_LENGTH_PX) {
-                resultXVert = EdgeHelper.LEFT.coordinate + (MIN_CROP_LENGTH_PX * aspectRatio);
+            if (((x - EdgeManager.LEFT.coordinate) / aspectRatio) <= MIN_CROP_LENGTH_PX) {
+                resultXVert = EdgeManager.LEFT.coordinate + (MIN_CROP_LENGTH_PX * aspectRatio);
             }
 
             resultX = Math.max(resultX, Math.max(resultXHoriz, resultXVert));
@@ -476,12 +476,12 @@ public class Edge
             float resultYHoriz = Float.POSITIVE_INFINITY;
 
             // Checks if the window is too small vertically
-            if (y >= EdgeHelper.BOTTOM.coordinate - MIN_CROP_LENGTH_PX)
-                resultYHoriz = EdgeHelper.BOTTOM.coordinate - MIN_CROP_LENGTH_PX;
+            if (y >= EdgeManager.BOTTOM.coordinate - MIN_CROP_LENGTH_PX)
+                resultYHoriz = EdgeManager.BOTTOM.coordinate - MIN_CROP_LENGTH_PX;
 
             // Checks if the window is too small horizontally
-            if (((EdgeHelper.BOTTOM.coordinate - y) * aspectRatio) <= MIN_CROP_LENGTH_PX)
-                resultYVert = EdgeHelper.BOTTOM.coordinate - (MIN_CROP_LENGTH_PX / aspectRatio);
+            if (((EdgeManager.BOTTOM.coordinate - y) * aspectRatio) <= MIN_CROP_LENGTH_PX)
+                resultYVert = EdgeManager.BOTTOM.coordinate - (MIN_CROP_LENGTH_PX / aspectRatio);
 
             resultY = Math.min(resultY, Math.min(resultYHoriz, resultYVert));
 
@@ -512,12 +512,12 @@ public class Edge
             float resultYHoriz = Float.NEGATIVE_INFINITY;
 
             // Checks if the window is too small vertically
-            if (y <= EdgeHelper.TOP.coordinate + MIN_CROP_LENGTH_PX)
-                resultYVert = EdgeHelper.TOP.coordinate + MIN_CROP_LENGTH_PX;
+            if (y <= EdgeManager.TOP.coordinate + MIN_CROP_LENGTH_PX)
+                resultYVert = EdgeManager.TOP.coordinate + MIN_CROP_LENGTH_PX;
 
             // Checks if the window is too small horizontally
-            if (((y - EdgeHelper.TOP.coordinate) * aspectRatio) <= MIN_CROP_LENGTH_PX)
-                resultYHoriz = EdgeHelper.TOP.coordinate + (MIN_CROP_LENGTH_PX / aspectRatio);
+            if (((y - EdgeManager.TOP.coordinate) * aspectRatio) <= MIN_CROP_LENGTH_PX)
+                resultYHoriz = EdgeManager.TOP.coordinate + (MIN_CROP_LENGTH_PX / aspectRatio);
 
             resultY = Math.max(resultY, Math.max(resultYHoriz, resultYVert));
         }

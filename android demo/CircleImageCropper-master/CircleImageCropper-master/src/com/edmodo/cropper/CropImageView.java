@@ -37,7 +37,7 @@ import android.widget.ImageView;
 
 import com.edmodo.cropper.cropwindow.CropOverlayView;
 import com.edmodo.cropper.cropwindow.edge.Edge;
-import com.edmodo.cropper.cropwindow.edge.EdgeHelper;
+import com.edmodo.cropper.cropwindow.edge.EdgeManager;
 import com.edmodo.cropper.util.ImageViewUtil;
 
 /**
@@ -346,8 +346,8 @@ public class CropImageView extends FrameLayout {
         final float scaleFactorHeight = actualImageHeight / displayedImageHeight;
 
         // Get crop window position relative to the displayed image.
-        final float cropWindowX = EdgeHelper.LEFT.coordinate - displayedImageRect.left;
-        final float cropWindowY = EdgeHelper.TOP.coordinate - displayedImageRect.top;
+        final float cropWindowX = EdgeManager.LEFT.coordinate - displayedImageRect.left;
+        final float cropWindowY = EdgeManager.TOP.coordinate - displayedImageRect.top;
         final float cropWindowWidth = Edge.getWidth();
         final float cropWindowHeight = Edge.getHeight();
 
@@ -419,8 +419,8 @@ public class CropImageView extends FrameLayout {
         final float scaleFactorHeight = actualImageHeight / displayedImageHeight;
 
         // Get crop window position relative to the displayed image.
-        final float displayedCropLeft = EdgeHelper.LEFT.coordinate - displayedImageRect.left;
-        final float displayedCropTop = EdgeHelper.TOP.coordinate - displayedImageRect.top;
+        final float displayedCropLeft = EdgeManager.LEFT.coordinate - displayedImageRect.left;
+        final float displayedCropTop = EdgeManager.TOP.coordinate - displayedImageRect.top;
         final float displayedCropWidth = Edge.getWidth();
         final float displayedCropHeight = Edge.getHeight();
 
