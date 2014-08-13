@@ -24,7 +24,7 @@
             android:paddingBottom="25dp"
             android:text="@string/title"
             android:textSize="27sp" />
-        <xamarin.circleimagecropper.cropper.CropImageView
+        <circleimagecropper.CropImageView
             android:id="@+id/CropImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

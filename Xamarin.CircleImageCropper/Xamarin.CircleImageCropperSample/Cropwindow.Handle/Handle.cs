@@ -1,6 +1,6 @@
 using Android.Graphics;
 
-namespace Xamarin.CircleImageCropper.Cropwindow.Handle
+namespace CircleImageCropper.Cropwindow.Handle
 {
     public class Handle
     {

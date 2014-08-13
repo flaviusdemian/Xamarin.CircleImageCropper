@@ -8,13 +8,12 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
-using Xamarin.CircleImageCropper.CropWindow;
-using Xamarin.CircleImageCropper.CropWindow.Pair;
-using Xamarin.CircleImageCropper.Util;
-using Edge = Xamarin.CircleImageCropper.CropWindow.Pair.Edge;
+using CircleImageCropper.CropWindow.Pair;
+using CircleImageCropper.Util;
+using Edge = CircleImageCropper.CropWindow.Pair.Edge;
 using Orientation = Android.Media.Orientation;
 
-namespace Xamarin.CircleImageCropper.Cropper
+namespace CircleImageCropper
 {
     public sealed class CropImageView : FrameLayout
     {
@@ -48,21 +47,21 @@ namespace Xamarin.CircleImageCropper.Cropper
 
         // Constructors ////////////////////////////////////////////////////////////
 
+        private CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
+            : base(javaReference, transfer)
+        {
+        }
+
         public CropImageView(Context context)
             : base(context)
         {
-            int x = 0;
-            //Init(context);
-        }
-
-        public CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
-            : base(javaReference, transfer)
-        {
+            Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
+            Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs)
@@ -72,8 +71,7 @@ namespace Xamarin.CircleImageCropper.Cropper
             try
             {
                 mGuidelines = ta.GetInteger(Resource.Styleable.CropImageView_guidelines, DEFAULT_GUIDELINES);
-                mFixAspectRatio = ta.GetBoolean(Resource.Styleable.CropImageView_fixAspectRatio,
-                    DEFAULT_FIXED_ASPECT_RATIO);
+                mFixAspectRatio = ta.GetBoolean(Resource.Styleable.CropImageView_fixAspectRatio, DEFAULT_FIXED_ASPECT_RATIO);
                 mAspectRatioX = ta.GetInteger(Resource.Styleable.CropImageView_aspectRatioX, DEFAULT_ASPECT_RATIO_X);
                 mAspectRatioY = ta.GetInteger(Resource.Styleable.CropImageView_aspectRatioY, DEFAULT_ASPECT_RATIO_Y);
                 mImageResource = ta.GetResourceId(Resource.Styleable.CropImageView_imageResource, DEFAULT_IMAGE_RESOURCE);
@@ -524,7 +522,14 @@ namespace Xamarin.CircleImageCropper.Cropper
 
         public void SetFixedAspectRatio(bool fixAspectRatio)
         {
-            mCropOverlayView.SetFixedAspectRatio(fixAspectRatio);
+            try
+            {
+                mCropOverlayView.SetFixedAspectRatio(fixAspectRatio);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         /**
@@ -580,14 +585,16 @@ namespace Xamarin.CircleImageCropper.Cropper
         {
             try
             {
-                LayoutInflater inflater = LayoutInflater.From(context);
+                LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);  
+                //LayoutInflater inflater  = LayoutInflater.From(context);
                 View v = inflater.Inflate(Resource.Layout.crop_image_view, this, true);
                 if (v != null)
                 {
-                    for (int i = 0; i < ((ViewGroup)v).ChildCount; ++i)
+                    int count = ((ViewGroup) v).ChildCount;
+                    for (int i = 0; i < count; ++i)
                     {
                         View nextChild = ((ViewGroup)v).GetChildAt(i);
-                        int  childID = nextChild.Id;
+                        int childID = nextChild.Id;
                     }
                     mImageView = v.FindViewById<ImageView>(Resource.Id.ImageView_image);
                     if (mImageView != null)

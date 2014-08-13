@@ -98,9 +98,9 @@
     <AndroidResource Include="Resources\menu\main.axml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.CircleImageCropperSample\Xamarin.CircleImageCropper.csproj">
+    <ProjectReference Include="..\Xamarin.CircleImageCropperSample\CircleImageCropper.csproj">
       <Project>{729dfb52-26a8-4d26-bca6-23a9a1e564f9}</Project>
-      <Name>Xamarin.CircleImageCropper</Name>
+      <Name>CircleImageCropper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

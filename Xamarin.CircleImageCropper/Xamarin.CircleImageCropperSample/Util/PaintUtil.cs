@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Graphics;
 using Android.Util;
 
-namespace Xamarin.CircleImageCropper.Util
+namespace CircleImageCropper.Util
 {
     public class PaintUtil
     {

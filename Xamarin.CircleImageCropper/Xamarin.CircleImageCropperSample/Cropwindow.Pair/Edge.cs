@@ -1,9 +1,9 @@
 using System;
 using Android.Graphics;
 using Android.Views;
-using Xamarin.CircleImageCropper.Util;
+using CircleImageCropper.Util;
 
-namespace Xamarin.CircleImageCropper.CropWindow.Pair
+namespace CircleImageCropper.CropWindow.Pair
 {
     public class Edge
     {

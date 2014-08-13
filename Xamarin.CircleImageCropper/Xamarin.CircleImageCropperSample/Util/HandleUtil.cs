@@ -1,10 +1,10 @@
 using System;
 using Android.Content;
 using Android.Util;
-using Xamarin.CircleImageCropper.CropWindow;
-using Xamarin.CircleImageCropper.Cropwindow.Handle;
+using CircleImageCropper.CropWindow;
+using CircleImageCropper.Cropwindow.Handle;
 
-namespace Xamarin.CircleImageCropper.Util
+namespace CircleImageCropper.Util
 {
     public class HandleUtil
     {

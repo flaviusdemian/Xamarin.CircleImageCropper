@@ -1,4 +1,4 @@
-namespace Xamarin.CircleImageCropper.CropWindow.Pair
+namespace CircleImageCropper.CropWindow.Pair
 {
     public class EdgePair
     {

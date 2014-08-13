@@ -1,4 +1,4 @@
-namespace Xamarin.CircleImageCropper.Cropwindow.Handle
+namespace CircleImageCropper.Cropwindow.Handle
 {
     internal class HandleType
     {

@@ -1,7 +1,7 @@
 using Android.Graphics;
-using Xamarin.CircleImageCropper.CropWindow.Pair;
+using CircleImageCropper.CropWindow.Pair;
 
-namespace Xamarin.CircleImageCropper.Cropwindow.Handle
+namespace CircleImageCropper.Cropwindow.Handle
 {
     public class CenterHandleHelper : HandleHelper
     {

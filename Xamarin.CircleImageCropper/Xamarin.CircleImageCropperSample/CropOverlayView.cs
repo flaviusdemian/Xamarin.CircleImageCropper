@@ -1,17 +1,18 @@
+using System;
 using Android.Content;
 using Android.Graphics;
+using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Java.Lang;
-using Xamarin.CircleImageCropper.Cropper;
-using Xamarin.CircleImageCropper.Cropwindow.Handle;
-using Xamarin.CircleImageCropper.CropWindow.Pair;
-using Xamarin.CircleImageCropper.Util;
-using Edge = Xamarin.CircleImageCropper.CropWindow.Pair.Edge;
+using CircleImageCropper.Cropwindow.Handle;
+using CircleImageCropper.CropWindow.Pair;
+using CircleImageCropper.Util;
+using Edge = CircleImageCropper.CropWindow.Pair.Edge;
 using Exception = System.Exception;
 using Math = System.Math;
 
-namespace Xamarin.CircleImageCropper.CropWindow
+namespace CircleImageCropper
 {
     public sealed class CropOverlayView : View
     {
@@ -73,6 +74,11 @@ namespace Xamarin.CircleImageCropper.CropWindow
 
         // Constructors ////////////////////////////////////////////////////////////
 
+        private CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer) 
+            : base(javaReference, transfer)
+        {
+        }
+
         public CropOverlayView(Context context)
             : base(context)
         {
@@ -82,15 +88,13 @@ namespace Xamarin.CircleImageCropper.CropWindow
         public CropOverlayView(Context context, IAttributeSet attrs)
             : base(context, attrs)
         {
-            int x = 0;
-            //Init(context);
+            Init(context);
         }
 
         public CropOverlayView(Context context, IAttributeSet attrs, int defStyleAttr)
             : base(context, attrs, defStyleAttr)
         {
-            int x = 0;
-            //Init(context);
+            Init(context);
         }
 
         // View Methods ////////////////////////////////////////////////////////////

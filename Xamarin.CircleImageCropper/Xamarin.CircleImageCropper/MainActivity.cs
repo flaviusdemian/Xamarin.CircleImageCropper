@@ -4,7 +4,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using Xamarin.CircleImageCropper.Cropper;
+using CircleImageCropper;
 
 namespace Xamarin.CircleImageCropper.Sample
 {
@@ -54,7 +54,7 @@ namespace Xamarin.CircleImageCropper.Sample
 
                 // Initialize components of the app
                 var cropImageView = FindViewById<CropImageView>(Resource.Id.CropImageView);
-                cropImageView.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.butterfly));
+                //cropImageView.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.butterfly));
                 var showGuidelinesSpin = FindViewById<Spinner>(Resource.Id.showGuidelinesSpin);
 
                 // Set initial spinner value

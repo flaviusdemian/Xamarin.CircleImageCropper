@@ -1,6 +1,6 @@
 using Android.Graphics;
 
-namespace Xamarin.CircleImageCropper.Util
+namespace CircleImageCropper.Util
 {
     public class AspectRatioUtil
     {
