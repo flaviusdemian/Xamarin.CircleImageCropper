@@ -1,22 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
-using Xamarin.CircleImageCropperSample.Util;
-using Xamarin.CircleImageCropperSample.Cropwindow;
+using Xamarin.CircleImageCropper.CropWindow.Pair;
+using Xamarin.CircleImageCropper.Util;
 
-namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
+namespace Xamarin.CircleImageCropper.Cropwindow.Handle
 {
     public class VerticalHandleHelper : HandleHelper
     {
         // Member Variables ////////////////////////////////////////////////////////
 
-        private Edge mEdgeType;
+        private readonly Edge mEdgeType;
 
         // Constructor /////////////////////////////////////////////////////////////
 
@@ -29,12 +21,11 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         // HandleHelper Methods ////////////////////////////////////////////////////
 
         public override void UpdateCropWindow(float x,
-                              float y,
-                              float targetAspectRatio,
-                              Rect imageRect,
-                              float snapRadius)
+            float y,
+            float targetAspectRatio,
+            Rect imageRect,
+            float snapRadius)
         {
-
             // Adjust this EdgeType accordingly.
             mEdgeType.adjustCoordinate(x, y, imageRect, snapRadius, targetAspectRatio);
 
@@ -50,7 +41,7 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
             // Adjust the crop window so that it maintains the given aspect ratio by
             // moving the adjacent EdgeTypes symmetrically in or out.
             float difference = targetHeight - currentHeight;
-            float halfDifference = difference / 2;
+            float halfDifference = difference/2;
             top -= halfDifference;
             bottom += halfDifference;
 
@@ -58,17 +49,19 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
             EdgeManager.BOTTOM.coordinate = bottom;
 
             // Check if we have gone out of bounds on the top or bottom, and fix.
-            if (EdgeManager.TOP.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.TOP,
-                                                                                                    imageRect,
-                                                                                                    targetAspectRatio))
+            if (EdgeManager.TOP.isOutsideMargin(imageRect, snapRadius) &&
+                !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.TOP,
+                    imageRect,
+                    targetAspectRatio))
             {
                 float offset = EdgeManager.TOP.snapToRect(imageRect);
                 EdgeManager.BOTTOM.offset(-offset);
                 mEdgeType.adjustCoordinate(targetAspectRatio);
             }
-            if (EdgeManager.BOTTOM.isOutsideMargin(imageRect, snapRadius) && !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.BOTTOM,
-                                                                                                       imageRect,
-                                                                                                       targetAspectRatio))
+            if (EdgeManager.BOTTOM.isOutsideMargin(imageRect, snapRadius) &&
+                !mEdgeType.isNewRectangleOutOfBounds(EdgeManager.BOTTOM,
+                    imageRect,
+                    targetAspectRatio))
             {
                 float offset = EdgeManager.BOTTOM.snapToRect(imageRect);
                 EdgeManager.TOP.offset(-offset);

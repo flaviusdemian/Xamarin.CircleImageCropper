@@ -1,22 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Xamarin.CircleImageCropper.CropWindow.Pair;
 
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
-
-namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
+namespace Xamarin.CircleImageCropper.Cropwindow.Handle
 {
     public class HandleManager
     {
-        public static Handle 
-	TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, TOP, RIGHT, BOTTOM, CENTER;
+        public static Handle
+            TOP_LEFT, TOP_RIGHT, BOTTOM_LEFT, BOTTOM_RIGHT, LEFT, TOP, RIGHT, BOTTOM, CENTER;
 
         static HandleManager()
         {

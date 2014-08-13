@@ -1,20 +1,10 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
+using System;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
-using Java.Lang;
-using xamarin.circleImageCropperSample.cropWindow;
-using Xamarin.CircleImageCropperSample.Cropwindow.Handle;
-using Math = System.Math;
+using Xamarin.CircleImageCropper.CropWindow;
+using Xamarin.CircleImageCropper.Cropwindow.Handle;
 
-namespace Xamarin.CircleImageCropperSample.Util
+namespace Xamarin.CircleImageCropper.Util
 {
     public class HandleUtil
     {
@@ -34,10 +24,11 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @param context the Context
          * @return the target radius (in pixels)
          */
+
         public static float getTargetRadius(Context context)
         {
-
-            float targetRadius = TypedValue.ApplyDimension(ComplexUnitType.Dip, TARGET_RADIUS_DP, context.Resources.DisplayMetrics);
+            float targetRadius = TypedValue.ApplyDimension(ComplexUnitType.Dip, TARGET_RADIUS_DP,
+                context.Resources.DisplayMetrics);
             return targetRadius;
         }
 
@@ -54,59 +45,58 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @param targetRadius the target radius in pixels
          * @return the Handle that was pressed; null if no Handle was pressed
          */
-        public static Handle getPressedHandle(float x,
-                                              float y,
-                                              float left,
-                                              float top,
-                                              float right,
-                                              float bottom,
-                                              float targetRadius)
-        {
 
+        public static Handle getPressedHandle(float x,
+            float y,
+            float left,
+            float top,
+            float right,
+            float bottom,
+            float targetRadius)
+        {
             Handle pressedHandle = null;
 
             // Note: corner-handles take precedence, then side-handles, then center.
 
-            if (HandleUtil.isInCornerTargetZone(x, y, left, top, targetRadius))
+            if (isInCornerTargetZone(x, y, left, top, targetRadius))
             {
                 pressedHandle = HandleManager.TOP_LEFT;
             }
-            else if (HandleUtil.isInCornerTargetZone(x, y, right, top, targetRadius))
+            else if (isInCornerTargetZone(x, y, right, top, targetRadius))
             {
                 pressedHandle = HandleManager.TOP_RIGHT;
             }
-            else if (HandleUtil.isInCornerTargetZone(x, y, left, bottom, targetRadius))
+            else if (isInCornerTargetZone(x, y, left, bottom, targetRadius))
             {
                 pressedHandle = HandleManager.BOTTOM_LEFT;
             }
-            else if (HandleUtil.isInCornerTargetZone(x, y, right, bottom, targetRadius))
+            else if (isInCornerTargetZone(x, y, right, bottom, targetRadius))
             {
                 pressedHandle = HandleManager.BOTTOM_RIGHT;
             }
-            else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && focusCenter())
+            else if (isInCenterTargetZone(x, y, left, top, right, bottom) && focusCenter())
             {
                 pressedHandle = HandleManager.CENTER;
             }
-            else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, top, targetRadius))
+            else if (isInHorizontalTargetZone(x, y, left, right, top, targetRadius))
             {
                 pressedHandle = HandleManager.TOP;
             }
-            else if (HandleUtil.isInHorizontalTargetZone(x, y, left, right, bottom, targetRadius))
+            else if (isInHorizontalTargetZone(x, y, left, right, bottom, targetRadius))
             {
                 pressedHandle = HandleManager.BOTTOM;
             }
-            else if (HandleUtil.isInVerticalTargetZone(x, y, left, top, bottom, targetRadius))
+            else if (isInVerticalTargetZone(x, y, left, top, bottom, targetRadius))
             {
                 pressedHandle = HandleManager.LEFT;
             }
-            else if (HandleUtil.isInVerticalTargetZone(x, y, right, top, bottom, targetRadius))
+            else if (isInVerticalTargetZone(x, y, right, top, bottom, targetRadius))
             {
                 pressedHandle = HandleManager.RIGHT;
             }
-            else if (HandleUtil.isInCenterTargetZone(x, y, left, top, right, bottom) && !focusCenter())
+            else if (isInCenterTargetZone(x, y, left, top, right, bottom) && !focusCenter())
             {
                 pressedHandle = HandleManager.CENTER;
-
             }
 
             return pressedHandle;
@@ -119,15 +109,15 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return the offset as a Pair where the x-offset is the first value and
          *         the y-offset is the second value; null if the handle is null
          */
-        public static Pair getOffset(Handle handle,
-                                                   float x,
-                                                   float y,
-                                                   float left,
-                                                   float top,
-                                                   float right,
-                                                   float bottom)
-        {
 
+        public static Pair getOffset(Handle handle,
+            float x,
+            float y,
+            float left,
+            float top,
+            float right,
+            float bottom)
+        {
             if (handle == null)
             {
                 return null;
@@ -139,7 +129,6 @@ namespace Xamarin.CircleImageCropperSample.Util
             // Calculate the offset from the appropriate handle.
             switch (handle.handleType)
             {
-
                 case HandleType.TOP_LEFT:
                     touchOffsetX = left - x;
                     touchOffsetY = top - y;
@@ -180,7 +169,7 @@ namespace Xamarin.CircleImageCropperSample.Util
                     break;
             }
 
-            Pair result = new Pair(touchOffsetX, touchOffsetY);
+            var result = new Pair(touchOffsetX, touchOffsetY);
             return result;
         }
 
@@ -198,13 +187,13 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return true if the touch point is in the target touch zone; false
          *         otherwise
          */
-        private static bool isInCornerTargetZone(float x,
-                                                    float y,
-                                                    float handleX,
-                                                    float handleY,
-                                                    float targetRadius)
-        {
 
+        private static bool isInCornerTargetZone(float x,
+            float y,
+            float handleX,
+            float handleY,
+            float targetRadius)
+        {
             if (Math.Abs(x - handleX) <= targetRadius && Math.Abs(y - handleY) <= targetRadius)
             {
                 return true;
@@ -225,14 +214,14 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return true if the touch point is in the target touch zone; false
          *         otherwise
          */
-        private static bool isInHorizontalTargetZone(float x,
-                                                        float y,
-                                                        float handleXStart,
-                                                        float handleXEnd,
-                                                        float handleY,
-                                                        float targetRadius)
-        {
 
+        private static bool isInHorizontalTargetZone(float x,
+            float y,
+            float handleXStart,
+            float handleXEnd,
+            float handleY,
+            float targetRadius)
+        {
             if (x > handleXStart && x < handleXEnd && Math.Abs(y - handleY) <= targetRadius)
             {
                 return true;
@@ -253,14 +242,14 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return true if the touch point is in the target touch zone; false
          *         otherwise
          */
-        private static bool isInVerticalTargetZone(float x,
-                                                      float y,
-                                                      float handleX,
-                                                      float handleYStart,
-                                                      float handleYEnd,
-                                                      float targetRadius)
-        {
 
+        private static bool isInVerticalTargetZone(float x,
+            float y,
+            float handleX,
+            float handleYStart,
+            float handleYEnd,
+            float targetRadius)
+        {
             if (Math.Abs(x - handleX) <= targetRadius && y > handleYStart && y < handleYEnd)
             {
                 return true;
@@ -281,14 +270,14 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return true if the touch point is inside the bounding rectangle; false
          *         otherwise
          */
-        private static bool isInCenterTargetZone(float x,
-                                                    float y,
-                                                    float left,
-                                                    float top,
-                                                    float right,
-                                                    float bottom)
-        {
 
+        private static bool isInCenterTargetZone(float x,
+            float y,
+            float left,
+            float top,
+            float right,
+            float bottom)
+        {
             if (x > left && x < right && y > top && y < bottom)
             {
                 return true;
@@ -306,9 +295,10 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @return true if it is small enough such that it should focus on the
          *         center; less than show_guidelines limit
          */
+
         private static bool focusCenter()
         {
-            return (!cropOverlayView.showGuidelines());
+            return (!CropOverlayView.showGuidelines());
         }
     }
 }

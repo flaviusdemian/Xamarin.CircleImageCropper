@@ -1,27 +1,19 @@
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
 using Android.Views;
-using Android.Widget;
 using Java.Lang;
-using xamarin.circleImageCropperSample.cropper;
-using Xamarin.CircleImageCropperSample.Cropwindow.Handle;
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
-using Xamarin.CircleImageCropperSample.Util;
+using Xamarin.CircleImageCropper.Cropper;
+using Xamarin.CircleImageCropper.Cropwindow.Handle;
+using Xamarin.CircleImageCropper.CropWindow.Pair;
+using Xamarin.CircleImageCropper.Util;
+using Edge = Xamarin.CircleImageCropper.CropWindow.Pair.Edge;
 using Exception = System.Exception;
 using Math = System.Math;
 
-namespace xamarin.circleImageCropperSample.cropWindow
+namespace Xamarin.CircleImageCropper.CropWindow
 {
-    public class cropOverlayView : View
+    public class CropOverlayView : View
     {
         // Private Constants ///////////////////////////////////////////////////////
 
@@ -30,11 +22,13 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
         // Gets default values from PaintUtil, sets a bunch of values such that the
         // corners will draw correctly
-        private static float DEFAULT_CORNER_THICKNESS_DP = PaintUtil.getCornerThickness();
-        private static float DEFAULT_LINE_THICKNESS_DP = PaintUtil.getLineThickness();
-        private static float DEFAULT_CORNER_OFFSET_DP = (DEFAULT_CORNER_THICKNESS_DP / 2) - (DEFAULT_LINE_THICKNESS_DP / 2);
-        private static float DEFAULT_CORNER_EXTENSION_DP = DEFAULT_CORNER_THICKNESS_DP / 2
-                                                                 + DEFAULT_CORNER_OFFSET_DP;
+        private static readonly float DEFAULT_CORNER_THICKNESS_DP = PaintUtil.getCornerThickness();
+        private static readonly float DEFAULT_LINE_THICKNESS_DP = PaintUtil.getLineThickness();
+
+        private static readonly float DEFAULT_CORNER_OFFSET_DP = (DEFAULT_CORNER_THICKNESS_DP/2) - (DEFAULT_LINE_THICKNESS_DP/2);
+
+        private static readonly float DEFAULT_CORNER_EXTENSION_DP = DEFAULT_CORNER_THICKNESS_DP/2 + DEFAULT_CORNER_OFFSET_DP;
+
         private static float DEFAULT_CORNER_LENGTH_DP = 20;
 
         // mGuidelines enumerations
@@ -45,86 +39,60 @@ namespace xamarin.circleImageCropperSample.cropWindow
         // Member Variables ////////////////////////////////////////////////////////
 
         // The Paint used to draw the white rectangle around the crop area.
-        private Paint mBorderPaint;
 
-        // The Paint used to draw the guidelines within the crop area when pressed.
-        private Paint mGuidelinePaint;
+        // Floats to save the current aspect ratio of the image
+        private static int mAspectRatioX = CropImageView.DEFAULT_ASPECT_RATIO_X;
+        private static int mAspectRatioY = CropImageView.DEFAULT_ASPECT_RATIO_Y;
 
-        // The Paint used to draw the corners of the Border
-        private Paint mCornerPaint;
+        // The aspect ratio that the crop area should maintain; this variable is
+        // only used when mMaintainAspectRatio is true.
 
-        // The Paint used to darken the surrounding areas outside the crop area.
+        // Whether the Crop View has been initialized for the first time
+        private bool initializedCropWindow;
         private Paint mBackgroundPaint;
 
         // The bounding box around the Bitmap that we are cropping.
         private Rect mBitmapRect;
-
-        // The radius of the touch zone (in pixels) around a given Handle.
-        private float mHandleRadius;
-
-        // An EdgeType of the crop window will snap to the corresponding EdgeType of a
-        // specified bounding box when the crop window EdgeType is less than or equal to
-        // this distance (in pixels) away from the bounding box EdgeType.
-        private float mSnapRadius;
-
-        // Holds the x and y offset between the exact touch location and the exact
-        // handle location that is activated. There may be an offset because we
-        // allow for some leeway (specified by mHandleRadius) in activating a
-        // handle. However, we want to maintain these offset values while the handle
-        // is being dragged so that the handle doesn't jump.
-        private Pair mTouchOffset;
-
-        // The Handle that is currently pressed; null if no Handle is pressed.
-        private Handle mPressedHandle;
-
-        // Flag indicating if the crop area should always be a certain aspect ratio
-        // (indicated by mTargetAspectRatio).
-        private bool mFixAspectRatio = cropImageView.DEFAULT_FIXED_ASPECT_RATIO;
-
-        // Floats to save the current aspect ratio of the image
-        private static int mAspectRatioX = cropImageView.DEFAULT_ASPECT_RATIO_X;
-        private static int mAspectRatioY = cropImageView.DEFAULT_ASPECT_RATIO_Y;
-
-        // The aspect ratio that the crop area should maintain; this variable is
-        // only used when mMaintainAspectRatio is true.
-        private float mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
-
-        // Instance variables for customizable attributes
-        private int mGuidelines;
-
-        // Whether the Crop View has been initialized for the first time
-        private bool initializedCropWindow = false;
+        private Paint mBorderPaint;
 
         // Instance variables for the corner values
         private float mCornerExtension;
-        private float mCornerOffset;
         private float mCornerLength;
+        private float mCornerOffset;
+        private Paint mCornerPaint;
+        private bool mFixAspectRatio = CropImageView.DEFAULT_FIXED_ASPECT_RATIO;
+        private Paint mGuidelinePaint;
+        private int mGuidelines;
+        private float mHandleRadius;
+        private Handle mPressedHandle;
+        private float mSnapRadius;
+        private float mTargetAspectRatio = ((float) mAspectRatioX)/mAspectRatioY;
+        private Android.Util.Pair mTouchOffset;
 
         // Constructors ////////////////////////////////////////////////////////////
 
-        public cropOverlayView(Context context)
+        public CropOverlayView(Context context)
             : base(context)
         {
             init(context);
         }
 
-        public cropOverlayView(Context context, IAttributeSet attrs)
+        public CropOverlayView(Context context, IAttributeSet attrs)
             : base(context, attrs)
         {
             init(context);
         }
 
-        //public cropOverlayView(Context context, IAttributeSet attrs, int defStyleAttr)
-        //    : base(context, attrs, defStyleAttr)
-        //{
-        //    init(context);
-        //}
+        public CropOverlayView(Context context, IAttributeSet attrs, int defStyleAttr)
+            : base(context, attrs, defStyleAttr)
+        {
+            init(context);
+        }
 
         // View Methods ////////////////////////////////////////////////////////////
 
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {
-
             // Initialize the crop window here because we need the size of the view
             // to have been determined.
             initCropWindow(mBitmapRect);
@@ -158,9 +126,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
                     }
                 }
                 // Draw the circular border
-                float cx = (EdgeManager.LEFT.coordinate + EdgeManager.RIGHT.coordinate) / 2;
-                float cy = (EdgeManager.TOP.coordinate + EdgeManager.BOTTOM.coordinate) / 2;
-                float radius = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate) / 2;
+                float cx = (EdgeManager.LEFT.coordinate + EdgeManager.RIGHT.coordinate)/2;
+                float cy = (EdgeManager.TOP.coordinate + EdgeManager.BOTTOM.coordinate)/2;
+                float radius = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate)/2;
 
                 canvas.DrawCircle(cx, cy, radius, mBorderPaint);
             }
@@ -172,7 +140,6 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
         public override bool OnTouchEvent(MotionEvent ev)
         {
-
             // If this View is not enabled, don't allow for touch interactions.
             if (!Enabled)
             {
@@ -181,7 +148,6 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
             switch (ev.Action)
             {
-
                 case MotionEventActions.Down:
                     onActionDown(ev.GetX(), ev.GetY());
                     return true;
@@ -205,11 +171,12 @@ namespace xamarin.circleImageCropperSample.cropWindow
         // Public Methods //////////////////////////////////////////////////////////
 
         /**
-         * Informs the cropOverlayView of the image's position relative to the
+         * Informs the CropOverlayView of the image's position relative to the
          * ImageView. This is necessary to call in order to draw the crop window.
          * 
          * @param bitmapRect the image's bounding box
          */
+
         public void setBitmapRect(Rect bitmapRect)
         {
             mBitmapRect = bitmapRect;
@@ -221,9 +188,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * 
          * @param bitmap the Bitmap to set
          */
+
         public void resetCropOverlayView()
         {
-
             if (initializedCropWindow)
             {
                 initCropWindow(mBitmapRect);
@@ -232,25 +199,23 @@ namespace xamarin.circleImageCropperSample.cropWindow
         }
 
         /**
-         * Sets the guidelines for the cropOverlayView to be either on, off, or to
+         * Sets the guidelines for the CropOverlayView to be either on, off, or to
          * show when resizing the application.
          * 
          * @param guidelines Integer that signals whether the guidelines should be
          *            on, off, or only showing when resizing.
          */
+
         public void setGuidelines(int guidelines)
         {
             if (guidelines < 0 || guidelines > 2)
                 throw new IllegalArgumentException("Guideline value must be set between 0 and 2. See documentation.");
-            else
-            {
-                mGuidelines = guidelines;
+            mGuidelines = guidelines;
 
-                if (initializedCropWindow)
-                {
-                    initCropWindow(mBitmapRect);
-                    Invalidate();
-                }
+            if (initializedCropWindow)
+            {
+                initCropWindow(mBitmapRect);
+                Invalidate();
             }
         }
 
@@ -261,6 +226,7 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param fixAspectRatio bool that signals whether the aspect ratio
          *            should be maintained.
          */
+
         public void setFixedAspectRatio(bool fixAspectRatio)
         {
             mFixAspectRatio = fixAspectRatio;
@@ -278,20 +244,18 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param aspectRatioX int that specifies the new X value of the aspect
          *            ratio
          */
+
         public void setAspectRatioX(int aspectRatioX)
         {
             if (aspectRatioX <= 0)
                 throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            else
-            {
-                mAspectRatioX = aspectRatioX;
-                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
+            mAspectRatioX = aspectRatioX;
+            mTargetAspectRatio = ((float) mAspectRatioX)/mAspectRatioY;
 
-                if (initializedCropWindow)
-                {
-                    initCropWindow(mBitmapRect);
-                    Invalidate();
-                }
+            if (initializedCropWindow)
+            {
+                initCropWindow(mBitmapRect);
+                Invalidate();
             }
         }
 
@@ -301,20 +265,18 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param aspectRatioY int that specifies the new Y value of the aspect
          *            ratio
          */
+
         public void setAspectRatioY(int aspectRatioY)
         {
             if (aspectRatioY <= 0)
                 throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            else
-            {
-                mAspectRatioY = aspectRatioY;
-                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
+            mAspectRatioY = aspectRatioY;
+            mTargetAspectRatio = ((float) mAspectRatioX)/mAspectRatioY;
 
-                if (initializedCropWindow)
-                {
-                    initCropWindow(mBitmapRect);
-                    Invalidate();
-                }
+            if (initializedCropWindow)
+            {
+                initCropWindow(mBitmapRect);
+                Invalidate();
             }
         }
 
@@ -331,34 +293,27 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param aspectRatioY float that specifies the new Y value of the aspect
          *            ratio
          */
+
         public void setInitialAttributeValues(int guidelines,
-                                              bool fixAspectRatio,
-                                              int aspectRatioX,
-                                              int aspectRatioY)
+            bool fixAspectRatio,
+            int aspectRatioX,
+            int aspectRatioY)
         {
             if (guidelines < 0 || guidelines > 2)
                 throw new IllegalArgumentException("Guideline value must be set between 0 and 2. See documentation.");
-            else
-                mGuidelines = guidelines;
+            mGuidelines = guidelines;
 
             mFixAspectRatio = fixAspectRatio;
 
             if (aspectRatioX <= 0)
                 throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            else
-            {
-                mAspectRatioX = aspectRatioX;
-                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
-            }
+            mAspectRatioX = aspectRatioX;
+            mTargetAspectRatio = ((float) mAspectRatioX)/mAspectRatioY;
 
             if (aspectRatioY <= 0)
                 throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            else
-            {
-                mAspectRatioY = aspectRatioY;
-                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
-            }
-
+            mAspectRatioY = aspectRatioY;
+            mTargetAspectRatio = ((float) mAspectRatioX)/mAspectRatioY;
         }
 
         // Private Methods /////////////////////////////////////////////////////////
@@ -372,8 +327,8 @@ namespace xamarin.circleImageCropperSample.cropWindow
                 mHandleRadius = HandleUtil.getTargetRadius(context);
 
                 mSnapRadius = TypedValue.ApplyDimension(ComplexUnitType.Dip,
-                                                        SNAP_RADIUS_DP,
-                                                        displayMetrics);
+                    SNAP_RADIUS_DP,
+                    displayMetrics);
 
                 mBorderPaint = PaintUtil.newBorderPaint(context);
                 mGuidelinePaint = PaintUtil.newGuidelinePaint();
@@ -382,18 +337,17 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
                 // Sets the values for the corner sizes
                 mCornerOffset = TypedValue.ApplyDimension(ComplexUnitType.Dip,
-                                                          DEFAULT_CORNER_OFFSET_DP,
-                                                          displayMetrics);
+                    DEFAULT_CORNER_OFFSET_DP,
+                    displayMetrics);
                 mCornerExtension = TypedValue.ApplyDimension(ComplexUnitType.Dip,
-                                                             DEFAULT_CORNER_EXTENSION_DP,
-                                                             displayMetrics);
+                    DEFAULT_CORNER_EXTENSION_DP,
+                    displayMetrics);
                 mCornerLength = TypedValue.ApplyDimension(ComplexUnitType.Dip,
-                                                          DEFAULT_CORNER_LENGTH_DP,
-                                                          displayMetrics);
+                    DEFAULT_CORNER_LENGTH_DP,
+                    displayMetrics);
 
                 // Sets guidelines to default until specified otherwise
-                mGuidelines = cropImageView.DEFAULT_GUIDELINES;
-
+                mGuidelines = CropImageView.DEFAULT_GUIDELINES;
             }
             catch (Exception ex)
             {
@@ -407,9 +361,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * 
          * @param bitmapRect the bounding box around the image being cropped
          */
+
         private void initCropWindow(Rect bitmapRect)
         {
-
             // Tells the attribute functions the crop window has already been
             // initialized
             if (initializedCropWindow == false)
@@ -417,65 +371,63 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
             if (mFixAspectRatio)
             {
-
                 // If the image aspect ratio is wider than the crop aspect ratio,
                 // then the image height is the determining initial length. Else,
                 // vice-versa.
                 if (AspectRatioUtil.calculateAspectRatio(bitmapRect) > mTargetAspectRatio)
                 {
-
                     EdgeManager.TOP.coordinate = bitmapRect.Top;
                     EdgeManager.BOTTOM.coordinate = bitmapRect.Bottom;
 
-                    float centerX = Width / 2f;
+                    float centerX = Width/2f;
 
                     // Limits the aspect ratio to no less than 40 wide or 40 tall
-                    float cropWidth = Math.Max(Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX,
-                                                    AspectRatioUtil.calculateWidth(EdgeManager.TOP.coordinate,
-                                                                                   EdgeManager.BOTTOM.coordinate,
-                                                                                   mTargetAspectRatio));
+                    float cropWidth = Math.Max(Edge.MIN_CROP_LENGTH_PX,
+                        AspectRatioUtil.calculateWidth(EdgeManager.TOP.coordinate,
+                            EdgeManager.BOTTOM.coordinate,
+                            mTargetAspectRatio));
 
                     // Create new TargetAspectRatio if the original one does not fit
                     // the screen
-                    if (cropWidth == Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX)
-                        mTargetAspectRatio = (Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX) / (EdgeManager.BOTTOM.coordinate - EdgeManager.TOP.coordinate);
+                    if (cropWidth == Edge.MIN_CROP_LENGTH_PX)
+                        mTargetAspectRatio = (Edge.MIN_CROP_LENGTH_PX)/
+                                             (EdgeManager.BOTTOM.coordinate - EdgeManager.TOP.coordinate);
 
-                    float halfCropWidth = cropWidth / 2f;
+                    float halfCropWidth = cropWidth/2f;
                     EdgeManager.LEFT.coordinate = (centerX - halfCropWidth);
                     EdgeManager.RIGHT.coordinate = (centerX + halfCropWidth);
-
                 }
                 else
                 {
-
                     EdgeManager.LEFT.coordinate = bitmapRect.Left;
                     EdgeManager.RIGHT.coordinate = bitmapRect.Right;
 
-                    float centerY = Height / 2f;
+                    float centerY = Height/2f;
 
                     // Limits the aspect ratio to no less than 40 wide or 40 tall
-                    float cropHeight = Math.Max(Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX,
-                                                     AspectRatioUtil.calculateHeight(EdgeManager.LEFT.coordinate,
-                                                                                     EdgeManager.RIGHT.coordinate,
-                                                                                     mTargetAspectRatio));
+                    float cropHeight = Math.Max(Edge.MIN_CROP_LENGTH_PX,
+                        AspectRatioUtil.calculateHeight(EdgeManager.LEFT.coordinate,
+                            EdgeManager.RIGHT.coordinate,
+                            mTargetAspectRatio));
 
                     // Create new TargetAspectRatio if the original one does not fit
                     // the screen
-                    if (cropHeight == Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX)
-                        mTargetAspectRatio = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate) / Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.MIN_CROP_LENGTH_PX;
+                    if (cropHeight == Edge.MIN_CROP_LENGTH_PX)
+                        mTargetAspectRatio = (EdgeManager.RIGHT.coordinate - EdgeManager.LEFT.coordinate)/
+                                             Edge.MIN_CROP_LENGTH_PX;
 
-                    float halfCropHeight = cropHeight / 2f;
+                    float halfCropHeight = cropHeight/2f;
                     EdgeManager.TOP.coordinate = (centerY - halfCropHeight);
                     EdgeManager.BOTTOM.coordinate = (centerY + halfCropHeight);
                 }
-
             }
             else
-            { // ... do not fix aspect ratio...
+            {
+                // ... do not fix aspect ratio...
 
                 // Initialize crop window to have 10% padding w/ respect to image.
-                float horizontalPadding = 0.1f * bitmapRect.Width();
-                float verticalPadding = 0.1f * bitmapRect.Height();
+                float horizontalPadding = 0.1f*bitmapRect.Width();
+                float verticalPadding = 0.1f*bitmapRect.Height();
 
                 EdgeManager.LEFT.coordinate = (bitmapRect.Left + horizontalPadding);
                 EdgeManager.TOP.coordinate = (bitmapRect.Top + verticalPadding);
@@ -491,36 +443,35 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * 
          * @return bool Whether the guidelines should be shown or not
          */
+
         public static bool showGuidelines()
         {
             if ((Math.Abs(EdgeManager.LEFT.coordinate - EdgeManager.RIGHT.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT)
-                || (Math.Abs(EdgeManager.TOP.coordinate - EdgeManager.BOTTOM.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT))
+                ||
+                (Math.Abs(EdgeManager.TOP.coordinate - EdgeManager.BOTTOM.coordinate) < DEFAULT_SHOW_GUIDELINES_LIMIT))
                 return false;
-            else
-                return true;
+            return true;
         }
 
         private void drawRuleOfThirdsGuidelines(Canvas canvas)
         {
-
-
             float left = EdgeManager.LEFT.coordinate;
             float top = EdgeManager.TOP.coordinate;
             float right = EdgeManager.RIGHT.coordinate;
             float bottom = EdgeManager.BOTTOM.coordinate;
 
 
-            float cx = (left + right) / 2;
-            float cy = (top + bottom) / 2;
-            float radius = (right - left) / 2;
+            float cx = (left + right)/2;
+            float cy = (top + bottom)/2;
+            float radius = (right - left)/2;
 
-            Path circleSelectionPath = new Path();
+            var circleSelectionPath = new Path();
             circleSelectionPath.AddCircle(cx, cy, radius, Path.Direction.Cw);
             canvas.ClipPath(circleSelectionPath, Region.Op.Replace);
 
 
             // Draw vertical guidelines.
-            float oneThirdCropWidth = Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.getWidth() / 3;
+            float oneThirdCropWidth = Edge.getWidth()/3;
 
             float x1 = left + oneThirdCropWidth;
             canvas.DrawLine(x1, top, x1, bottom, mGuidelinePaint);
@@ -528,7 +479,7 @@ namespace xamarin.circleImageCropperSample.cropWindow
             canvas.DrawLine(x2, top, x2, bottom, mGuidelinePaint);
 
             // Draw horizontal guidelines.
-            float oneThirdCropHeight = Xamarin.CircleImageCropperSample.Cropwindow.Pair.Edge.getHeight() / 3;
+            float oneThirdCropHeight = Edge.getHeight()/3;
 
             float y1 = top + oneThirdCropHeight;
             canvas.DrawLine(left, y1, right, y1, mGuidelinePaint);
@@ -538,21 +489,21 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
         private void drawBackground(Canvas canvas, Rect bitmapRect)
         {
-
             float left = EdgeManager.LEFT.coordinate;
             float top = EdgeManager.TOP.coordinate;
             float right = EdgeManager.RIGHT.coordinate;
             float bottom = EdgeManager.BOTTOM.coordinate;
 
-            float cx = (left + right) / 2;
-            float cy = (top + bottom) / 2;
-            float radius = (right - left) / 2;
+            float cx = (left + right)/2;
+            float cy = (top + bottom)/2;
+            float radius = (right - left)/2;
 
 
-            Path fullCanvasPath = new Path();
-            fullCanvasPath.AddRect(bitmapRect.Left, bitmapRect.Top, bitmapRect.Right, bitmapRect.Bottom, Path.Direction.Cw);
+            var fullCanvasPath = new Path();
+            fullCanvasPath.AddRect(bitmapRect.Left, bitmapRect.Top, bitmapRect.Right, bitmapRect.Bottom,
+                Path.Direction.Cw);
 
-            Path circleSelectionPath = new Path();
+            var circleSelectionPath = new Path();
             circleSelectionPath.AddCircle(cx, cy, radius, Path.Direction.Ccw);
 
             canvas.ClipPath(fullCanvasPath);
@@ -560,12 +511,10 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
             //Draw semi-transparent background
             canvas.DrawRect(bitmapRect.Left, bitmapRect.Top, bitmapRect.Right, bitmapRect.Bottom, mBackgroundPaint);
-
         }
 
         private void drawCorners(Canvas canvas)
         {
-
             float left = EdgeManager.LEFT.coordinate;
             float top = EdgeManager.TOP.coordinate;
             float right = EdgeManager.RIGHT.coordinate;
@@ -575,44 +524,43 @@ namespace xamarin.circleImageCropperSample.cropWindow
 
             // Top left
             canvas.DrawLine(left - mCornerOffset,
-                            top - mCornerExtension,
-                            left - mCornerOffset,
-                            top + mCornerLength,
-                            mCornerPaint);
+                top - mCornerExtension,
+                left - mCornerOffset,
+                top + mCornerLength,
+                mCornerPaint);
             canvas.DrawLine(left, top - mCornerOffset, left + mCornerLength, top - mCornerOffset, mCornerPaint);
 
             // Top right
             canvas.DrawLine(right + mCornerOffset,
-                            top - mCornerExtension,
-                            right + mCornerOffset,
-                            top + mCornerLength,
-                            mCornerPaint);
+                top - mCornerExtension,
+                right + mCornerOffset,
+                top + mCornerLength,
+                mCornerPaint);
             canvas.DrawLine(right, top - mCornerOffset, right - mCornerLength, top - mCornerOffset, mCornerPaint);
 
             // Bottom left
             canvas.DrawLine(left - mCornerOffset,
-                            bottom + mCornerExtension,
-                            left - mCornerOffset,
-                            bottom - mCornerLength,
-                            mCornerPaint);
+                bottom + mCornerExtension,
+                left - mCornerOffset,
+                bottom - mCornerLength,
+                mCornerPaint);
             canvas.DrawLine(left,
-                            bottom + mCornerOffset,
-                            left + mCornerLength,
-                            bottom + mCornerOffset,
-                            mCornerPaint);
+                bottom + mCornerOffset,
+                left + mCornerLength,
+                bottom + mCornerOffset,
+                mCornerPaint);
 
             // Bottom left
             canvas.DrawLine(right + mCornerOffset,
-                            bottom + mCornerExtension,
-                            right + mCornerOffset,
-                            bottom - mCornerLength,
-                            mCornerPaint);
+                bottom + mCornerExtension,
+                right + mCornerOffset,
+                bottom - mCornerLength,
+                mCornerPaint);
             canvas.DrawLine(right,
-                            bottom + mCornerOffset,
-                            right - mCornerLength,
-                            bottom + mCornerOffset,
-                            mCornerPaint);
-
+                bottom + mCornerOffset,
+                right - mCornerLength,
+                bottom + mCornerOffset,
+                mCornerPaint);
         }
 
         /**
@@ -621,9 +569,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param x the x-coordinate of the down action
          * @param y the y-coordinate of the down action
          */
+
         private void onActionDown(float x, float y)
         {
-
             float left = EdgeManager.LEFT.coordinate;
             float top = EdgeManager.TOP.coordinate;
             float right = EdgeManager.RIGHT.coordinate;
@@ -646,9 +594,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * Handles a {@link MotionEvent#ACTION_UP} or
          * {@link MotionEvent#ACTION_CANCEL} event.
          */
+
         private void onActionUp()
         {
-
             if (mPressedHandle == null)
                 return;
 
@@ -663,9 +611,9 @@ namespace xamarin.circleImageCropperSample.cropWindow
          * @param x the x-coordinate of the move event
          * @param y the y-coordinate of the move event
          */
+
         private void onActionMove(float x, float y)
         {
-
             if (mPressedHandle == null)
                 return;
 
@@ -674,8 +622,8 @@ namespace xamarin.circleImageCropperSample.cropWindow
             // We want to maintain the initial touch's distance to the pressed
             // handle so that the crop window size does not "jump".
             //TODO: FIX
-            x += (float)mTouchOffset.First;
-            y += (float)mTouchOffset.Second;
+            x += (float) mTouchOffset.First;
+            y += (float) mTouchOffset.Second;
 
             // Calculate the new crop window size/position.
             if (mFixAspectRatio)

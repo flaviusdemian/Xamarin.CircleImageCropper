@@ -2,7 +2,7 @@ using System;
 using Android.Graphics;
 using Android.Views;
 
-namespace Xamarin.CircleImageCropperSample.Util
+namespace Xamarin.CircleImageCropper.Util
 {
     public class ImageViewUtil
     {

@@ -1,36 +1,23 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Widget;
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
+using Xamarin.CircleImageCropper.CropWindow.Pair;
 
-namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
+namespace Xamarin.CircleImageCropper.Cropwindow.Handle
 {
     public class CornerHandleHelper : HandleHelper
     {
-
         public CornerHandleHelper(Edge horizontalEdge, Edge verticalEdge)
             : base(horizontalEdge, verticalEdge)
         {
-
         }
 
         // HandleHelper Methods ////////////////////////////////////////////////////
 
         public override void UpdateCropWindow(float x,
-                              float y,
-                              float targetAspectRatio,
-                              Rect imageRect,
-                              float snapRadius)
+            float y,
+            float targetAspectRatio,
+            Rect imageRect,
+            float snapRadius)
         {
-
             EdgePair activeEdges = GetActiveEdges(x, y, targetAspectRatio);
             Edge primaryEdge = activeEdges.primary;
             Edge secondaryEdge = activeEdges.secondary;

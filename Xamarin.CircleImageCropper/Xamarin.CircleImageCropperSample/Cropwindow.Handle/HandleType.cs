@@ -1,8 +1,6 @@
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
-
-namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
+namespace Xamarin.CircleImageCropper.Cropwindow.Handle
 {
-    class HandleType
+    internal class HandleType
     {
         public const int TOP_LEFT = 0;
         public const int TOP_RIGHT = 1;

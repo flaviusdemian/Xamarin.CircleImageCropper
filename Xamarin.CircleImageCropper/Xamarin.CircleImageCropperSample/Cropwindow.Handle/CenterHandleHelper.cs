@@ -1,18 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
-using Xamarin.CircleImageCropperSample.Cropwindow.Pair;
+using Xamarin.CircleImageCropper.CropWindow.Pair;
 
-namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
+namespace Xamarin.CircleImageCropper.Cropwindow.Handle
 {
     public class CenterHandleHelper : HandleHelper
     {
@@ -21,23 +10,21 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         public CenterHandleHelper()
             : base(null, null)
         {
-
         }
 
         // HandleHelper Methods ////////////////////////////////////////////////////
         public override void UpdateCropWindow(float x,
-                              float y,
-                              Rect imageRect,
-                              float snapRadius)
+            float y,
+            Rect imageRect,
+            float snapRadius)
         {
-
             float left = EdgeManager.LEFT.coordinate;
             float top = EdgeManager.TOP.coordinate;
             float right = EdgeManager.RIGHT.coordinate;
             float bottom = EdgeManager.BOTTOM.coordinate;
 
-            float currentCenterX = (left + right) / 2;
-            float currentCenterY = (top + bottom) / 2;
+            float currentCenterX = (left + right)/2;
+            float currentCenterY = (top + bottom)/2;
 
             float offsetX = x - currentCenterX;
             float offsetY = y - currentCenterY;
@@ -74,12 +61,11 @@ namespace Xamarin.CircleImageCropperSample.Cropwindow.Handle
         }
 
         public override void UpdateCropWindow(float x,
-                              float y,
-                              float targetAspectRatio,
-                              Rect imageRect,
-                              float snapRadius)
+            float y,
+            float targetAspectRatio,
+            Rect imageRect,
+            float snapRadius)
         {
-
             UpdateCropWindow(x, y, imageRect, snapRadius);
         }
     }

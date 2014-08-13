@@ -9,8 +9,8 @@
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Xamarin.CircleImageCropper</RootNamespace>
-    <AssemblyName>Xamarin.CircleImageCropper</AssemblyName>
+    <RootNamespace>Xamarin.CircleImageCropper.Sample</RootNamespace>
+    <AssemblyName>Xamarin.CircleImageCropper.Sample</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidApplication>true</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
@@ -97,9 +97,9 @@
     <AndroidResource Include="Resources\menu\main.axml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Xamarin.CircleImageCropperSample\Xamarin.CircleImageCropperSample.csproj">
+    <ProjectReference Include="..\Xamarin.CircleImageCropperSample\Xamarin.CircleImageCropper.csproj">
       <Project>{729dfb52-26a8-4d26-bca6-23a9a1e564f9}</Project>
-      <Name>Xamarin.CircleImageCropperSample</Name>
+      <Name>Xamarin.CircleImageCropper</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

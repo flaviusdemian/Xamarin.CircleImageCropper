@@ -1,18 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
 using Android.Content;
 using Android.Graphics;
-using Android.OS;
-using Android.Runtime;
 using Android.Util;
-using Android.Views;
-using Android.Widget;
 
-namespace Xamarin.CircleImageCropperSample.Util
+namespace Xamarin.CircleImageCropper.Util
 {
     public class PaintUtil
     {
@@ -33,12 +24,14 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @param context the Context
          * @return new Paint object
          */
+
         public static Paint newBorderPaint(Context context)
         {
             // Set the line thickness for the crop window border.
-            float lineThicknessPx = TypedValue.ApplyDimension(ComplexUnitType.Dip, DEFAULT_LINE_THICKNESS_DP, context.Resources.DisplayMetrics);
+            float lineThicknessPx = TypedValue.ApplyDimension(ComplexUnitType.Dip, DEFAULT_LINE_THICKNESS_DP,
+                context.Resources.DisplayMetrics);
 
-            Paint borderPaint = new Paint();
+            var borderPaint = new Paint();
             borderPaint.Color = Color.ParseColor(SEMI_TRANSPARENT);
             borderPaint.StrokeWidth = lineThicknessPx;
             borderPaint.SetStyle(Paint.Style.Stroke);
@@ -52,9 +45,10 @@ namespace Xamarin.CircleImageCropperSample.Util
          * 
          * @return the new Paint object
          */
+
         public static Paint newGuidelinePaint()
         {
-            Paint paint = new Paint();
+            var paint = new Paint();
             paint.Color = Color.ParseColor(SEMI_TRANSPARENT);
             paint.StrokeWidth = DEFAULT_GUIDELINE_THICKNESS_PX;
 
@@ -68,9 +62,10 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @param context the Context
          * @return the new Paint object
          */
+
         public static Paint newBackgroundPaint(Context context)
         {
-            Paint paint = new Paint();
+            var paint = new Paint();
             paint.Color = Color.ParseColor(DEFAULT_BACKGROUND_COLOR_ID);
 
             return paint;
@@ -82,15 +77,15 @@ namespace Xamarin.CircleImageCropperSample.Util
          * @param context the Context
          * @return the new Paint object
          */
+
         public static Paint newCornerPaint(Context context)
         {
-
             // Set the line thickness for the crop window border.
-            float lineThicknessPx = TypedValue.ApplyDimension(ComplexUnitType.Dip, 
-                                                                   DEFAULT_CORNER_THICKNESS_DP,
-                                                                   context.Resources.DisplayMetrics);
+            float lineThicknessPx = TypedValue.ApplyDimension(ComplexUnitType.Dip,
+                DEFAULT_CORNER_THICKNESS_DP,
+                context.Resources.DisplayMetrics);
 
-            Paint cornerPaint = new Paint();
+            var cornerPaint = new Paint();
             //TODO: FIX
             //cornerPaint.Color = DEFAULT_CORNER_COLOR;
             cornerPaint.StrokeWidth = lineThicknessPx;
@@ -104,6 +99,7 @@ namespace Xamarin.CircleImageCropperSample.Util
          * 
          * @return Float equivalent to the corner thickness
          */
+
         public static float getCornerThickness()
         {
             return DEFAULT_CORNER_THICKNESS_DP;
@@ -114,6 +110,7 @@ namespace Xamarin.CircleImageCropperSample.Util
          * 
          * @return Float equivalent to the line thickness
          */
+
         public static float getLineThickness()
         {
             return DEFAULT_LINE_THICKNESS_DP;
