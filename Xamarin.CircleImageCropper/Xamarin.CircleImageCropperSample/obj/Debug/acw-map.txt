@@ -1,2 +1,0 @@
-xamarin.circleImageCropperSample.cropper.cropImageView;xamarin.circleimagecroppersample.cropper.cropImageView
-xamarin.circleImageCropperSample.cropWindow.cropOverlayView;xamarin.circleimagecroppersample.cropwindow.cropOverlayView

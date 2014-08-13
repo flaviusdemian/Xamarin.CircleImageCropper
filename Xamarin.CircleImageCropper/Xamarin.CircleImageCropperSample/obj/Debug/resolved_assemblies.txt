@@ -1,1 +1,0 @@
-C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\Xamarin.CircleImageCropperSample\bin\Debug\Xamarin.CircleImageCropperSample.dll
