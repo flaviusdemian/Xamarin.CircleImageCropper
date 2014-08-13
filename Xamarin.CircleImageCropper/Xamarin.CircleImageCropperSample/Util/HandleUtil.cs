@@ -298,7 +298,7 @@ namespace Xamarin.CircleImageCropper.Util
 
         private static bool focusCenter()
         {
-            return (!CropOverlayView.showGuidelines());
+            return (!CropOverlayView.ShowGuidelines());
         }
     }
 }

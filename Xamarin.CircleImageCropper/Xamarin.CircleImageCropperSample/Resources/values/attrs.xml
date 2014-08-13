@@ -1,6 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
 <resources>
-
-    <declare-styleable name="cropImageView">
+    <declare-styleable name="CropImageView">
         <attr name="guidelines">
             <enum name="on" value="2"/>
             <enum name="onTouch" value="1"/>
@@ -11,5 +11,4 @@
         <attr name="aspectRatioY" format= "integer"/>
         <attr name="imageResource" format="reference"/>
     </declare-styleable>
-
 </resources>

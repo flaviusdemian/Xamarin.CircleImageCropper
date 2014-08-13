@@ -16,7 +16,7 @@ using Orientation = Android.Media.Orientation;
 
 namespace Xamarin.CircleImageCropper.Cropper
 {
-    public class CropImageView : FrameLayout
+    public sealed class CropImageView : FrameLayout
     {
         // Private Constants ///////////////////////////////////////////////////////
 
@@ -51,7 +51,8 @@ namespace Xamarin.CircleImageCropper.Cropper
         public CropImageView(Context context)
             : base(context)
         {
-            init(context);
+            int x = 0;
+            //Init(context);
         }
 
         public CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
@@ -62,22 +63,20 @@ namespace Xamarin.CircleImageCropper.Cropper
         public CropImageView(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
-            init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs)
             : base(context, attrs)
         {
-            TypedArray ta = context.ObtainStyledAttributes(attrs, Resource.Styleable.cropImageView, 0, 0);
-
+            TypedArray ta = context.ObtainStyledAttributes(attrs, Resource.Styleable.CropImageView, 0, 0);
             try
             {
-                mGuidelines = ta.GetInteger(Resource.Styleable.cropImageView_guidelines, DEFAULT_GUIDELINES);
-                mFixAspectRatio = ta.GetBoolean(Resource.Styleable.cropImageView_fixAspectRatio,
+                mGuidelines = ta.GetInteger(Resource.Styleable.CropImageView_guidelines, DEFAULT_GUIDELINES);
+                mFixAspectRatio = ta.GetBoolean(Resource.Styleable.CropImageView_fixAspectRatio,
                     DEFAULT_FIXED_ASPECT_RATIO);
-                mAspectRatioX = ta.GetInteger(Resource.Styleable.cropImageView_aspectRatioX, DEFAULT_ASPECT_RATIO_X);
-                mAspectRatioY = ta.GetInteger(Resource.Styleable.cropImageView_aspectRatioY, DEFAULT_ASPECT_RATIO_Y);
-                mImageResource = ta.GetResourceId(Resource.Styleable.cropImageView_imageResource, DEFAULT_IMAGE_RESOURCE);
+                mAspectRatioX = ta.GetInteger(Resource.Styleable.CropImageView_aspectRatioX, DEFAULT_ASPECT_RATIO_X);
+                mAspectRatioY = ta.GetInteger(Resource.Styleable.CropImageView_aspectRatioY, DEFAULT_ASPECT_RATIO_Y);
+                mImageResource = ta.GetResourceId(Resource.Styleable.CropImageView_imageResource, DEFAULT_IMAGE_RESOURCE);
             }
             catch (Exception ex)
             {
@@ -88,7 +87,7 @@ namespace Xamarin.CircleImageCropper.Cropper
                 ta.Recycle();
             }
 
-            init(context);
+            Init(context);
         }
 
         // View Methods ////////////////////////////////////////////////////////////
@@ -96,30 +95,42 @@ namespace Xamarin.CircleImageCropper.Cropper
         protected override IParcelable OnSaveInstanceState()
         {
             var bundle = new Bundle();
-
-            bundle.PutParcelable("instanceState", base.OnSaveInstanceState());
-            bundle.PutInt(DEGREES_ROTATED, mDegreesRotated);
-
+            try
+            {
+                bundle.PutParcelable("instanceState", base.OnSaveInstanceState());
+                bundle.PutInt(DEGREES_ROTATED, mDegreesRotated);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
             return bundle;
         }
 
         protected override void OnRestoreInstanceState(IParcelable parcelable)
         {
-            if (parcelable is Bundle)
+            try
             {
-                var bundle = (Bundle) parcelable;
+                if (parcelable is Bundle)
+                {
+                    var bundle = (Bundle)parcelable;
 
-                // Fixes the rotation of the image when orientation changes.
-                mDegreesRotated = bundle.GetInt(DEGREES_ROTATED);
-                int tempDegrees = mDegreesRotated;
-                rotateImage(mDegreesRotated);
-                mDegreesRotated = tempDegrees;
-                //TODO: THIS SHOULD WORK, FIX
-                base.OnRestoreInstanceState(bundle.GetParcelable("instanceState").JavaCast<IParcelable>());
+                    // Fixes the rotation of the image when orientation changes.
+                    mDegreesRotated = bundle.GetInt(DEGREES_ROTATED);
+                    int tempDegrees = mDegreesRotated;
+                    RotateImage(mDegreesRotated);
+                    mDegreesRotated = tempDegrees;
+                    //TODO: THIS SHOULD WORK, FIX
+                    base.OnRestoreInstanceState(bundle.GetParcelable("instanceState").JavaCast<IParcelable>());
+                }
+                else
+                {
+                    base.OnRestoreInstanceState(parcelable);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                base.OnRestoreInstanceState(parcelable);
+                ex.ToString();
             }
         }
 
@@ -128,11 +139,11 @@ namespace Xamarin.CircleImageCropper.Cropper
             if (mBitmap != null)
             {
                 Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, this);
-                mCropOverlayView.setBitmapRect(bitmapRect);
+                mCropOverlayView.SetBitmapRect(bitmapRect);
             }
             else
             {
-                mCropOverlayView.setBitmapRect(EMPTY_RECT);
+                mCropOverlayView.SetBitmapRect(EMPTY_RECT);
             }
         }
 
@@ -140,9 +151,9 @@ namespace Xamarin.CircleImageCropper.Cropper
         {
             try
             {
-                var widthMode = (int) MeasureSpec.GetMode(widthMeasureSpec);
+                var widthMode = (int)MeasureSpec.GetMode(widthMeasureSpec);
                 int widthSize = MeasureSpec.GetSize(widthMeasureSpec);
-                var heightMode = (int) MeasureSpec.GetMode(heightMeasureSpec);
+                var heightMode = (int)MeasureSpec.GetMode(heightMeasureSpec);
                 int heightSize = MeasureSpec.GetSize(heightMeasureSpec);
 
                 if (mBitmap != null)
@@ -163,11 +174,11 @@ namespace Xamarin.CircleImageCropper.Cropper
                     // Checks if either width or height needs to be fixed
                     if (widthSize < mBitmap.Width)
                     {
-                        viewToBitmapWidthRatio = widthSize/(double) mBitmap.Width;
+                        viewToBitmapWidthRatio = widthSize / (double)mBitmap.Width;
                     }
                     if (heightSize < mBitmap.Height)
                     {
-                        viewToBitmapHeightRatio = heightSize/(double) mBitmap.Height;
+                        viewToBitmapHeightRatio = heightSize / (double)mBitmap.Height;
                     }
 
                     // If either needs to be fixed, choose smallest ratio and calculate
@@ -178,26 +189,26 @@ namespace Xamarin.CircleImageCropper.Cropper
                         if (viewToBitmapWidthRatio <= viewToBitmapHeightRatio)
                         {
                             desiredWidth = widthSize;
-                            desiredHeight = (int) (mBitmap.Height*viewToBitmapWidthRatio);
+                            desiredHeight = (int)(mBitmap.Height * viewToBitmapWidthRatio);
                         }
                         else
                         {
                             desiredHeight = heightSize;
-                            desiredWidth = (int) (mBitmap.Width*viewToBitmapHeightRatio);
+                            desiredWidth = (int)(mBitmap.Width * viewToBitmapHeightRatio);
                         }
                     }
 
                         // Otherwise, the picture is within frame layout bounds. Desired
-                        // width is
-                        // simply picture size
+                    // width is
+                    // simply picture size
                     else
                     {
                         desiredWidth = mBitmap.Width;
                         desiredHeight = mBitmap.Height;
                     }
 
-                    int width = getOnMeasureSpec(widthMode, widthSize, desiredWidth);
-                    int height = getOnMeasureSpec(heightMode, heightSize, desiredHeight);
+                    int width = GetOnMeasureSpec(widthMode, widthSize, desiredWidth);
+                    int height = GetOnMeasureSpec(heightMode, heightSize, desiredHeight);
 
                     mLayoutWidth = width;
                     mLayoutHeight = height;
@@ -206,14 +217,14 @@ namespace Xamarin.CircleImageCropper.Cropper
                         mBitmap.Height,
                         mLayoutWidth,
                         mLayoutHeight);
-                    mCropOverlayView.setBitmapRect(bitmapRect);
+                    mCropOverlayView.SetBitmapRect(bitmapRect);
 
                     // MUST CALL THIS
                     SetMeasuredDimension(mLayoutWidth, mLayoutHeight);
                 }
                 else
                 {
-                    mCropOverlayView.setBitmapRect(EMPTY_RECT);
+                    mCropOverlayView.SetBitmapRect(EMPTY_RECT);
                     SetMeasuredDimension(widthSize, heightSize);
                 }
             }
@@ -263,14 +274,14 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @param bitmap the Bitmap to set
          */
 
-        public void setImageBitmap(Bitmap bitmap)
+        public void SetImageBitmap(Bitmap bitmap)
         {
             mBitmap = bitmap;
             mImageView.SetImageBitmap(mBitmap);
 
             if (mCropOverlayView != null)
             {
-                mCropOverlayView.resetCropOverlayView();
+                mCropOverlayView.ResetCropOverlayView();
             }
         }
 
@@ -284,52 +295,59 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @param exif the EXIF information about this bitmap; may be null
          */
 
-        public void setImageBitmap(Bitmap bitmap, ExifInterface exif)
+        public void SetImageBitmap(Bitmap bitmap, ExifInterface exif)
         {
-            if (bitmap == null)
+            try
             {
-                return;
-            }
+                if (bitmap == null)
+                {
+                    return;
+                }
 
-            if (exif == null)
-            {
-                setImageBitmap(bitmap);
-                return;
-            }
+                if (exif == null)
+                {
+                    SetImageBitmap(bitmap);
+                    return;
+                }
 
-            var matrix = new Matrix();
-            int orientation = exif.GetAttributeInt(ExifInterface.TagOrientation, 1);
-            int rotate = -1;
-            //TODO CHECK THIS FIX
-            switch (orientation)
-            {
-                case (int) Orientation.Rotate270:
-                    rotate = 270;
-                    break;
-                case (int) Orientation.Rotate180:
-                    rotate = 180;
-                    break;
-                case (int) Orientation.Rotate90:
-                    rotate = 90;
-                    break;
-            }
+                var matrix = new Matrix();
+                int orientation = exif.GetAttributeInt(ExifInterface.TagOrientation, 1);
+                int rotate = -1;
+                //TODO CHECK THIS FIX
+                switch (orientation)
+                {
+                    case (int)Orientation.Rotate270:
+                        rotate = 270;
+                        break;
+                    case (int)Orientation.Rotate180:
+                        rotate = 180;
+                        break;
+                    case (int)Orientation.Rotate90:
+                        rotate = 90;
+                        break;
+                }
 
-            if (rotate == -1)
-            {
-                setImageBitmap(bitmap);
+                if (rotate == -1)
+                {
+                    SetImageBitmap(bitmap);
+                }
+                else
+                {
+                    matrix.PostRotate(rotate);
+                    Bitmap rotatedBitmap = Bitmap.CreateBitmap(bitmap,
+                        0,
+                        0,
+                        bitmap.Width,
+                        bitmap.Height,
+                        matrix,
+                        true);
+                    SetImageBitmap(rotatedBitmap);
+                    bitmap.Recycle();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                matrix.PostRotate(rotate);
-                Bitmap rotatedBitmap = Bitmap.CreateBitmap(bitmap,
-                    0,
-                    0,
-                    bitmap.Width,
-                    bitmap.Height,
-                    matrix,
-                    true);
-                setImageBitmap(rotatedBitmap);
-                bitmap.Recycle();
+                ex.ToString();
             }
         }
 
@@ -339,12 +357,12 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @param resId the drawable resource ID to set
          */
 
-        public void setImageResource(int resId)
+        public void SetImageResource(int resId)
         {
             if (resId != 0)
             {
                 Bitmap bitmap = BitmapFactory.DecodeResource(Resources, resId);
-                setImageBitmap(bitmap);
+                SetImageBitmap(bitmap);
             }
         }
 
@@ -354,42 +372,50 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @return a new Bitmap representing the cropped image
          */
 
-        public Bitmap getCroppedImage()
+        public Bitmap GetCroppedImage()
         {
-            Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
+            try
+            {
+                Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
 
-            // Get the scale factor between the actual Bitmap dimensions and the
-            // displayed dimensions for width.
-            float actualImageWidth = mBitmap.Width;
-            float displayedImageWidth = displayedImageRect.Width();
-            float scaleFactorWidth = actualImageWidth/displayedImageWidth;
+                // Get the scale factor between the actual Bitmap dimensions and the
+                // displayed dimensions for width.
+                float actualImageWidth = mBitmap.Width;
+                float displayedImageWidth = displayedImageRect.Width();
+                float scaleFactorWidth = actualImageWidth / displayedImageWidth;
 
-            // Get the scale factor between the actual Bitmap dimensions and the
-            // displayed dimensions for height.
-            float actualImageHeight = mBitmap.Height;
-            float displayedImageHeight = displayedImageRect.Height();
-            float scaleFactorHeight = actualImageHeight/displayedImageHeight;
+                // Get the scale factor between the actual Bitmap dimensions and the
+                // displayed dimensions for height.
+                float actualImageHeight = mBitmap.Height;
+                float displayedImageHeight = displayedImageRect.Height();
+                float scaleFactorHeight = actualImageHeight / displayedImageHeight;
 
-            // Get crop window position relative to the displayed image.
-            float cropWindowX = EdgeManager.LEFT.coordinate - displayedImageRect.Left;
-            float cropWindowY = EdgeManager.TOP.coordinate - displayedImageRect.Top;
-            float cropWindowWidth = Edge.getWidth();
-            float cropWindowHeight = Edge.getHeight();
+                // Get crop window position relative to the displayed image.
+                float cropWindowX = EdgeManager.LEFT.coordinate - displayedImageRect.Left;
+                float cropWindowY = EdgeManager.TOP.coordinate - displayedImageRect.Top;
+                float cropWindowWidth = Edge.getWidth();
+                float cropWindowHeight = Edge.getHeight();
 
-            // Scale the crop window position to the actual size of the Bitmap.
-            float actualCropX = cropWindowX*scaleFactorWidth;
-            float actualCropY = cropWindowY*scaleFactorHeight;
-            float actualCropWidth = cropWindowWidth*scaleFactorWidth;
-            float actualCropHeight = cropWindowHeight*scaleFactorHeight;
+                // Scale the crop window position to the actual size of the Bitmap.
+                float actualCropX = cropWindowX * scaleFactorWidth;
+                float actualCropY = cropWindowY * scaleFactorHeight;
+                float actualCropWidth = cropWindowWidth * scaleFactorWidth;
+                float actualCropHeight = cropWindowHeight * scaleFactorHeight;
 
-            // Crop the subset from the original Bitmap.
-            Bitmap croppedBitmap = Bitmap.CreateBitmap(mBitmap,
-                (int) actualCropX,
-                (int) actualCropY,
-                (int) actualCropWidth,
-                (int) actualCropHeight);
+                // Crop the subset from the original Bitmap.
+                Bitmap croppedBitmap = Bitmap.CreateBitmap(mBitmap,
+                    (int)actualCropX,
+                    (int)actualCropY,
+                    (int)actualCropWidth,
+                    (int)actualCropHeight);
 
-            return croppedBitmap;
+                return croppedBitmap;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            return null;
         }
 
         /**
@@ -398,29 +424,36 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @return a new Circular Bitmap representing the cropped image
          */
 
-        public Bitmap getCroppedCircleImage()
+        public Bitmap GetCroppedCircleImage()
         {
-            Bitmap bitmap = getCroppedImage();
+            try
+            {
+                Bitmap bitmap = GetCroppedImage();
+                Bitmap output = Bitmap.CreateBitmap(bitmap.Width,
+                    bitmap.Height, Bitmap.Config.Argb8888);
+                var canvas = new Canvas(output);
+                //TODO: FIX THIS
+                //int color = 0xff424242;
+                var paint = new Paint();
+                var rect = new Rect(0, 0, bitmap.Width, bitmap.Height);
 
-            Bitmap output = Bitmap.CreateBitmap(bitmap.Width,
-                bitmap.Height, Bitmap.Config.Argb8888);
-            var canvas = new Canvas(output);
-            //TODO: FIX THIS
-            //int color = 0xff424242;
-            var paint = new Paint();
-            var rect = new Rect(0, 0, bitmap.Width, bitmap.Height);
-
-            paint.AntiAlias = true;
-            canvas.DrawARGB(0, 0, 0, 0);
-            //TODO: FIX THIS
-            //paint.Color = color;
-            canvas.DrawCircle(bitmap.Width/2, bitmap.Height/2,
-                bitmap.Width/2, paint);
-            paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.SrcIn));
-            canvas.DrawBitmap(bitmap, rect, rect, paint);
-            //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
-            //return _bmp;
-            return output;
+                paint.AntiAlias = true;
+                canvas.DrawARGB(0, 0, 0, 0);
+                //TODO: FIX THIS
+                //paint.Color = color;
+                canvas.DrawCircle(bitmap.Width / 2, bitmap.Height / 2,
+                    bitmap.Width / 2, paint);
+                paint.SetXfermode(new PorterDuffXfermode(PorterDuff.Mode.SrcIn));
+                canvas.DrawBitmap(bitmap, rect, rect, paint);
+                //Bitmap _bmp = Bitmap.createScaledBitmap(output, 60, 60, false);
+                //return _bmp;
+                return output;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            return null;
         }
 
         /**
@@ -430,47 +463,55 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @return a RectF instance containing cropped area boundaries of the source Bitmap
          */
 
-        public RectF getActualCropRect()
+        public RectF GetActualCropRect()
         {
-            Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
+            try
+            {
+                Rect displayedImageRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, mImageView);
 
-            // Get the scale factor between the actual Bitmap dimensions and the
-            // displayed dimensions for width.
-            float actualImageWidth = mBitmap.Width;
-            float displayedImageWidth = displayedImageRect.Width();
-            float scaleFactorWidth = actualImageWidth/displayedImageWidth;
+                // Get the scale factor between the actual Bitmap dimensions and the
+                // displayed dimensions for width.
+                float actualImageWidth = mBitmap.Width;
+                float displayedImageWidth = displayedImageRect.Width();
+                float scaleFactorWidth = actualImageWidth / displayedImageWidth;
 
-            // Get the scale factor between the actual Bitmap dimensions and the
-            // displayed dimensions for height.
-            float actualImageHeight = mBitmap.Height;
-            float displayedImageHeight = displayedImageRect.Height();
-            float scaleFactorHeight = actualImageHeight/displayedImageHeight;
+                // Get the scale factor between the actual Bitmap dimensions and the
+                // displayed dimensions for height.
+                float actualImageHeight = mBitmap.Height;
+                float displayedImageHeight = displayedImageRect.Height();
+                float scaleFactorHeight = actualImageHeight / displayedImageHeight;
 
-            // Get crop window position relative to the displayed image.
-            float displayedCropLeft = EdgeManager.LEFT.coordinate - displayedImageRect.Left;
-            float displayedCropTop = EdgeManager.TOP.coordinate - displayedImageRect.Top;
-            float displayedCropWidth = Edge.getWidth();
-            float displayedCropHeight = Edge.getHeight();
+                // Get crop window position relative to the displayed image.
+                float displayedCropLeft = EdgeManager.LEFT.coordinate - displayedImageRect.Left;
+                float displayedCropTop = EdgeManager.TOP.coordinate - displayedImageRect.Top;
+                float displayedCropWidth = Edge.getWidth();
+                float displayedCropHeight = Edge.getHeight();
 
-            // Scale the crop window position to the actual size of the Bitmap.
-            float actualCropLeft = displayedCropLeft*scaleFactorWidth;
-            float actualCropTop = displayedCropTop*scaleFactorHeight;
-            float actualCropRight = actualCropLeft + displayedCropWidth*scaleFactorWidth;
-            float actualCropBottom = actualCropTop + displayedCropHeight*scaleFactorHeight;
+                // Scale the crop window position to the actual size of the Bitmap.
+                float actualCropLeft = displayedCropLeft * scaleFactorWidth;
+                float actualCropTop = displayedCropTop * scaleFactorHeight;
+                float actualCropRight = actualCropLeft + displayedCropWidth * scaleFactorWidth;
+                float actualCropBottom = actualCropTop + displayedCropHeight * scaleFactorHeight;
 
-            // Correct for floating point errors. Crop rect boundaries should not
-            // exceed the source Bitmap bounds.
-            actualCropLeft = Math.Max(0f, actualCropLeft);
-            actualCropTop = Math.Max(0f, actualCropTop);
-            actualCropRight = Math.Min(mBitmap.Width, actualCropRight);
-            actualCropBottom = Math.Min(mBitmap.Height, actualCropBottom);
+                // Correct for floating point errors. Crop rect boundaries should not
+                // exceed the source Bitmap bounds.
+                actualCropLeft = Math.Max(0f, actualCropLeft);
+                actualCropTop = Math.Max(0f, actualCropTop);
+                actualCropRight = Math.Min(mBitmap.Width, actualCropRight);
+                actualCropBottom = Math.Min(mBitmap.Height, actualCropBottom);
 
-            var actualCropRect = new RectF(actualCropLeft,
-                actualCropTop,
-                actualCropRight,
-                actualCropBottom);
+                var actualCropRect = new RectF(actualCropLeft,
+                    actualCropTop,
+                    actualCropRight,
+                    actualCropBottom);
 
-            return actualCropRect;
+                return actualCropRect;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            return null;
         }
 
         /**
@@ -481,9 +522,9 @@ namespace Xamarin.CircleImageCropper.Cropper
          *            maintained.
          */
 
-        public void setFixedAspectRatio(bool fixAspectRatio)
+        public void SetFixedAspectRatio(bool fixAspectRatio)
         {
-            mCropOverlayView.setFixedAspectRatio(fixAspectRatio);
+            mCropOverlayView.SetFixedAspectRatio(fixAspectRatio);
         }
 
         /**
@@ -494,9 +535,9 @@ namespace Xamarin.CircleImageCropper.Cropper
          *            only showing when resizing.
          */
 
-        public void setGuidelines(int guidelines)
+        public void SetGuidelines(int guidelines)
         {
-            mCropOverlayView.setGuidelines(guidelines);
+            mCropOverlayView.SetGuidelines(guidelines);
         }
 
         /**
@@ -506,13 +547,13 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @param aspectRatioX int that specifies the new Y value of the aspect ratio
          */
 
-        public void setAspectRatio(int aspectRatioX, int aspectRatioY)
+        public void SetAspectRatio(int aspectRatioX, int aspectRatioY)
         {
             mAspectRatioX = aspectRatioX;
-            mCropOverlayView.setAspectRatioX(mAspectRatioX);
+            mCropOverlayView.SetAspectRatioX(mAspectRatioX);
 
             mAspectRatioY = aspectRatioY;
-            mCropOverlayView.setAspectRatioY(mAspectRatioY);
+            mCropOverlayView.SetAspectRatioY(mAspectRatioY);
         }
 
         /**
@@ -522,31 +563,43 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @param degrees Integer specifying the number of degrees to rotate.
          */
 
-        public void rotateImage(int degrees)
+        public void RotateImage(int degrees)
         {
             var matrix = new Matrix();
             matrix.PostRotate(degrees);
             mBitmap = Bitmap.CreateBitmap(mBitmap, 0, 0, mBitmap.Width, mBitmap.Height, matrix, true);
-            setImageBitmap(mBitmap);
+            SetImageBitmap(mBitmap);
 
             mDegreesRotated += degrees;
-            mDegreesRotated = mDegreesRotated%360;
+            mDegreesRotated = mDegreesRotated % 360;
         }
 
         // Private Methods /////////////////////////////////////////////////////////
 
-        private void init(Context context)
+        private void Init(Context context)
         {
             try
             {
                 LayoutInflater inflater = LayoutInflater.From(context);
                 View v = inflater.Inflate(Resource.Layout.crop_image_view, this, true);
-
-                mImageView = v.FindViewById<ImageView>(Resource.Id.ImageView_image);
-
-                setImageResource(mImageResource);
-                mCropOverlayView = v.FindViewById<CropOverlayView>(Resource.Id.CropOverlayView);
-                mCropOverlayView.setInitialAttributeValues(mGuidelines, mFixAspectRatio, mAspectRatioX, mAspectRatioY);
+                if (v != null)
+                {
+                    for (int i = 0; i < ((ViewGroup)v).ChildCount; ++i)
+                    {
+                        View nextChild = ((ViewGroup)v).GetChildAt(i);
+                        int  childID = nextChild.Id;
+                    }
+                    mImageView = v.FindViewById<ImageView>(Resource.Id.ImageView_image);
+                    if (mImageView != null)
+                    {
+                        SetImageResource(mImageResource);
+                    }
+                    mCropOverlayView = v.FindViewById<CropOverlayView>(Resource.Id.CropOverlayView);
+                    if (mCropOverlayView != null)
+                    {
+                        mCropOverlayView.SetInitialAttributeValues(mGuidelines, mFixAspectRatio, mAspectRatioX, mAspectRatioY);
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -564,16 +617,16 @@ namespace Xamarin.CircleImageCropper.Cropper
          * @return The  size of the width or height.
          */
 
-        private static int getOnMeasureSpec(int measureSpecMode, int measureSpecSize, int desiredSize)
+        private static int GetOnMeasureSpec(int measureSpecMode, int measureSpecSize, int desiredSize)
         {
             // Measure Width
             int spec;
-            if (measureSpecMode == (int) MeasureSpecMode.Exactly)
+            if (measureSpecMode == (int)MeasureSpecMode.Exactly)
             {
                 // Must be this size
                 spec = measureSpecSize;
             }
-            else if (measureSpecMode == (int) MeasureSpecMode.AtMost)
+            else if (measureSpecMode == (int)MeasureSpecMode.AtMost)
             {
                 // Can't be bigger than...; match_parent value
                 spec = Math.Min(desiredSize, measureSpecSize);

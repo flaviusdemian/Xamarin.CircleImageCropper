@@ -176,7 +176,7 @@ namespace Xamarin.CircleImageCropper
 		public partial class Styleable
 		{
 			
-			public static int[] cropImageView = new int[] {
+			public static int[] CropImageView = new int[] {
 					2130771968,
 					2130771969,
 					2130771970,
@@ -184,19 +184,19 @@ namespace Xamarin.CircleImageCropper
 					2130771972};
 			
 			// aapt resource value: 2
-			public const int cropImageView_aspectRatioX = 2;
+			public const int CropImageView_aspectRatioX = 2;
 			
 			// aapt resource value: 3
-			public const int cropImageView_aspectRatioY = 3;
+			public const int CropImageView_aspectRatioY = 3;
 			
 			// aapt resource value: 1
-			public const int cropImageView_fixAspectRatio = 1;
+			public const int CropImageView_fixAspectRatio = 1;
 			
 			// aapt resource value: 0
-			public const int cropImageView_guidelines = 0;
+			public const int CropImageView_guidelines = 0;
 			
 			// aapt resource value: 4
-			public const int cropImageView_imageResource = 4;
+			public const int CropImageView_imageResource = 4;
 			
 			static Styleable()
 			{

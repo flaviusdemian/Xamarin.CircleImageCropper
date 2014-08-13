@@ -50,30 +50,30 @@ namespace Xamarin.CircleImageCropper.Sample
                 // Sets fonts for all
                 Typeface mFont = Typeface.CreateFromAsset(Assets, "Roboto-Thin.ttf");
                 var root = FindViewById<ViewGroup>(Resource.Id.mylayout);
-                setFont(root, mFont);
+                SetFont(root, mFont);
 
                 // Initialize components of the app
-                var cropImageView = FindViewById<CropImageView>(Resource.Id.cropImageView);
-                cropImageView.setImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.butterfly));
+                var cropImageView = FindViewById<CropImageView>(Resource.Id.CropImageView);
+                cropImageView.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.butterfly));
                 var showGuidelinesSpin = FindViewById<Spinner>(Resource.Id.showGuidelinesSpin);
 
                 // Set initial spinner value
                 showGuidelinesSpin.SetSelection(ON_TOUCH);
 
                 //Set AspectRatio fixed for circular selection
-                cropImageView.setFixedAspectRatio(true);
+                cropImageView.SetFixedAspectRatio(true);
 
                 // Sets initial aspect ratio to 10/10
-                cropImageView.setAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
+                cropImageView.SetAspectRatio(DEFAULT_ASPECT_RATIO_VALUES, DEFAULT_ASPECT_RATIO_VALUES);
 
                 //Sets the rotate button
                 var rotateButton = FindViewById<Button>(Resource.Id.Button_rotate);
-                rotateButton.Click += delegate { cropImageView.rotateImage(ROTATE_NINETY_DEGREES); };
+                rotateButton.Click += delegate { cropImageView.RotateImage(ROTATE_NINETY_DEGREES); };
 
                 // Sets up the Spinner
                 //showGuidelinesSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 //    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //        CropImageView.setGuidelines(i);
+                //        CropImageView.SetGuidelines(i);
                 //    }
 
                 //    public void onNothingSelected(AdapterView<?> adapterView) {
@@ -84,7 +84,7 @@ namespace Xamarin.CircleImageCropper.Sample
                 var cropButton = FindViewById<Button>(Resource.Id.Button_crop);
                 cropButton.Click += delegate
                 {
-                    croppedImage = cropImageView.getCroppedCircleImage();
+                    croppedImage = cropImageView.GetCroppedCircleImage();
                     var croppedImageView = FindViewById<ImageView>(Resource.Id.croppedImageView);
                     croppedImageView.SetImageBitmap(croppedImage);
                 };
@@ -101,7 +101,7 @@ namespace Xamarin.CircleImageCropper.Sample
          * want to set as well (EditText, etc.)
          */
 
-        public void setFont(ViewGroup group, Typeface font)
+        public void SetFont(ViewGroup group, Typeface font)
         {
             int count = group.ChildCount;
             View v;
@@ -113,7 +113,7 @@ namespace Xamarin.CircleImageCropper.Sample
                     ((TextView) v).Typeface = font;
                 }
                 else if (v is ViewGroup)
-                    setFont((ViewGroup) v, font);
+                    SetFont((ViewGroup) v, font);
             }
         }
 

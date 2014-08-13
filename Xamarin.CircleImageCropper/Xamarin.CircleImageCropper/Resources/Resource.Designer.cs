@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("Xamarin.CircleImageCropper.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("Xamarin.CircleImageCropper.Sample.Resource", IsApplication=true)]
 
-namespace Xamarin.CircleImageCropper
+namespace Xamarin.CircleImageCropper.Sample
 {
 	
 	
@@ -122,11 +122,11 @@ namespace Xamarin.CircleImageCropper
 			// aapt resource value: 0x7f090004
 			public const int Button_rotate = 2131296260;
 			
+			// aapt resource value: 0x7f090003
+			public const int CropImageView = 2131296259;
+			
 			// aapt resource value: 0x7f09000a
 			public const int action_settings = 2131296266;
-			
-			// aapt resource value: 0x7f090003
-			public const int cropImageView = 2131296259;
 			
 			// aapt resource value: 0x7f090009
 			public const int croppedImageView = 2131296265;
