@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.CircleImageCropper.Sample", "Xamarin.CircleImageCropper\Xamarin.CircleImageCropper.Sample.csproj", "{3B8395CF-F528-4F0E-87CA-7D1D4898137C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper.Sample", "Xamarin.CircleImageCropper\CircleImageCropper.Sample.csproj", "{3B8395CF-F528-4F0E-87CA-7D1D4898137C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper", "Xamarin.CircleImageCropperSample\CircleImageCropper.csproj", "{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}"
 EndProject

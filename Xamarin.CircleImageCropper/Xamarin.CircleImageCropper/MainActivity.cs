@@ -4,9 +4,8 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
-using CircleImageCropper;
 
-namespace Xamarin.CircleImageCropper.Sample
+namespace CircleImageCropper.Sample
 {
     [Activity(Label = "Xamarin.CircleImageCropper", MainLauncher = true, Icon = "@drawable/icon")]
     public class MainActivity : Activity

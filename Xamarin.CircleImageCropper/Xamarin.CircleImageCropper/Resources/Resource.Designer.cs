@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("Xamarin.CircleImageCropper.Sample.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("CircleImageCropper.Sample.Resource", IsApplication=true)]
 
-namespace Xamarin.CircleImageCropper.Sample
+namespace CircleImageCropper.Sample
 {
 	
 	
