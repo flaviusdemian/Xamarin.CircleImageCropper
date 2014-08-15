@@ -1,4 +1,6 @@
 using System;
+using System.ComponentModel;
+using Android.App;
 using Android.Content;
 using Android.Content.Res;
 using Android.Graphics;
@@ -8,17 +10,19 @@ using Android.Runtime;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
+using CircleImageCropper;
 using CircleImageCropper.CropWindow.Pair;
 using CircleImageCropper.Util;
+using com.edmodo.cropper.cropwindow;
 using Edge = CircleImageCropper.CropWindow.Pair.Edge;
 using Orientation = Android.Media.Orientation;
 
-namespace CircleImageCropper
+namespace com.edmodo.cropper
 {
-    public sealed class CropImageView : FrameLayout
+    public class CropImageView : FrameLayout
     {
         // Private Constants ///////////////////////////////////////////////////////
-
+        public static bool onceSet = false;
         private static readonly Rect EMPTY_RECT = new Rect();
 
         // Member Variables ////////////////////////////////////////////////////////
@@ -47,26 +51,36 @@ namespace CircleImageCropper
 
         // Constructors ////////////////////////////////////////////////////////////
 
-        private CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
+        protected CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
+            int x = 0;
+            x++;
+            throw  new Exception("fucking navtive contructor");
         }
+
+
+        //protected CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
+        //    : base(javaReference, transfer)
+        //{
+        //}
 
         public CropImageView(Context context)
             : base(context)
         {
-            Init(context);
+            //Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
-            Init(context);
+            //Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs)
             : base(context, attrs)
         {
+
             TypedArray ta = context.ObtainStyledAttributes(attrs, Resource.Styleable.CropImageView, 0, 0);
             try
             {
@@ -274,12 +288,19 @@ namespace CircleImageCropper
 
         public void SetImageBitmap(Bitmap bitmap)
         {
-            mBitmap = bitmap;
-            mImageView.SetImageBitmap(mBitmap);
-
-            if (mCropOverlayView != null)
+            try
             {
-                mCropOverlayView.ResetCropOverlayView();
+                mBitmap = bitmap;
+                mImageView.SetImageBitmap(mBitmap);
+
+                if (mCropOverlayView != null)
+                {
+                    mCropOverlayView.ResetCropOverlayView();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
@@ -542,7 +563,14 @@ namespace CircleImageCropper
 
         public void SetGuidelines(int guidelines)
         {
-            mCropOverlayView.SetGuidelines(guidelines);
+            try
+            {
+                mCropOverlayView.SetGuidelines(guidelines);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         /**
@@ -554,11 +582,18 @@ namespace CircleImageCropper
 
         public void SetAspectRatio(int aspectRatioX, int aspectRatioY)
         {
-            mAspectRatioX = aspectRatioX;
-            mCropOverlayView.SetAspectRatioX(mAspectRatioX);
+            try
+            {
+                mAspectRatioX = aspectRatioX;
+                mCropOverlayView.SetAspectRatioX(mAspectRatioX);
 
-            mAspectRatioY = aspectRatioY;
-            mCropOverlayView.SetAspectRatioY(mAspectRatioY);
+                mAspectRatioY = aspectRatioY;
+                mCropOverlayView.SetAspectRatioY(mAspectRatioY);
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         /**
@@ -585,16 +620,22 @@ namespace CircleImageCropper
         {
             try
             {
-                LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);  
-                //LayoutInflater inflater  = LayoutInflater.From(context);
+                //LayoutInflater inflater = (LayoutInflater)context.GetSystemService(Context.LayoutInflaterService);
+                LayoutInflater inflater = LayoutInflater.From(context);
                 View v = inflater.Inflate(Resource.Layout.crop_image_view, this, true);
                 if (v != null)
                 {
-                    int count = ((ViewGroup) v).ChildCount;
+                    int count = ((ViewGroup)v).ChildCount;
                     for (int i = 0; i < count; ++i)
                     {
                         View nextChild = ((ViewGroup)v).GetChildAt(i);
                         int childID = nextChild.Id;
+                        count = ((ViewGroup)nextChild).ChildCount;
+                        for (i = 0; i < count; ++i)
+                        {
+                            nextChild = ((ViewGroup)nextChild).GetChildAt(i);
+                            childID = nextChild.Id;
+                        }
                     }
                     mImageView = v.FindViewById<ImageView>(Resource.Id.ImageView_image);
                     if (mImageView != null)

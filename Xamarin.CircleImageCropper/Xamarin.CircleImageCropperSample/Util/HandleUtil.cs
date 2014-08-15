@@ -1,8 +1,8 @@
 using System;
 using Android.Content;
 using Android.Util;
-using CircleImageCropper.CropWindow;
 using CircleImageCropper.Cropwindow.Handle;
+using com.edmodo.cropper.cropwindow;
 
 namespace CircleImageCropper.Util
 {

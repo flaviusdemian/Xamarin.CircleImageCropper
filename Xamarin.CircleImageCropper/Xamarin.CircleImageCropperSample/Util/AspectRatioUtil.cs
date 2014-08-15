@@ -1,4 +1,5 @@
 using Android.Graphics;
+using Java.Lang;
 
 namespace CircleImageCropper.Util
 {
@@ -12,7 +13,7 @@ namespace CircleImageCropper.Util
         {
             float width = right - left;
             float height = bottom - top;
-            float aspectRatio = width/height;
+            float aspectRatio = width / height;
 
             return aspectRatio;
         }
@@ -23,9 +24,17 @@ namespace CircleImageCropper.Util
 
         public static float calculateAspectRatio(Rect rect)
         {
-            float aspectRatio = rect.Width()/(float) rect.Height();
+            try
+            {
+                float aspectRatio = rect.Width()/(float) rect.Height();
 
-            return aspectRatio;
+                return aspectRatio;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
+            return 5;
         }
 
         /**
@@ -39,7 +48,7 @@ namespace CircleImageCropper.Util
             // targetAspectRatio = width / height
             // width = targetAspectRatio * height
             // right - left = targetAspectRatio * height
-            float left = right - (targetAspectRatio*height);
+            float left = right - (targetAspectRatio * height);
 
             return left;
         }
@@ -56,7 +65,7 @@ namespace CircleImageCropper.Util
             // width = targetAspectRatio * height
             // height = width / targetAspectRatio
             // bottom - top = width / targetAspectRatio
-            float top = bottom - (width/targetAspectRatio);
+            float top = bottom - (width / targetAspectRatio);
 
             return top;
         }
@@ -72,7 +81,7 @@ namespace CircleImageCropper.Util
             // targetAspectRatio = width / height
             // width = targetAspectRatio * height
             // right - left = targetAspectRatio * height
-            float right = (targetAspectRatio*height) + left;
+            float right = (targetAspectRatio * height) + left;
 
             return right;
         }
@@ -89,7 +98,7 @@ namespace CircleImageCropper.Util
             // width = targetAspectRatio * height
             // height = width / targetAspectRatio
             // bottom - top = width / targetAspectRatio
-            float bottom = (width/targetAspectRatio) + top;
+            float bottom = (width / targetAspectRatio) + top;
 
             return bottom;
         }
@@ -102,7 +111,7 @@ namespace CircleImageCropper.Util
         public static float calculateWidth(float top, float bottom, float targetAspectRatio)
         {
             float height = bottom - top;
-            float width = targetAspectRatio*height;
+            float width = targetAspectRatio * height;
 
             return width;
         }
@@ -115,7 +124,7 @@ namespace CircleImageCropper.Util
         public static float calculateHeight(float left, float right, float targetAspectRatio)
         {
             float width = right - left;
-            float height = width/targetAspectRatio;
+            float height = width / targetAspectRatio;
 
             return height;
         }

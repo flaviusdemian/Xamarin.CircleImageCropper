@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using Android.Content;
 using Android.Graphics;
 using Android.Runtime;
@@ -12,9 +13,9 @@ using Edge = CircleImageCropper.CropWindow.Pair.Edge;
 using Exception = System.Exception;
 using Math = System.Math;
 
-namespace CircleImageCropper
+namespace com.edmodo.cropper.cropwindow
 {
-    public sealed class CropOverlayView : View
+    public class CropOverlayView : View
     {
         // Private Constants ///////////////////////////////////////////////////////
 
@@ -74,15 +75,18 @@ namespace CircleImageCropper
 
         // Constructors ////////////////////////////////////////////////////////////
 
-        private CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer) 
+        protected CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
+            throw new Exception("fucking navtive contructor");
+            int x = 0;
+            x++;
         }
 
         public CropOverlayView(Context context)
             : base(context)
         {
-            Init(context);
+
         }
 
         public CropOverlayView(Context context, IAttributeSet attrs)
@@ -97,7 +101,7 @@ namespace CircleImageCropper
             Init(context);
         }
 
-        // View Methods ////////////////////////////////////////////////////////////
+        // View Methods ///////////////////////////////////////////////////////////
 
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {

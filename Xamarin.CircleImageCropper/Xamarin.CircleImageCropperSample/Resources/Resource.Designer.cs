@@ -28,6 +28,22 @@ namespace CircleImageCropper
 		{
 		}
 		
+		public partial class Array
+		{
+			
+			// aapt resource value: 0x7f080000
+			public const int showGuidelinesArray = 2131230720;
+			
+			static Array()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Array()
+			{
+			}
+		}
+		
 		public partial class Attribute
 		{
 			
@@ -72,14 +88,51 @@ namespace CircleImageCropper
 			}
 		}
 		
+		public partial class Dimension
+		{
+			
+			// aapt resource value: 0x7f060000
+			public const int activity_horizontal_margin = 2131099648;
+			
+			// aapt resource value: 0x7f060001
+			public const int activity_vertical_margin = 2131099649;
+			
+			// aapt resource value: 0x7f060002
+			public const int textSize = 2131099650;
+			
+			static Dimension()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Dimension()
+			{
+			}
+		}
+		
 		public partial class Drawable
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int bkg = 2130837504;
 			
 			// aapt resource value: 0x7f020001
-			public const int monoandroidsplash = 2130837505;
+			public const int butterfly = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int ic_launcher = 2130837506;
+			
+			// aapt resource value: 0x7f020003
+			public const int Icon = 2130837507;
+			
+			// aapt resource value: 0x7f020004
+			public const int monoandroidsplash = 2130837508;
+			
+			// aapt resource value: 0x7f020005
+			public const int sidewayssky = 2130837509;
+			
+			// aapt resource value: 0x7f020006
+			public const int violetsky = 2130837510;
 			
 			static Drawable()
 			{
@@ -138,8 +191,41 @@ namespace CircleImageCropper
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f060000
-			public const int app_name = 2131099648;
+			// aapt resource value: 0x7f070002
+			public const int action_settings = 2131165186;
+			
+			// aapt resource value: 0x7f070000
+			public const int app_name = 2131165184;
+			
+			// aapt resource value: 0x7f070004
+			public const int aspectRatioX = 2131165188;
+			
+			// aapt resource value: 0x7f070005
+			public const int aspectRatioXHeader = 2131165189;
+			
+			// aapt resource value: 0x7f070006
+			public const int aspectRatioY = 2131165190;
+			
+			// aapt resource value: 0x7f070007
+			public const int aspectRatioYHeader = 2131165191;
+			
+			// aapt resource value: 0x7f070009
+			public const int crop = 2131165193;
+			
+			// aapt resource value: 0x7f07000b
+			public const int croppedImageDesc = 2131165195;
+			
+			// aapt resource value: 0x7f070003
+			public const int fixedAspectRatio = 2131165187;
+			
+			// aapt resource value: 0x7f07000a
+			public const int rotate = 2131165194;
+			
+			// aapt resource value: 0x7f070008
+			public const int showGuidelines = 2131165192;
+			
+			// aapt resource value: 0x7f070001
+			public const int title = 2131165185;
 			
 			static String()
 			{
@@ -154,14 +240,17 @@ namespace CircleImageCropper
 		public partial class Style
 		{
 			
-			// aapt resource value: 0x7f070000
-			public const int AppBaseTheme = 2131165184;
+			// aapt resource value: 0x7f090000
+			public const int AppBaseTheme = 2131296256;
 			
-			// aapt resource value: 0x7f070001
-			public const int AppTheme = 2131165185;
+			// aapt resource value: 0x7f090001
+			public const int AppTheme = 2131296257;
 			
-			// aapt resource value: 0x7f070002
-			public const int Mono_Android_Theme_Splash = 2131165186;
+			// aapt resource value: 0x7f090003
+			public const int Mono_Android_Theme_Splash = 2131296259;
+			
+			// aapt resource value: 0x7f090002
+			public const int RoboTheme = 2131296258;
 			
 			static Style()
 			{
