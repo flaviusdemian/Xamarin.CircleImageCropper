@@ -72,7 +72,6 @@
     <Compile Include="Util\PaintUtil.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\crop_image_view.axml" />
   </ItemGroup>
