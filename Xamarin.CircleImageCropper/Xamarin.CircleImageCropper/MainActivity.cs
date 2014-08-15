@@ -4,6 +4,7 @@ using Android.Graphics;
 using Android.OS;
 using Android.Views;
 using Android.Widget;
+using com.edmodo.cropper;
 
 namespace CircleImageCropper.Sample
 {
