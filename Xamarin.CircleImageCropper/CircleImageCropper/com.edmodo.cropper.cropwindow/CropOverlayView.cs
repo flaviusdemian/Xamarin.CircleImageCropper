@@ -75,7 +75,7 @@ namespace com.edmodo.cropper.cropwindow
 
         // Constructors ////////////////////////////////////////////////////////////
 
-        protected CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer)
+        private CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
             try

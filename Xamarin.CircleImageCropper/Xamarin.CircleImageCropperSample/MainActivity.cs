@@ -18,6 +18,7 @@ namespace CircleImageCropper.Sample
         private static String ASPECT_RATIO_Y = "ASPECT_RATIO_Y";
         private static int ON_TOUCH = 1;
         private Bitmap croppedImage;
+        private CropImageView cropImageView;
 
         // Instance variables
         private int mAspectRatioX = DEFAULT_ASPECT_RATIO_VALUES;
@@ -53,7 +54,7 @@ namespace CircleImageCropper.Sample
                 SetFont(root, mFont);
 
                 // Initialize components of the app
-                var cropImageView = FindViewById<CropImageView>(Resource.Id.CropImageView);
+                cropImageView = FindViewById<CropImageView>(Resource.Id.CropImageView);
                 var showGuidelinesSpin = FindViewById<Spinner>(Resource.Id.showGuidelinesSpin);
 
                 // Set initial spinner value
@@ -70,15 +71,8 @@ namespace CircleImageCropper.Sample
                 rotateButton.Click += delegate { cropImageView.RotateImage(ROTATE_NINETY_DEGREES); };
 
                 // Sets up the Spinner
-                //showGuidelinesSpin.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                //    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                //        CropImageView.SetGuidelines(i);
-                //    }
-
-                //    public void onNothingSelected(AdapterView<?> adapterView) {
-                //        return;
-                //    }
-                //});
+                showGuidelinesSpin.ItemSelected += showGuidelinesSpin_ItemSelected;
+                showGuidelinesSpin.NothingSelected += showGuidelinesSpin_NothingSelected;
 
                 var cropButton = FindViewById<Button>(Resource.Id.Button_crop);
                 cropButton.Click += delegate
@@ -92,6 +86,16 @@ namespace CircleImageCropper.Sample
             {
                 ex.ToString();
             }
+        }
+
+        void showGuidelinesSpin_ItemSelected(object sender, AdapterView.ItemSelectedEventArgs e)
+        {
+            cropImageView.SetGuidelines(e.Position);
+        }
+
+        void showGuidelinesSpin_NothingSelected(object sender, AdapterView.NothingSelectedEventArgs e)
+        {
+            return;
         }
 
         /*
