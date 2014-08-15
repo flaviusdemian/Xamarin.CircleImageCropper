@@ -1,0 +1,15 @@
+layout/crop_image_view.axml;layout/crop_image_view.xml
+Values/Strings.xml;values/strings.xml
+drawable/Icon.png;drawable/icon.png
+drawable-hdpi/ic_launcher.png;drawable-hdpi/ic_launcher.png
+drawable-xhdpi/bkg.jpg;drawable-xhdpi/bkg.jpg
+drawable-xhdpi/butterfly.jpg;drawable-xhdpi/butterfly.jpg
+drawable-xhdpi/ic_launcher.png;drawable-xhdpi/ic_launcher.png
+drawable-xhdpi/sidewayssky.png.jpg;drawable-xhdpi/sidewayssky.png.jpg
+drawable-xhdpi/violetsky.png;drawable-xhdpi/violetsky.png
+Values/attrs.xml;values/attrs.xml
+Values/colors.xml;values/colors.xml
+Values/dimens.xml;values/dimens.xml
+Values/styles.xml;values/styles.xml
+values-v11/styles.xml;values-v11/styles.xml
+values-v14/styles.xml;values-v14/styles.xml

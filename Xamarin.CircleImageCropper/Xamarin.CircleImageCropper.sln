@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper.Sample", "Xamarin.CircleImageCropper\CircleImageCropper.Sample.csproj", "{3B8395CF-F528-4F0E-87CA-7D1D4898137C}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper", "Xamarin.CircleImageCropperSample\CircleImageCropper.csproj", "{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper.Sample", "Xamarin.CircleImageCropperSample\CircleImageCropper.Sample.csproj", "{3B8395CF-F528-4F0E-87CA-7D1D4898137C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3D8FBDC-CCE7-437E-BF73-F13B444C0706}"
 	ProjectSection(SolutionItems) = preProject
@@ -13,6 +11,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{A3D8FB
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CircleImageCropper", "CircleImageCropper\CircleImageCropper.csproj", "{9E7486F8-A7B1-4534-8A5F-34B965A48F39}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,11 +26,10 @@ Global
 		{3B8395CF-F528-4F0E-87CA-7D1D4898137C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B8395CF-F528-4F0E-87CA-7D1D4898137C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B8395CF-F528-4F0E-87CA-7D1D4898137C}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{729DFB52-26A8-4D26-BCA6-23A9A1E564F9}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{9E7486F8-A7B1-4534-8A5F-34B965A48F39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9E7486F8-A7B1-4534-8A5F-34B965A48F39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9E7486F8-A7B1-4534-8A5F-34B965A48F39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E7486F8-A7B1-4534-8A5F-34B965A48F39}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

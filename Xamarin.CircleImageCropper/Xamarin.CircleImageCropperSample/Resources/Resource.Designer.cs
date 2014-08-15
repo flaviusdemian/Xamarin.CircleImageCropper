@@ -9,9 +9,9 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: global::Android.Runtime.ResourceDesignerAttribute("CircleImageCropper.Resource", IsApplication=true)]
+[assembly: global::Android.Runtime.ResourceDesignerAttribute("CircleImageCropper.Sample.Resource", IsApplication=true)]
 
-namespace CircleImageCropper
+namespace CircleImageCropper.Sample
 {
 	
 	
@@ -26,6 +26,49 @@ namespace CircleImageCropper
 		
 		public static void UpdateIdValues()
 		{
+			global::CircleImageCropper.Resource.Array.showGuidelinesArray = global::CircleImageCropper.Sample.Resource.Array.showGuidelinesArray;
+			global::CircleImageCropper.Resource.Attribute.aspectRatioX = global::CircleImageCropper.Sample.Resource.Attribute.aspectRatioX;
+			global::CircleImageCropper.Resource.Attribute.aspectRatioY = global::CircleImageCropper.Sample.Resource.Attribute.aspectRatioY;
+			global::CircleImageCropper.Resource.Attribute.fixAspectRatio = global::CircleImageCropper.Sample.Resource.Attribute.fixAspectRatio;
+			global::CircleImageCropper.Resource.Attribute.guidelines = global::CircleImageCropper.Sample.Resource.Attribute.guidelines;
+			global::CircleImageCropper.Resource.Attribute.imageResource = global::CircleImageCropper.Sample.Resource.Attribute.imageResource;
+			global::CircleImageCropper.Resource.Color.black_translucent = global::CircleImageCropper.Sample.Resource.Color.black_translucent;
+			global::CircleImageCropper.Resource.Dimension.activity_horizontal_margin = global::CircleImageCropper.Sample.Resource.Dimension.activity_horizontal_margin;
+			global::CircleImageCropper.Resource.Dimension.activity_vertical_margin = global::CircleImageCropper.Sample.Resource.Dimension.activity_vertical_margin;
+			global::CircleImageCropper.Resource.Dimension.textSize = global::CircleImageCropper.Sample.Resource.Dimension.textSize;
+			global::CircleImageCropper.Resource.Drawable.bkg = global::CircleImageCropper.Sample.Resource.Drawable.bkg;
+			global::CircleImageCropper.Resource.Drawable.butterfly = global::CircleImageCropper.Sample.Resource.Drawable.butterfly;
+			global::CircleImageCropper.Resource.Drawable.ic_launcher = global::CircleImageCropper.Sample.Resource.Drawable.ic_launcher;
+			global::CircleImageCropper.Resource.Drawable.Icon = global::CircleImageCropper.Sample.Resource.Drawable.Icon;
+			global::CircleImageCropper.Resource.Drawable.sidewayssky = global::CircleImageCropper.Sample.Resource.Drawable.sidewayssky;
+			global::CircleImageCropper.Resource.Drawable.violetsky = global::CircleImageCropper.Sample.Resource.Drawable.violetsky;
+			global::CircleImageCropper.Resource.Id.CropOverlayView = global::CircleImageCropper.Sample.Resource.Id.CropOverlayView;
+			global::CircleImageCropper.Resource.Id.ImageView_image = global::CircleImageCropper.Sample.Resource.Id.ImageView_image;
+			global::CircleImageCropper.Resource.Id.off = global::CircleImageCropper.Sample.Resource.Id.off;
+			global::CircleImageCropper.Resource.Id.on = global::CircleImageCropper.Sample.Resource.Id.on;
+			global::CircleImageCropper.Resource.Id.onTouch = global::CircleImageCropper.Sample.Resource.Id.onTouch;
+			global::CircleImageCropper.Resource.Layout.crop_image_view = global::CircleImageCropper.Sample.Resource.Layout.crop_image_view;
+			global::CircleImageCropper.Resource.String.action_settings = global::CircleImageCropper.Sample.Resource.String.action_settings;
+			global::CircleImageCropper.Resource.String.app_name = global::CircleImageCropper.Sample.Resource.String.app_name;
+			global::CircleImageCropper.Resource.String.aspectRatioX = global::CircleImageCropper.Sample.Resource.String.aspectRatioX;
+			global::CircleImageCropper.Resource.String.aspectRatioXHeader = global::CircleImageCropper.Sample.Resource.String.aspectRatioXHeader;
+			global::CircleImageCropper.Resource.String.aspectRatioY = global::CircleImageCropper.Sample.Resource.String.aspectRatioY;
+			global::CircleImageCropper.Resource.String.aspectRatioYHeader = global::CircleImageCropper.Sample.Resource.String.aspectRatioYHeader;
+			global::CircleImageCropper.Resource.String.crop = global::CircleImageCropper.Sample.Resource.String.crop;
+			global::CircleImageCropper.Resource.String.croppedImageDesc = global::CircleImageCropper.Sample.Resource.String.croppedImageDesc;
+			global::CircleImageCropper.Resource.String.fixedAspectRatio = global::CircleImageCropper.Sample.Resource.String.fixedAspectRatio;
+			global::CircleImageCropper.Resource.String.rotate = global::CircleImageCropper.Sample.Resource.String.rotate;
+			global::CircleImageCropper.Resource.String.showGuidelines = global::CircleImageCropper.Sample.Resource.String.showGuidelines;
+			global::CircleImageCropper.Resource.String.title = global::CircleImageCropper.Sample.Resource.String.title;
+			global::CircleImageCropper.Resource.Style.AppBaseTheme = global::CircleImageCropper.Sample.Resource.Style.AppBaseTheme;
+			global::CircleImageCropper.Resource.Style.AppTheme = global::CircleImageCropper.Sample.Resource.Style.AppTheme;
+			global::CircleImageCropper.Resource.Style.RoboTheme = global::CircleImageCropper.Sample.Resource.Style.RoboTheme;
+			global::CircleImageCropper.Resource.Styleable.CropImageView = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView;
+			global::CircleImageCropper.Resource.Styleable.CropImageView_aspectRatioX = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView_aspectRatioX;
+			global::CircleImageCropper.Resource.Styleable.CropImageView_aspectRatioY = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView_aspectRatioY;
+			global::CircleImageCropper.Resource.Styleable.CropImageView_fixAspectRatio = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView_fixAspectRatio;
+			global::CircleImageCropper.Resource.Styleable.CropImageView_guidelines = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView_guidelines;
+			global::CircleImageCropper.Resource.Styleable.CropImageView_imageResource = global::CircleImageCropper.Sample.Resource.Styleable.CropImageView_imageResource;
 		}
 		
 		public partial class Array
@@ -147,11 +190,29 @@ namespace CircleImageCropper
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f040004
-			public const int CropOverlayView = 2130968580;
+			// aapt resource value: 0x7f04000b
+			public const int Button_crop = 2130968587;
 			
-			// aapt resource value: 0x7f040003
-			public const int ImageView_image = 2130968579;
+			// aapt resource value: 0x7f040007
+			public const int Button_rotate = 2130968583;
+			
+			// aapt resource value: 0x7f040006
+			public const int CropImageView = 2130968582;
+			
+			// aapt resource value: 0x7f04000e
+			public const int CropOverlayView = 2130968590;
+			
+			// aapt resource value: 0x7f04000d
+			public const int ImageView_image = 2130968589;
+			
+			// aapt resource value: 0x7f04000f
+			public const int action_settings = 2130968591;
+			
+			// aapt resource value: 0x7f04000c
+			public const int croppedImageView = 2130968588;
+			
+			// aapt resource value: 0x7f040004
+			public const int mylayout = 2130968580;
 			
 			// aapt resource value: 0x7f040002
 			public const int off = 2130968578;
@@ -161,6 +222,21 @@ namespace CircleImageCropper
 			
 			// aapt resource value: 0x7f040001
 			public const int onTouch = 2130968577;
+			
+			// aapt resource value: 0x7f040003
+			public const int scrollview = 2130968579;
+			
+			// aapt resource value: 0x7f040009
+			public const int showGuidelines = 2130968585;
+			
+			// aapt resource value: 0x7f040008
+			public const int showGuidelinesLayout = 2130968584;
+			
+			// aapt resource value: 0x7f04000a
+			public const int showGuidelinesSpin = 2130968586;
+			
+			// aapt resource value: 0x7f040005
+			public const int title = 2130968581;
 			
 			static Id()
 			{
@@ -176,7 +252,10 @@ namespace CircleImageCropper
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int crop_image_view = 2130903040;
+			public const int activity_main = 2130903040;
+			
+			// aapt resource value: 0x7f030001
+			public const int crop_image_view = 2130903041;
 			
 			static Layout()
 			{
@@ -184,6 +263,22 @@ namespace CircleImageCropper
 			}
 			
 			private Layout()
+			{
+			}
+		}
+		
+		public partial class Menu
+		{
+			
+			// aapt resource value: 0x7f0a0000
+			public const int main = 2131361792;
+			
+			static Menu()
+			{
+				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
+			}
+			
+			private Menu()
 			{
 			}
 		}
