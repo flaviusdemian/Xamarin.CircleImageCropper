@@ -78,9 +78,15 @@ namespace com.edmodo.cropper.cropwindow
         protected CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
-            throw new Exception("fucking navtive contructor");
-            int x = 0;
-            x++;
+            try
+            {
+                int x = 0;
+                x++;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         public CropOverlayView(Context context)

@@ -23,3 +23,4 @@ C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\CircleImageCro
 C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\CircleImageCropper\obj\Debug\res\values-v14\styles.xml
 C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\CircleImageCropper\obj\Debug\R.cs.flag
 C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\CircleImageCropper\obj\Debug\uploadflags.txt
+C:\Projects\Xamarin.CircleImageCropper\Xamarin.CircleImageCropper\CircleImageCropper\obj\Debug\CircleImageCropper.csprojResolveAssemblyReference.cache

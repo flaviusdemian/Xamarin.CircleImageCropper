@@ -54,27 +54,27 @@ namespace com.edmodo.cropper
         protected CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
-            int x = 0;
-            x++;
-            throw  new Exception("fucking navtive contructor");
+            try
+            {
+                int x = 0;
+                x++;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
-
-
-        //protected CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
-        //    : base(javaReference, transfer)
-        //{
-        //}
 
         public CropImageView(Context context)
             : base(context)
         {
-            //Init(context);
+            Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs, int defStyle)
             : base(context, attrs, defStyle)
         {
-            //Init(context);
+            Init(context);
         }
 
         public CropImageView(Context context, IAttributeSet attrs)
@@ -148,14 +148,21 @@ namespace com.edmodo.cropper
 
         protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
         {
-            if (mBitmap != null)
+            try
             {
-                Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, this);
-                mCropOverlayView.SetBitmapRect(bitmapRect);
+                if (mBitmap != null)
+                {
+                    Rect bitmapRect = ImageViewUtil.getBitmapRectCenterInside(mBitmap, this);
+                    mCropOverlayView.SetBitmapRect(bitmapRect);
+                }
+                else
+                {
+                    mCropOverlayView.SetBitmapRect(EMPTY_RECT);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                mCropOverlayView.SetBitmapRect(EMPTY_RECT);
+                ex.ToString();
             }
         }
 
@@ -625,18 +632,6 @@ namespace com.edmodo.cropper
                 View v = inflater.Inflate(Resource.Layout.crop_image_view, this, true);
                 if (v != null)
                 {
-                    int count = ((ViewGroup)v).ChildCount;
-                    for (int i = 0; i < count; ++i)
-                    {
-                        View nextChild = ((ViewGroup)v).GetChildAt(i);
-                        int childID = nextChild.Id;
-                        count = ((ViewGroup)nextChild).ChildCount;
-                        for (i = 0; i < count; ++i)
-                        {
-                            nextChild = ((ViewGroup)nextChild).GetChildAt(i);
-                            childID = nextChild.Id;
-                        }
-                    }
                     mImageView = v.FindViewById<ImageView>(Resource.Id.ImageView_image);
                     if (mImageView != null)
                     {

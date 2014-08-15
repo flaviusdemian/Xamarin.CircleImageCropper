@@ -54,7 +54,6 @@ namespace CircleImageCropper.Sample
 
                 // Initialize components of the app
                 var cropImageView = FindViewById<CropImageView>(Resource.Id.CropImageView);
-                cropImageView.SetImageBitmap(BitmapFactory.DecodeResource(Resources, Resource.Drawable.butterfly));
                 var showGuidelinesSpin = FindViewById<Spinner>(Resource.Id.showGuidelinesSpin);
 
                 // Set initial spinner value
@@ -105,18 +104,20 @@ namespace CircleImageCropper.Sample
         {
             try
             {
-                //int count = group.ChildCount;
-                //View v;
-                //for (int i = 0; i < count; i++)
-                //{
-                //    v = group.GetChildAt(i);
-                //    if (v is TextView || v is EditText || v is Button)
-                //    {
-                //        ((TextView)v).Typeface = font;
-                //    }
-                //    else if (v is ViewGroup)
-                //        SetFont((ViewGroup)v, font);
-                //}
+                int count = group.ChildCount;
+                View v;
+                for (int i = 0; i < count; i++)
+                {
+                    v = group.GetChildAt(i);
+                    if (v is TextView || v is EditText || v is Button)
+                    {
+                        ((TextView)v).Typeface = font;
+                    }
+                    else if (v is ViewGroup)
+                    {
+                        SetFont((ViewGroup)v, font);
+                    }
+                }
             }
             catch (Exception ex)
             {

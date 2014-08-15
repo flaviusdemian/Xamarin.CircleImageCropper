@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/scrollview"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
-
+    android:layout_height="fill_parent">
     <LinearLayout
         android:id="@+id/mylayout"
         android:layout_width="fill_parent"
@@ -15,8 +14,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context=".MainActivity" >
-
+        tools:context=".MainActivity">
         <TextView
             android:id="@+id/title"
             style="@style/RoboTheme"
@@ -26,22 +24,18 @@
             android:paddingBottom="25dp"
             android:text="@string/title"
             android:textSize="27sp" />
-
-        <com.edmodo.cropper.CropImageView
-            xmlns:custom="http://schemas.android.com/apk/res-auto"
+        <com.edmodo.cropper.CropImageView xmlns:custom="http://schemas.android.com/apk/res-auto"
             android:id="@+id/CropImageView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" 
-            />
-
+            android:layout_gravity="center"
+            custom:imageResource="@drawable/butterfly" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="40dp"
-            android:paddingRight="40dp" >
-
+            android:paddingRight="40dp">
             <Button
                 android:id="@+id/Button_rotate"
                 style="@style/RoboTheme"
@@ -54,21 +48,13 @@
                 android:paddingRight="25dp"
                 android:text="@string/rotate"
                 android:textColor="#33B5E5" />
-
-            
-
-            
-
-            
-
             <LinearLayout
                 android:id="@+id/showGuidelinesLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:focusableInTouchMode="true"
-                android:orientation="horizontal" >
-
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/showGuidelines"
                     style="@style/RoboTheme"
@@ -77,13 +63,11 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="@string/showGuidelines" />
-
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:orientation="horizontal" >
-
+                    android:orientation="horizontal">
                     <Spinner
                         android:id="@+id/showGuidelinesSpin"
                         style="@style/RoboTheme"
@@ -93,7 +77,6 @@
                         android:gravity="left" />
                 </LinearLayout>
             </LinearLayout>
-
             <Button
                 android:id="@+id/Button_crop"
                 style="@style/RoboTheme"
@@ -107,15 +90,13 @@
                 android:text="@string/crop"
                 android:textColor="#33B5E5"
                 android:textSize="30sp" />
-
             <ImageView
                 android:id="@+id/croppedImageView"
                 style="@style/RoboTheme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center|top"
-                android:contentDescription="@string/croppedImageDesc"/>
+                android:contentDescription="@string/croppedImageDesc" />
         </LinearLayout>
     </LinearLayout>
-
 </ScrollView>
