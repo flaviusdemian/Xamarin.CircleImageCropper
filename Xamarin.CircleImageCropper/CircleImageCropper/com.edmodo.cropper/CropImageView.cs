@@ -22,6 +22,7 @@ namespace com.edmodo.cropper
     public class CropImageView : FrameLayout
     {
         // Private Constants ///////////////////////////////////////////////////////
+        public static bool onceSet = false;
         private static readonly Rect EMPTY_RECT = new Rect();
 
         // Member Variables ////////////////////////////////////////////////////////
@@ -50,10 +51,18 @@ namespace com.edmodo.cropper
 
         // Constructors ////////////////////////////////////////////////////////////
 
-        private CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
+        protected CropImageView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
         {
-            
+            try
+            {
+                int x = 0;
+                x++;
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
+            }
         }
 
         public CropImageView(Context context)
