@@ -77,14 +77,11 @@ namespace com.edmodo.cropper.cropwindow
 
         protected CropOverlayView(IntPtr javaReference, JniHandleOwnership transfer)
             : base(javaReference, transfer)
-        {
-        }
+        {}
 
         public CropOverlayView(Context context)
             : base(context)
-        {
-
-        }
+        {}
 
         public CropOverlayView(Context context, IAttributeSet attrs)
             : base(context, attrs)
@@ -208,10 +205,17 @@ namespace com.edmodo.cropper.cropwindow
 
         public void ResetCropOverlayView()
         {
-            if (initializedCropWindow)
+            try
             {
-                InitCropWindow(mBitmapRect);
-                Invalidate();
+                if (initializedCropWindow)
+                {
+                    InitCropWindow(mBitmapRect);
+                    Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
@@ -225,14 +229,21 @@ namespace com.edmodo.cropper.cropwindow
 
         public void SetGuidelines(int guidelines)
         {
-            if (guidelines < 0 || guidelines > 2)
-                throw new IllegalArgumentException("Guideline value must be set between 0 and 2. See documentation.");
-            mGuidelines = guidelines;
-
-            if (initializedCropWindow)
+            try
             {
-                InitCropWindow(mBitmapRect);
-                Invalidate();
+                if (guidelines < 0 || guidelines > 2)
+                    throw new IllegalArgumentException("Guideline value must be set between 0 and 2. See documentation.");
+                mGuidelines = guidelines;
+
+                if (initializedCropWindow)
+                {
+                    InitCropWindow(mBitmapRect);
+                    Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
@@ -246,12 +257,19 @@ namespace com.edmodo.cropper.cropwindow
 
         public void SetFixedAspectRatio(bool fixAspectRatio)
         {
-            mFixAspectRatio = fixAspectRatio;
-
-            if (initializedCropWindow)
+            try
             {
-                InitCropWindow(mBitmapRect);
-                Invalidate();
+                mFixAspectRatio = fixAspectRatio;
+
+                if (initializedCropWindow)
+                {
+                    InitCropWindow(mBitmapRect);
+                    Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
@@ -264,15 +282,22 @@ namespace com.edmodo.cropper.cropwindow
 
         public void SetAspectRatioX(int aspectRatioX)
         {
-            if (aspectRatioX <= 0)
-                throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            mAspectRatioX = aspectRatioX;
-            mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
-
-            if (initializedCropWindow)
+            try
             {
-                InitCropWindow(mBitmapRect);
-                Invalidate();
+                if (aspectRatioX <= 0)
+                    throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
+                mAspectRatioX = aspectRatioX;
+                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
+
+                if (initializedCropWindow)
+                {
+                    InitCropWindow(mBitmapRect);
+                    Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
@@ -285,15 +310,23 @@ namespace com.edmodo.cropper.cropwindow
 
         public void SetAspectRatioY(int aspectRatioY)
         {
-            if (aspectRatioY <= 0)
-                throw new IllegalArgumentException("Cannot set aspect ratio value to a number less than or equal to 0.");
-            mAspectRatioY = aspectRatioY;
-            mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
-
-            if (initializedCropWindow)
+            try
             {
-                InitCropWindow(mBitmapRect);
-                Invalidate();
+                if (aspectRatioY <= 0)
+                    throw new IllegalArgumentException(
+                        "Cannot set aspect ratio value to a number less than or equal to 0.");
+                mAspectRatioY = aspectRatioY;
+                mTargetAspectRatio = ((float)mAspectRatioX) / mAspectRatioY;
+
+                if (initializedCropWindow)
+                {
+                    InitCropWindow(mBitmapRect);
+                    Invalidate();
+                }
+            }
+            catch (Exception ex)
+            {
+                ex.ToString();
             }
         }
 
