@@ -4,8 +4,6 @@ Xamarin.CircleImageCropper
 
 <p>This project it the Xamarin.Android implementation of <a href='https://github.com/rachitwatts/CircleImageCropper'>CircleImageCropper.</a>
 
-<a name="user-content-circleimagecropper" class="anchor" href="#circleimagecropper" aria-hidden="true"><span class="octicon octicon-link"></span></a>CircleImageCropper</h1>
-
 <p>The CircleImageCropper is an image cropping tool for Circle Image View used by several applications these days. 
 It provides a way to set an image in XML and programmatically, and displays a resizable circular crop window on top of the image. 
 Calling the method getCroppedCircleImage() will then return the Circle Bitmap marked by the circular crop window.</p>
