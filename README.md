@@ -2,8 +2,8 @@ Xamarin.CircleImageCropper
 ==========================
 
 
+<p>This project it the Xamarin.Android implementation of <a href='https://github.com/rachitwatts/CircleImageCropper'>CircleImageCropper</a>
 
-    <article class="markdown-body entry-content" itemprop="mainContentOfPage"><h1>
 <a name="user-content-circleimagecropper" class="anchor" href="#circleimagecropper" aria-hidden="true"><span class="octicon octicon-link"></span></a>CircleImageCropper</h1>
 
 <p>The CircleImageCropper is an image cropping tool for Circle Image View used by several applications these days. 
@@ -38,4 +38,4 @@ You may obtain a copy of the License in the LICENSE file, or at:</p>
 
 <p>We'd love for you to participate in the development of our project. Before we can accept your pull request, please sign our Individual Contributor License Agreement. It's a short form that covers our bases and makes sure you're eligible to contribute. Thank you!</p>
 
-<p><a href="http://goo.gl/gfj6Mb">http://goo.gl/gfj6Mb</a></p></article>
+
