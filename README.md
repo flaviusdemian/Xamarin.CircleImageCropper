@@ -2,7 +2,7 @@ Xamarin.CircleImageCropper
 ==========================
 
 
-<p>This project it the Xamarin.Android implementation of <a href='https://github.com/rachitwatts/CircleImageCropper'>CircleImageCropper</a>
+<p>This project it the Xamarin.Android implementation of <a href='https://github.com/rachitwatts/CircleImageCropper'>CircleImageCropper.</a>
 
 <a name="user-content-circleimagecropper" class="anchor" href="#circleimagecropper" aria-hidden="true"><span class="octicon octicon-link"></span></a>CircleImageCropper</h1>
 
